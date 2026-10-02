@@ -1,0 +1,1636 @@
+
+:root{
+  --bg:#f4f7f8; --card:#fff; --ink:#111827; --muted:#778395; --line:#dfe6eb;
+  --dark:#14232f; --dark2:#1d3241; --green:#00ef5d; --green2:#00c94d;
+  --softgreen:#eafff1; --yellow:#f3b61f; --softyellow:#fff6d8;
+  --blue:#2f7fc0; --softblue:#eaf4ff; --danger:#d94f4f; --softred:#fff0f0;
+  --shadow:0 10px 30px rgba(15,23,42,.08); --max:560px;
+}
+*{box-sizing:border-box}
+html{background:#111}
+body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.shell{max-width:var(--max);margin:auto;min-height:100vh;background:var(--bg);position:relative;padding-bottom:104px}
+.topbar{position:sticky;top:0;z-index:20;background:var(--dark);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 18px 15px;border-bottom:1px solid rgba(255,255,255,.06)}
+.topbar-row{display:flex;align-items:center;gap:13px}
+.brand-logo{width:108px;height:46px;object-fit:contain;object-position:left center}
+.brand-fallback{font-size:27px;font-weight:900}.brand-fallback span{color:var(--green);font-size:.55em}
+.top-title{font-weight:800;font-size:18px}.avatar{margin-left:auto;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--dark);font-weight:900}
+.content{padding:25px 18px}.eyebrow{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--green2);margin-bottom:7px}
+h1{font-size:34px;line-height:1.03;letter-spacing:-1.2px;margin:0 0 9px}.sub{margin:0 0 22px;color:var(--muted);line-height:1.45;font-size:15px}
+.hero{background:linear-gradient(145deg,var(--dark),var(--dark2));border-radius:28px;padding:23px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;background:rgba(0,239,93,.1);right:-80px;top:-80px}
+.hero-label{font-size:12px;letter-spacing:.17em;font-weight:900;color:var(--green);position:relative;z-index:1}
+.hero-amount{font-size:42px;font-weight:900;letter-spacing:-1.4px;margin:9px 0 3px;position:relative;z-index:1}
+.hero-desc{font-size:14px;color:#cfd8df;position:relative;z-index:1}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:20px;position:relative;z-index:1}
+.metric{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);border-radius:15px;padding:13px 11px}
+.metric span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#cdd6dd}.metric b{font-size:17px;display:block;margin-top:4px}
+.section{margin-top:22px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.section-title{font-size:18px;font-weight:900}
+.link-btn{border:0;background:transparent;color:var(--green2);font-weight:800;padding:5px}
+.stack{display:grid;gap:10px}.card{background:#fff;border:1px solid var(--line);border-radius:21px;padding:16px;box-shadow:0 2px 0 rgba(15,23,42,.02)}
+.lead{display:flex;align-items:center;gap:12px}.initials{width:44px;height:44px;border-radius:14px;background:#eef3f5;display:grid;place-items:center;font-weight:900;color:var(--dark);flex:0 0 auto}
+.lead-main{min-width:0;flex:1}.lead-name{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lead-meta{font-size:13px;color:var(--muted);margin-top:2px}
+.lead-right{text-align:right}.money{font-weight:900}.created{font-size:11px;color:#95a0aa;margin-top:7px}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:800;margin-top:5px}
+.b-yellow{background:var(--softyellow);color:#876400}.b-blue{background:var(--softblue);color:#26649a}.b-green{background:var(--softgreen);color:#087c34}.b-gray{background:#eef2f4;color:#647180}.b-red{background:var(--softred);color:#9d3434}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px;padding-top:13px;border-top:1px solid #edf1f3}
+.btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 11px;font-size:12px;font-weight:850;color:#41505d}
+.btn.primary-small{background:var(--dark);border-color:var(--dark);color:#fff}.btn.green-small{background:var(--softgreen);border-color:#bceccb;color:#087c34}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px;text-align:left}
+.iconbox{width:38px;height:38px;border-radius:12px;background:#eef5f0;display:grid;place-items:center;font-size:19px}.quick strong{display:block;margin-top:10px}.quick small{display:block;margin-top:3px;color:var(--muted)}
+.view{display:none}.view.active{display:block}.toolbar{display:flex;gap:9px;margin:14px 0}.search{display:flex;align-items:center;gap:8px;flex:1;background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px}
+.search input{border:0;outline:0;background:transparent;width:100%}.filter{border:1px solid var(--line);background:#fff;border-radius:15px;padding:0 13px;font-weight:800}
+.tabs{display:flex;gap:8px;overflow:auto;scrollbar-width:none;margin-bottom:12px}.tabs::-webkit-scrollbar{display:none}.pill{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;font-size:13px;font-weight:800;color:#687586}.pill.active{background:var(--dark);color:#fff;border-color:var(--dark)}
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,var(--max));z-index:30;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:7px 12px calc(10px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr 76px 1fr 1fr;align-items:end;backdrop-filter:blur(14px)}
+.nav button{border:0;background:transparent;color:#8592a0;display:grid;place-items:center;gap:3px;font-size:11px;font-weight:800;padding:8px 2px}.nav button.active{color:var(--dark)}.ni{font-size:21px}
+.fab{width:62px;height:62px;border-radius:50%;border:0;background:var(--green)!important;color:var(--dark)!important;font-size:39px!important;font-weight:300!important;transform:translateY(-15px);box-shadow:0 10px 24px rgba(0,239,93,.28)}
+.backdrop{position:fixed;inset:0;background:rgba(6,13,20,.46);z-index:50;display:none;align-items:flex-end;justify-content:center}.backdrop.show{display:flex}
+.sheet{width:min(100%,var(--max));max-height:95vh;overflow:auto;background:var(--bg);border-radius:28px 28px 0 0;padding:10px 18px calc(20px + env(safe-area-inset-bottom));animation:up .2s ease}
+@keyframes up{from{transform:translateY(22px);opacity:.5}to{transform:none;opacity:1}}
+.handle{width:44px;height:5px;border-radius:99px;background:#cad3d9;margin:4px auto 16px}.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.sheet-head h2{margin:0;font-size:24px}.close{width:38px;height:38px;border:0;border-radius:50%;background:#e7ecef;font-size:20px}
+.form-card{background:#fff;border:1px solid var(--line);border-radius:21px;padding:16px;margin-bottom:12px}.form-card h3{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:#657180;margin:0 0 13px}
+.field{display:grid;gap:6px;margin-bottom:10px}.field:last-child{margin-bottom:0}.field label{font-size:12px;font-weight:800;color:#657180}.req{color:var(--danger)}
+.field input,.field select,.field textarea{width:100%;border:1px solid #d8e0e5;border-radius:14px;background:#fbfcfd;padding:13px 12px;outline:0;color:var(--ink)}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(0,201,77,.08)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.primary{width:100%;border:0;background:var(--green);color:var(--dark);font-weight:900;border-radius:16px;padding:15px 16px;font-size:15px;box-shadow:0 8px 18px rgba(0,239,93,.18)}
+.secondary{width:100%;border:1px solid var(--line);background:#fff;color:var(--dark);font-weight:900;border-radius:16px;padding:14px 16px;font-size:14px}.ghost{width:100%;border:1px dashed #cbd5db;background:#f9fbfc;color:#506070;font-weight:800;border-radius:14px;padding:12px}
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice{border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px;text-align:left;font-weight:800}.choice.active{border-color:var(--green2);box-shadow:0 0 0 3px rgba(0,201,77,.09);background:#fbfffc}
+.reservation-type-grid{display:grid;gap:12px}.reservation-type-card{width:100%;border:1px solid var(--line);background:#fff;border-radius:20px;padding:18px;text-align:left;display:flex;gap:14px;align-items:center;transition:.15s}.reservation-type-card:active{transform:scale(.99)}.reservation-type-card .type-icon{width:50px;height:50px;border-radius:15px;background:#eef5f0;display:grid;place-items:center;font-size:24px;flex:0 0 auto}.reservation-type-card b{display:block;font-size:16px}.reservation-type-card span{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:4px}.reservation-type-card.exclusive .type-icon{background:var(--softgreen)}.reservation-type-card.court .type-icon{background:var(--softblue)}.reservation-kind-chip{display:inline-flex;border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900;background:#eef3f5;color:#506070;margin-bottom:10px}
+.client-option{display:flex;align-items:center;gap:11px;border:1px solid var(--line);background:#fff;border-radius:15px;padding:12px;text-align:left;width:100%}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:13px;padding:10px;background:#fbfcfd;font-size:12px;font-weight:700}.check input{accent-color:var(--green2)}
+.info{background:#f7faf8;border:1px solid #dbe8df;border-radius:15px;padding:12px;font-size:12px;color:#52616d;line-height:1.45}
+.summary{position:sticky;bottom:0;background:rgba(244,247,248,.97);backdrop-filter:blur(10px);border-top:1px solid var(--line);margin:10px -18px -20px;padding:12px 18px calc(17px + env(safe-area-inset-bottom))}
+.sumrow{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#667482;margin:5px 0}.sumrow.total{font-size:22px;color:var(--ink);font-weight:900;margin:9px 0}
+.actionlist{display:grid;gap:10px}.actionbtn{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:#fff;border-radius:18px;padding:15px;text-align:left}.actionbtn b{display:block}.actionbtn span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.detail-row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #edf1f3;font-size:13px}.detail-row:last-child{border-bottom:0}.detail-row span{color:var(--muted)}.detail-row b{text-align:right}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:110px;background:#12202b;color:#fff;padding:12px 16px;border-radius:13px;z-index:90;opacity:0;pointer-events:none;transition:.2s;font-size:13px;font-weight:800;box-shadow:var(--shadow)}.toast.show{opacity:1}
+.hidden{display:none!important}.empty{text-align:center;padding:28px 14px;color:var(--muted)}
+@media(min-width:700px){.shell{box-shadow:0 0 80px rgba(0,0,0,.35)}}
+
+/* Vista previa de cotizacion / PDF */
+.pdf-overlay{position:fixed;inset:0;z-index:120;background:#e7ecef;display:none;overflow:auto}
+.pdf-overlay.show{display:block}
+.pdf-toolbar{position:sticky;top:0;z-index:2;background:rgba(20,35,47,.97);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:9px;box-shadow:0 2px 12px rgba(0,0,0,.14)}
+.pdf-toolbar-title{font-weight:900;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdf-toolbtn{border:1px solid rgba(255,255,255,.18);background:#fff;color:var(--dark);font-weight:900;border-radius:12px;padding:10px 12px}
+.pdf-toolbtn.green{background:var(--green);border-color:var(--green)}
+.pdf-toolbtn.dark{background:transparent;color:#fff}
+.pdf-stage{padding:20px 12px 36px;display:flex;justify-content:center}
+.pdf-paper{width:794px;min-height:1123px;background:#fff;box-shadow:0 18px 50px rgba(15,23,42,.18);padding:46px 52px;color:#17212b}
+.pdf-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;border-bottom:3px solid #0ae668;padding-bottom:20px}
+.pdf-brand{display:flex;align-items:center;gap:16px}.pdf-logo{width:120px;height:60px;object-fit:contain;object-position:left center}.pdf-org{font-size:12px;line-height:1.5;color:#5d6873}.pdf-title{text-align:right}.pdf-title h2{font-size:18px;line-height:1.25;margin:0 0 5px;color:#10232f}.pdf-title b{font-size:13px;color:#00b947}
+.pdf-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin:24px 0 18px}.pdf-meta-item{border-bottom:1px solid #d9e1e6;padding:9px 0}.pdf-meta-item span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#7b8791;font-weight:800}.pdf-meta-item b{display:block;margin-top:3px;font-size:14px}
+.pdf-section{margin-top:22px}.pdf-section-title{font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:#00a940;margin-bottom:9px}.pdf-box{border:1px solid #dfe6eb;border-radius:12px;padding:14px 16px}
+.pdf-event-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:0;border:1px solid #dfe6eb;border-radius:10px;overflow:hidden}.pdf-event-grid>div{padding:11px 12px;border-right:1px solid #dfe6eb}.pdf-event-grid>div:last-child{border-right:0}.pdf-event-grid span{display:block;font-size:9px;text-transform:uppercase;color:#7d8994;font-weight:800;letter-spacing:.06em}.pdf-event-grid b{display:block;font-size:13px;margin-top:4px}
+.pdf-list{margin:0;padding-left:19px;font-size:12px;line-height:1.7;color:#36434e}.pdf-table{width:100%;border-collapse:collapse;font-size:12px}.pdf-table th{background:#14232f;color:#fff;padding:10px 9px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.06em}.pdf-table td{padding:11px 9px;border-bottom:1px solid #e3e9ed}.pdf-table td.num,.pdf-table th.num{text-align:right}.pdf-total-row td{font-weight:900;font-size:14px;border-top:2px solid #14232f}.pdf-note{font-size:10.5px;line-height:1.55;color:#65717d;margin-top:14px}.pdf-footer{margin-top:28px;padding-top:16px;border-top:1px solid #dfe6eb;display:flex;justify-content:space-between;gap:18px;color:#697580;font-size:10.5px}.pdf-status{display:inline-block;padding:6px 9px;border-radius:999px;background:#eafff1;color:#087c34;font-weight:900;font-size:10px}
+@media(max-width:850px){.pdf-paper{width:100%;min-height:auto;padding:28px 20px}.pdf-stage{padding:10px}.pdf-head{display:block}.pdf-title{text-align:left;margin-top:16px}.pdf-event-grid{grid-template-columns:1fr 1fr}.pdf-event-grid>div{border-bottom:1px solid #dfe6eb}.pdf-meta{grid-template-columns:1fr}.pdf-toolbar{flex-wrap:wrap}.pdf-toolbar-title{width:100%;flex-basis:100%}}
+
+/* v5: reservations, tariff settings and operational calendar */
+.monthbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.monthbar b{font-size:17px}.monthnav{width:38px;height:38px;border:1px solid var(--line);background:#fff;border-radius:12px;font-weight:900}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.cal-head{text-align:center;font-size:10px;font-weight:900;color:#8b96a3;padding:5px 0}
+.cal-day{min-height:53px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:7px 5px;text-align:left;position:relative;color:var(--ink)}
+.cal-day.muted{opacity:.35}.cal-day.today{box-shadow:0 0 0 2px var(--green2) inset}.cal-day.selected{background:var(--dark);color:#fff;border-color:var(--dark)}
+.cal-num{font-size:12px;font-weight:900}.event-dot{position:absolute;left:7px;right:7px;bottom:6px;height:5px;border-radius:99px;background:var(--green2)}
+.event-count{font-size:9px;color:var(--muted);position:absolute;right:6px;top:7px}.cal-day.selected .event-count{color:#cfd8df}
+.reservation-card{border-left:4px solid var(--green2)}.warning-card{background:#fffaf0;border-color:#f2dfab}.mutedline{font-size:12px;color:var(--muted);line-height:1.45}
+.inline-total{background:var(--dark);color:#fff;border-radius:17px;padding:15px;display:flex;align-items:center;justify-content:space-between;margin-top:8px}.inline-total span{color:#cfd8df;font-size:12px}.inline-total b{font-size:22px}
+
+@media print{
+  @page{size:A4;margin:0}
+  body{background:#fff!important}
+  body>*:not(#pdfPreviewOverlay){display:none!important}
+  #pdfPreviewOverlay{display:block!important;position:static!important;inset:auto!important;background:#fff!important;overflow:visible!important}
+  #pdfPreviewOverlay .pdf-toolbar{display:none!important}
+  #pdfPreviewOverlay .pdf-stage{padding:0!important;display:block!important}
+  #pdfPreviewOverlay .pdf-paper{width:210mm!important;min-height:297mm!important;box-shadow:none!important;margin:0!important;padding:14mm 14mm!important}
+}
+
+
+/* v8: calendario operativo por recursos */
+.calendar-sheet{max-height:97vh}
+.cal-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.cal-toolbar-left,.cal-toolbar-right{display:flex;align-items:center;gap:7px}
+.cal-iconbtn{border:1px solid var(--line);background:#fff;border-radius:12px;min-width:40px;height:40px;padding:0 11px;font-weight:900;color:var(--dark)}
+.cal-today{border:1px solid var(--line);background:#fff;border-radius:12px;height:40px;padding:0 13px;font-weight:850;color:var(--dark)}
+.cal-date-label{font-size:16px;font-weight:900;line-height:1.1}
+.cal-date-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.cal-view-tabs{display:flex;gap:6px;background:#e9eef1;padding:4px;border-radius:14px;margin:10px 0}
+.cal-view-tab{flex:1;border:0;background:transparent;border-radius:10px;padding:8px;font-size:12px;font-weight:850;color:#687586}
+.cal-view-tab.active{background:#fff;color:var(--dark);box-shadow:0 1px 4px rgba(15,23,42,.08)}
+.date-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:12px 0}
+.date-chip{border:1px solid var(--line);background:#fff;border-radius:15px;padding:9px 4px;text-align:center}
+.date-chip span{display:block;font-size:10px;color:var(--muted);font-weight:750}
+.date-chip b{display:block;font-size:17px;margin:2px 0}
+.date-chip small{display:block;font-size:10px;color:var(--muted)}
+.date-chip.active{background:var(--dark);border-color:var(--dark);color:#fff}
+.date-chip.active span,.date-chip.active small{color:#d4dde3}
+.scheduler-wrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:#fff;max-height:59vh}
+.scheduler{min-width:500px;display:grid;grid-template-columns:62px repeat(3,minmax(132px,1fr));position:relative}
+.sch-head{position:sticky;top:0;z-index:5;background:#f8fafb;border-bottom:1px solid var(--line);padding:12px 7px;text-align:center;font-size:12px;font-weight:900}
+.sch-head.time{left:0;z-index:7}
+.sch-time{position:sticky;left:0;z-index:3;background:#f8fafb;border-right:1px solid var(--line);border-bottom:1px solid #edf1f3;min-height:56px;padding:10px 6px;font-size:11px;font-weight:850;color:#647180}
+.sch-cell{min-height:56px;border-right:1px solid #edf1f3;border-bottom:1px solid #edf1f3;background:#fff;padding:5px;position:relative}
+.sch-cell.free{cursor:pointer}
+.sch-cell.free:active{background:#f1fff6}
+.sch-slot{height:100%;min-height:44px;border-radius:10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:7px 8px;font-size:10px;line-height:1.15;font-weight:800;overflow:hidden}
+.sch-slot.free-ui{border:1px dashed #dbe4e8;color:#a0aab3;background:#fbfcfd;align-items:center}
+.sch-slot.reserved{background:#eaf4ff;color:#245d8c}
+.sch-slot.fut9{background:#eef0ff;color:#4f4c99}
+.sch-slot.exclusive{background:#f3ebff;color:#7045a0}
+.sch-slot.hold{background:#fff5d7;color:#8a6600}
+.sch-slot.blocked{background:#fff0f0;color:#963c3c}
+.sch-slot b{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.sch-slot span{font-size:9px;font-weight:700;opacity:.82;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cal-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:#687586;font-weight:750}
+.legend-dot{width:9px;height:9px;border-radius:3px}
+.legend-dot.avail{background:#fff;border:1px solid #cbd5db}
+.legend-dot.res{background:#bfe0fb}.legend-dot.f9{background:#cfd2ff}.legend-dot.exc{background:#dfc8ff}.legend-dot.pre{background:#ffe59b}
+.calendar-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.cal-note{font-size:11px;color:var(--muted);line-height:1.45;margin-top:8px}
+.conflict-box{display:none;background:#fff0f0;border:1px solid #f1c4c4;color:#963c3c;border-radius:14px;padding:11px 12px;font-size:12px;font-weight:750;line-height:1.4;margin-bottom:12px}
+.conflict-box.show{display:block}
+.resource-help{background:#f7faf8;border:1px solid #dbe8df;border-radius:14px;padding:11px 12px;font-size:11px;color:#53626c;line-height:1.45;margin-top:8px}
+#rPhysicalCourtWrap.hidden{display:none!important}
+.month-panel.hidden{display:none!important}
+
+
+/* v9: Más / Historial / Masters */
+.more-section{margin-top:22px}
+.more-section-title{font-size:12px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:#7b8795;margin:0 4px 9px}
+.more-card{width:100%;text-align:left}
+.list-chevron{font-size:22px;color:#a1abb4;margin-left:auto}
+.history-tabs{display:flex;gap:7px;overflow:auto;scrollbar-width:none;margin-bottom:12px}
+.history-tabs::-webkit-scrollbar{display:none}
+.history-item{display:flex;gap:11px;align-items:flex-start}
+.history-icon{width:38px;height:38px;border-radius:12px;background:#eef3f5;display:grid;place-items:center;flex:0 0 auto;font-size:15px;font-weight:900}
+.history-main{flex:1;min-width:0}.history-title{font-weight:900;font-size:14px}.history-meta{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35}
+.master-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.master-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:15px;text-align:left}
+.master-card .iconbox{margin-bottom:9px}.master-card b{display:block;font-size:14px}.master-card span{display:block;color:var(--muted);font-size:11px;line-height:1.35;margin-top:3px}
+.master-badge{display:inline-flex;margin-top:8px;border-radius:999px;background:#eef3f5;padding:5px 8px;font-size:10px;font-weight:800;color:#63717e}
+
+
+/* v10: multi-cancha + tarifas especiales por cliente */
+.rate-source{display:flex;align-items:center;gap:7px;margin-top:7px;font-size:11px;font-weight:800;color:#647180}
+.rate-source .dotrate{width:8px;height:8px;border-radius:50%;background:#9aa6af}
+.rate-source.special{color:#087c34}.rate-source.special .dotrate{background:var(--green2)}
+.court-select-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.court-check{position:relative;display:block}
+.court-check input{position:absolute;opacity:0;pointer-events:none}
+.court-check span{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--line);border-radius:13px;background:#fbfcfd;font-size:12px;font-weight:850;color:#5e6b78}
+.court-check input:checked + span{border-color:var(--green2);background:#effff4;color:#087c34;box-shadow:0 0 0 2px rgba(0,201,77,.08)}
+.court-check input:disabled + span{opacity:.45;background:#f0f2f3}
+.calc-box{margin-top:10px;background:#f7faf8;border:1px solid #dbe8df;border-radius:14px;padding:11px 12px;display:flex;justify-content:space-between;gap:12px;font-size:12px;color:#53626c}
+.calc-box b{color:var(--ink)}
+.special-pricing-box{margin-top:12px;background:#f7faf8;border:1px solid #dbe8df;border-radius:15px;padding:12px}
+.special-pricing-box h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#63717e}
+
+
+/* v11: Reservas como modulo principal + lista/calendario + compartir */
+.reservation-view-switch{display:flex;gap:5px;background:#e9eef1;border-radius:14px;padding:4px;margin:14px 0}
+.reservation-view-switch button{flex:1;border:0;background:transparent;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:900;color:#71808d}
+.reservation-view-switch button.active{background:#fff;color:var(--dark);box-shadow:0 1px 4px rgba(15,23,42,.08)}
+.reservation-group{margin-top:18px}.reservation-group:first-child{margin-top:0}
+.reservation-group-title{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#7a8794;margin:0 4px 8px}
+.reservation-card-v11{padding:15px}.reservation-card-v11 .lead{align-items:flex-start}
+.reservation-mainline{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:6px;font-size:12px;color:#596774}
+.reservation-mainline b{color:var(--ink)}
+.reservation-money-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:13px}
+.reservation-money{background:#f7f9fa;border-radius:12px;padding:9px 10px}
+.reservation-money span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#8a96a2;font-weight:800}
+.reservation-money b{display:block;font-size:13px;margin-top:3px}
+.rate-tag{display:inline-flex;align-items:center;border-radius:999px;background:#edf3f5;color:#586977;font-size:10px;font-weight:850;padding:5px 8px;margin-top:7px}
+.rate-tag.special{background:#eafff1;color:#087c34}
+.share-preview{background:#dde4e8;border-radius:18px;padding:9px;margin-bottom:12px}
+.share-preview canvas{display:block;width:100%;height:auto;border-radius:12px;background:#fff;box-shadow:0 4px 18px rgba(15,23,42,.10)}
+.share-note{font-size:11px;color:var(--muted);line-height:1.45;margin:9px 2px 0}
+.btn-share{background:#eafff1!important;border-color:#bceccb!important;color:#087c34!important}
+.btn-edit{background:#f3f6f8!important}
+
+
+
+/* v12: correccion aislada de impresion A4 - no modifica la interfaz */
+@media print{
+  @page{size:A4 portrait;margin:0}
+  html,body{width:210mm!important;margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important}
+  body>*:not(#pdfPreviewOverlay){display:none!important}
+  #pdfPreviewOverlay{display:block!important;position:static!important;inset:auto!important;width:210mm!important;background:#fff!important;overflow:visible!important}
+  #pdfPreviewOverlay .pdf-toolbar{display:none!important}
+  #pdfPreviewOverlay .pdf-stage{display:block!important;width:210mm!important;padding:0!important;margin:0!important}
+  #pdfPreviewOverlay .pdf-paper{
+    width:210mm!important;
+    min-height:0!important;
+    height:auto!important;
+    margin:0!important;
+    padding:10mm 12mm!important;
+    box-shadow:none!important;
+    overflow:visible!important;
+  }
+
+  /* Restablecer el layout A4 aunque la impresion se lance desde un celular */
+  #pdfPreviewOverlay .pdf-head{display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:18px!important;padding-bottom:12px!important}
+  #pdfPreviewOverlay .pdf-brand{display:flex!important;align-items:center!important;gap:12px!important}
+  #pdfPreviewOverlay .pdf-logo{width:104px!important;height:50px!important}
+  #pdfPreviewOverlay .pdf-title{text-align:right!important;margin-top:0!important}
+  #pdfPreviewOverlay .pdf-title h2{font-size:15px!important;margin-bottom:3px!important}
+  #pdfPreviewOverlay .pdf-meta{grid-template-columns:1fr 1fr!important;gap:5px 20px!important;margin:13px 0 10px!important}
+  #pdfPreviewOverlay .pdf-meta-item{padding:5px 0!important}
+  #pdfPreviewOverlay .pdf-meta-item b{font-size:12px!important}
+  #pdfPreviewOverlay .pdf-event-grid{grid-template-columns:1.2fr 1fr 1fr 1fr!important}
+  #pdfPreviewOverlay .pdf-event-grid>div{padding:7px 9px!important;border-bottom:0!important}
+  #pdfPreviewOverlay .pdf-event-grid b{font-size:11.5px!important}
+  #pdfPreviewOverlay .pdf-section{margin-top:11px!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  #pdfPreviewOverlay .pdf-section-title{margin-bottom:5px!important;font-size:10.5px!important}
+  #pdfPreviewOverlay .pdf-box{padding:8px 11px!important}
+  #pdfPreviewOverlay .pdf-list{font-size:10.5px!important;line-height:1.38!important;margin:0!important}
+  #pdfPreviewOverlay .pdf-table{font-size:10.5px!important}
+  #pdfPreviewOverlay .pdf-table th{padding:6px 7px!important;font-size:9px!important}
+  #pdfPreviewOverlay .pdf-table td{padding:6px 7px!important}
+  #pdfPreviewOverlay .pdf-total-row td{font-size:12px!important}
+  #pdfPreviewOverlay .pdf-note{font-size:9px!important;line-height:1.35!important;margin-top:8px!important}
+  #pdfPreviewOverlay .pdf-footer{margin-top:11px!important;padding-top:8px!important;font-size:9px!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  #pdfPreviewOverlay table,#pdfPreviewOverlay tr,#pdfPreviewOverlay .pdf-box,#pdfPreviewOverlay .pdf-event-grid{break-inside:avoid!important;page-break-inside:avoid!important}
+  #pdfPreviewOverlay *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+
+/* =========================================================
+   v13 - correcciones UX móvil sin alterar lógica de negocio
+   ========================================================= */
+:root{--visual-vh:100dvh}
+
+/* Títulos principales sin descripción: conserva aire suficiente */
+.view>.content>h1{margin-bottom:18px}
+
+/* Centrado real de iconos + */
+.fab{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0!important;
+  line-height:1!important;
+  text-align:center!important;
+  text-indent:0!important;
+}
+.filter{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* El overlay usa el viewport visual real de Safari/iPhone */
+.backdrop{
+  top:0!important;
+  right:0!important;
+  bottom:auto!important;
+  left:0!important;
+  height:var(--visual-vh,100dvh)!important;
+  min-height:0!important;
+  padding-top:8px;
+  overflow:hidden;
+}
+.sheet{
+  max-height:calc(var(--visual-vh,100dvh) - 8px)!important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  scroll-behavior:auto;
+}
+
+/* Formularios largos: el resumen ya no tapa campos en smartphone */
+@media (max-width:640px){
+  .sheet{
+    width:100%!important;
+    border-radius:24px 24px 0 0!important;
+    padding-top:8px!important;
+  }
+  .sheet-head{
+    position:sticky;
+    top:-1px;
+    z-index:12;
+    background:var(--bg);
+    margin:0 -2px 12px;
+    padding:7px 2px 10px;
+    border-bottom:1px solid rgba(223,230,235,.72);
+  }
+  .sheet-head h2{
+    font-size:23px!important;
+    line-height:1.08!important;
+  }
+  .sheet .summary{
+    position:static!important;
+    bottom:auto!important;
+    margin:12px 0 0!important;
+    padding:14px!important;
+    border:1px solid var(--line)!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    backdrop-filter:none!important;
+  }
+  .sheet .form-card:first-of-type{margin-top:0}
+}
+
+/* Evitar desbordes horizontales accidentales en móvil */
+html,body,.shell,.view,.content{max-width:100%;overflow-x:hidden}
+.sheet,.form-card,.toolbar,.grid2{min-width:0}
+.field,.lead-main{min-width:0}
+
+
+/* v14 - Nueva cotizacion: grilla movil estable en Safari */
+.quote-event-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.quote-event-card .field,.quote-event-card input,.quote-event-card select{min-width:0!important;max-width:100%!important;width:100%!important;box-sizing:border-box!important}
+.quote-event-card input[type="date"],.quote-event-card input[type="time"]{-webkit-appearance:none;appearance:none;font-size:16px!important}
+.quote-event-date,.quote-event-hours{width:100%}
+.quote-event-hours input[readonly]{background:#f2f5f6;font-weight:850}
+@media (max-width:640px){.quote-event-top{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}.quote-event-date{margin-top:2px}.quote-event-times{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.quote-event-hours{margin-top:2px}}
+
+
+/* =========================================================
+   v15 - Safari/iPhone: modales estables con teclado abierto
+   ========================================================= */
+.backdrop{
+  position:fixed!important;
+  inset:0!important;
+  width:100%!important;
+  height:100dvh!important;
+  min-height:100dvh!important;
+  max-height:100dvh!important;
+  padding-top:0!important;
+  overflow:hidden!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+}
+.sheet{
+  width:min(100%,var(--max))!important;
+  max-height:100dvh!important;
+  height:auto!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  transform:translateZ(0);
+}
+@supports(height:100svh){
+  .backdrop{
+    height:100svh!important;
+    min-height:100svh!important;
+    max-height:100svh!important;
+  }
+  .sheet{
+    max-height:100svh!important;
+  }
+}
+@media (max-width:640px){
+  .sheet{
+    border-radius:24px 24px 0 0!important;
+    padding-bottom:calc(18px + env(safe-area-inset-bottom))!important;
+  }
+  .sheet-head{
+    position:sticky!important;
+    top:0!important;
+    z-index:20!important;
+    background:var(--bg)!important;
+  }
+  .sheet input,
+  .sheet textarea,
+  .sheet select{
+    font-size:16px!important; /* evita zoom automático de iOS */
+  }
+}
+
+
+/* =========================================================
+   v16 - Inicio: titulo correcto + responsive movil
+   ========================================================= */
+html,body{
+  width:100%;
+  min-width:0;
+  margin:0;
+}
+.shell{
+  width:100%;
+  max-width:var(--max);
+  min-width:0;
+}
+#view-home .content,
+#view-home .hero,
+#view-home .section,
+#view-home .card{
+  min-width:0;
+  max-width:100%;
+}
+
+@media (max-width:640px){
+  #view-home .content{
+    padding:22px 18px 20px;
+  }
+  #view-home h1{
+    font-size:31px;
+    line-height:1.06;
+    letter-spacing:-.9px;
+    margin-bottom:18px;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  #view-home .eyebrow{
+    margin-bottom:8px;
+  }
+  #view-home .hero{
+    width:100%;
+    padding:20px;
+    border-radius:24px;
+  }
+  #view-home .hero-amount{
+    font-size:40px;
+  }
+  #view-home .metrics{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+  }
+  #view-home .metric{
+    min-width:0;
+    padding:12px 9px;
+  }
+  #view-home .metric span{
+    font-size:9px;
+    line-height:1.2;
+    overflow-wrap:anywhere;
+  }
+  #view-home .metric b{
+    font-size:16px;
+    white-space:nowrap;
+  }
+  #view-home .section-head{
+    gap:10px;
+    min-width:0;
+  }
+  #view-home .section-title{
+    min-width:0;
+    font-size:17px;
+    line-height:1.15;
+  }
+  #view-home .link-btn{
+    flex:0 0 auto;
+    white-space:nowrap;
+    font-size:14px;
+  }
+}
+
+@media (max-width:380px){
+  #view-home .content{padding-left:15px;padding-right:15px}
+  #view-home h1{font-size:29px}
+  #view-home .hero{padding:18px}
+  #view-home .metric{padding:11px 7px}
+  #view-home .metric b{font-size:15px}
+}
+
+
+/* =========================================================
+   v17 - Formularios full-screen en smartphone
+   Mantiene bottom-sheets solo para acciones/detalles breves
+   ========================================================= */
+@media (max-width:640px){
+  /* Formularios que requieren teclado o edición prolongada */
+  #clientSheet,
+  #selectClientSheet,
+  #quoteSheet,
+  #followSheet,
+  #reservationSheet,
+  #tariffSheet,
+  #reservationOutcomeSheet{
+    position:fixed!important;
+    left:0!important;
+    right:0!important;
+    top:var(--vv-top,0px)!important;
+    bottom:auto!important;
+    width:100%!important;
+    height:var(--vv-height,100dvh)!important;
+    min-height:var(--vv-height,100dvh)!important;
+    max-height:var(--vv-height,100dvh)!important;
+    align-items:stretch!important;
+    justify-content:stretch!important;
+    background:var(--bg)!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+
+  #clientSheet>.sheet,
+  #selectClientSheet>.sheet,
+  #quoteSheet>.sheet,
+  #followSheet>.sheet,
+  #reservationSheet>.sheet,
+  #tariffSheet>.sheet,
+  #reservationOutcomeSheet>.sheet{
+    width:100%!important;
+    max-width:none!important;
+    height:100%!important;
+    min-height:100%!important;
+    max-height:100%!important;
+    border-radius:0!important;
+    margin:0!important;
+    padding:0 18px calc(22px + env(safe-area-inset-bottom))!important;
+    background:var(--bg)!important;
+    box-shadow:none!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    transform:none!important;
+  }
+
+  #clientSheet .handle,
+  #selectClientSheet .handle,
+  #quoteSheet .handle,
+  #followSheet .handle,
+  #reservationSheet .handle,
+  #tariffSheet .handle,
+  #reservationOutcomeSheet .handle{
+    display:none!important;
+  }
+
+  #clientSheet .sheet-head,
+  #selectClientSheet .sheet-head,
+  #quoteSheet .sheet-head,
+  #followSheet .sheet-head,
+  #reservationSheet .sheet-head,
+  #tariffSheet .sheet-head,
+  #reservationOutcomeSheet .sheet-head{
+    position:sticky!important;
+    top:0!important;
+    z-index:50!important;
+    min-height:78px;
+    margin:0 -18px 16px!important;
+    padding:18px 18px 12px!important;
+    background:var(--bg)!important;
+    border-bottom:1px solid var(--line)!important;
+  }
+
+  #clientSheet .sheet-head h2,
+  #selectClientSheet .sheet-head h2,
+  #quoteSheet .sheet-head h2,
+  #followSheet .sheet-head h2,
+  #reservationSheet .sheet-head h2,
+  #tariffSheet .sheet-head h2,
+  #reservationOutcomeSheet .sheet-head h2{
+    font-size:26px!important;
+    line-height:1.05!important;
+  }
+
+  #clientSheet .sheet-head .eyebrow,
+  #selectClientSheet .sheet-head .eyebrow,
+  #quoteSheet .sheet-head .eyebrow,
+  #followSheet .sheet-head .eyebrow,
+  #reservationSheet .sheet-head .eyebrow,
+  #tariffSheet .sheet-head .eyebrow,
+  #reservationOutcomeSheet .sheet-head .eyebrow{
+    margin-bottom:5px!important;
+  }
+
+  #clientSheet .close,
+  #selectClientSheet .close,
+  #quoteSheet .close,
+  #followSheet .close,
+  #reservationSheet .close,
+  #tariffSheet .close,
+  #reservationOutcomeSheet .close{
+    flex:0 0 auto!important;
+  }
+
+  /* El formulario siempre tapa completamente la app de fondo */
+  #clientSheet.show,
+  #selectClientSheet.show,
+  #quoteSheet.show,
+  #followSheet.show,
+  #reservationSheet.show,
+  #tariffSheet.show,
+  #reservationOutcomeSheet.show{
+    display:flex!important;
+  }
+
+  /* Botones finales nunca quedan debajo del teclado por position:sticky previo */
+  #clientSheet .summary,
+  #quoteSheet .summary,
+  #followSheet .summary,
+  #reservationSheet .summary,
+  #tariffSheet .summary,
+  #reservationOutcomeSheet .summary{
+    position:static!important;
+  }
+}
+
+
+/* =========================================================
+   v18 - Reservas: tarjetas responsive en smartphone
+   ========================================================= */
+@media (max-width:640px){
+  #view-reservations .content{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+  .reservation-group,
+  .reservation-group .stack,
+  .reservation-card-v11{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  .reservation-card-v11{
+    padding:14px!important;
+    overflow:hidden!important;
+  }
+  .reservation-card-v11 .lead{
+    display:grid!important;
+    grid-template-columns:44px minmax(0,1fr)!important;
+    gap:10px 12px!important;
+    align-items:start!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  .reservation-card-v11 .initials{
+    grid-column:1;
+    grid-row:1 / span 2;
+  }
+  .reservation-card-v11 .lead-main{
+    grid-column:2;
+    grid-row:1;
+    width:100%!important;
+    min-width:0!important;
+  }
+  .reservation-card-v11 .lead-name{
+    white-space:normal!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    overflow-wrap:anywhere!important;
+    word-break:normal!important;
+    line-height:1.15!important;
+    font-size:17px!important;
+  }
+  .reservation-card-v11 .lead-meta,
+  .reservation-card-v11 .reservation-mainline,
+  .reservation-card-v11 .rate-tag{
+    max-width:100%!important;
+  }
+  .reservation-card-v11 .lead-right{
+    grid-column:2;
+    grid-row:2;
+    justify-self:start!important;
+    text-align:left!important;
+    width:auto!important;
+    min-width:0!important;
+    margin-top:-2px!important;
+  }
+  .reservation-card-v11 .badge{
+    max-width:100%!important;
+    white-space:normal!important;
+  }
+  .reservation-money-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    width:100%!important;
+  }
+  .reservation-money{
+    min-width:0!important;
+    padding:9px 8px!important;
+  }
+  .reservation-money b{
+    font-size:13px!important;
+    overflow-wrap:anywhere!important;
+  }
+  .reservation-card-v11 .actions{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+  .reservation-card-v11 .actions .btn{
+    width:100%!important;
+    min-width:0!important;
+    padding:10px 6px!important;
+    white-space:nowrap!important;
+  }
+}
+@media (max-width:380px){
+  .reservation-money-grid{
+    grid-template-columns:1fr!important;
+  }
+  .reservation-card-v11 .actions{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .reservation-card-v11 .actions .btn-share{
+    grid-column:1 / -1!important;
+  }
+}
+
+
+/* =========================================================
+   v19 - Reservas: Agenda | Canchas | Lista (mobile-first)
+   ========================================================= */
+.reservation-view-switch-v19{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.reservation-view-switch-v19 button{
+  min-width:0;
+  padding:10px 6px;
+}
+.reservation-workspace-panel{min-width:0;width:100%}
+.reservation-day-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:16px 0 10px;
+}
+.reservation-day-title{
+  font-size:18px;
+  font-weight:900;
+  color:var(--ink);
+  line-height:1.15;
+}
+.reservation-day-sub{
+  margin-top:3px;
+  font-size:12px;
+  color:var(--muted);
+}
+.reservation-today-btn{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--dark);
+  border-radius:12px;
+  padding:9px 12px;
+  font-size:12px;
+  font-weight:900;
+  flex:0 0 auto;
+}
+.reservation-date-strip{
+  display:flex;
+  gap:7px;
+  margin-bottom:14px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x proximity;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x;
+}
+.reservation-date-strip::-webkit-scrollbar{display:none}
+.reservation-date-btn{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:14px;
+  min-width:0;
+  flex:0 0 calc((100% - 28px)/5);
+  padding:8px 3px;
+  text-align:center;
+  color:var(--dark);
+  scroll-snap-align:start;
+}
+.reservation-date-btn span,
+.reservation-date-btn small{
+  display:block;
+  font-size:9px;
+  font-weight:800;
+  color:var(--muted);
+  text-transform:capitalize;
+}
+.reservation-date-btn b{
+  display:block;
+  font-size:17px;
+  line-height:1.1;
+  margin:2px 0;
+}
+.reservation-date-btn.active{
+  background:var(--dark);
+  border-color:var(--dark);
+  color:#fff;
+}
+.reservation-date-btn.active span,
+.reservation-date-btn.active small{color:#d9e1e6}
+
+/* Agenda compacta */
+.reservation-agenda-list{
+  display:grid;
+  gap:8px;
+}
+.agenda-row{
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:17px;
+  padding:11px 12px;
+  display:grid;
+  grid-template-columns:70px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  text-align:left;
+}
+.agenda-time{
+  align-self:stretch;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  border-right:1px solid #edf1f3;
+  padding-right:9px;
+}
+.agenda-time b{font-size:14px;line-height:1.05}
+.agenda-time span{font-size:11px;color:var(--muted);margin-top:3px}
+.agenda-main{min-width:0}
+.agenda-client{
+  font-size:14px;
+  font-weight:900;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.agenda-space{
+  font-size:12px;
+  color:#65727e;
+  margin-top:3px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.agenda-finance{
+  font-size:10px;
+  font-weight:800;
+  color:#71808c;
+  margin-top:5px;
+}
+.agenda-status{
+  align-self:start;
+  border-radius:999px;
+  padding:6px 8px;
+  font-size:10px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.agenda-status.confirmed{background:var(--softgreen);color:#087c34}
+.agenda-status.hold{background:var(--softyellow);color:#876400}
+.agenda-empty{
+  border:1px dashed #d8e0e5;
+  background:#fbfcfd;
+  border-radius:18px;
+  padding:28px 18px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* Canchas: una cancha a la vez, visión vertical compacta */
+.reservation-court-tabs{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+  margin:4px 0 10px;
+}
+.reservation-court-tabs button{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:13px;
+  padding:10px 5px;
+  font-size:12px;
+  font-weight:900;
+  color:#6d7985;
+}
+.reservation-court-tabs button.active{
+  background:var(--dark);
+  border-color:var(--dark);
+  color:#fff;
+}
+.reservation-court-summary{
+  font-size:11px;
+  color:var(--muted);
+  margin:0 2px 9px;
+}
+.reservation-court-timeline{
+  display:grid;
+  gap:7px;
+}
+.court-segment{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:10px 12px;
+  display:grid;
+  grid-template-columns:92px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  text-align:left;
+}
+.court-segment.free{
+  background:#fff;
+  border-style:dashed;
+}
+.court-segment.busy{
+  background:#f7fafb;
+}
+.court-segment.hold{
+  background:#fff8e5;
+  border-color:#f0d996;
+}
+.court-segment.exclusive{
+  background:#f5effc;
+  border-color:#ddc9ef;
+}
+.court-segment .court-time{
+  font-size:12px;
+  font-weight:900;
+  color:var(--dark);
+}
+.court-segment .court-main{
+  min-width:0;
+}
+.court-segment .court-main b{
+  display:block;
+  font-size:13px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.court-segment .court-main span{
+  display:block;
+  font-size:11px;
+  color:var(--muted);
+  margin-top:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.court-segment .court-action{
+  font-size:10px;
+  font-weight:900;
+  color:var(--green2);
+  white-space:nowrap;
+}
+
+@media(max-width:390px){
+  .agenda-row{
+    grid-template-columns:64px minmax(0,1fr);
+  }
+  .agenda-status{
+    grid-column:2;
+    justify-self:start;
+    margin-top:-2px;
+  }
+  .court-segment{
+    grid-template-columns:82px minmax(0,1fr);
+  }
+  .court-segment .court-action{
+    grid-column:2;
+    justify-self:start;
+  }
+}
+
+
+/* =========================================================
+   v22 dashboard ejecutivo mobile-first
+   ========================================================= */
+.dashboard-content{padding-top:22px}
+.dashboard-period-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:14px 0 10px}
+.dashboard-period-tabs button{min-width:0;border:1px solid var(--line);background:#fff;color:#687586;border-radius:13px;padding:10px 4px;font-size:11px;font-weight:900;white-space:nowrap}
+.dashboard-period-tabs button.active{background:var(--dark);border-color:var(--dark);color:#fff}
+.dashboard-custom-range{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:end;background:#fff;border:1px solid var(--line);border-radius:17px;padding:12px;margin-bottom:10px}
+.dashboard-custom-range .field{margin:0}.dashboard-custom-range .field input{padding:10px 8px;font-size:12px}.dashboard-custom-range .btn{height:40px;grid-column:1/-1}
+.dashboard-type-tabs{margin:0 0 8px}.dashboard-range-label{font-size:11px;color:var(--muted);margin:4px 1px 12px;font-weight:750}
+.dashboard-kpis{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.dashboard-kpi{background:#fff;border:1px solid var(--line);border-radius:19px;padding:15px;min-width:0;box-shadow:0 2px 0 rgba(15,23,42,.02)}
+.dashboard-kpi.primary-kpi{background:var(--dark);border-color:var(--dark);color:#fff}
+.dashboard-kpi span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#74818d}.dashboard-kpi.primary-kpi span{color:var(--green)}
+.dashboard-kpi b{display:block;font-size:24px;line-height:1.05;margin-top:8px;letter-spacing:-.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dashboard-kpi small{display:block;margin-top:7px;font-size:10px;color:#8a96a1;line-height:1.3}.dashboard-kpi.primary-kpi small{color:#cbd5dc}
+.dashboard-section{margin-top:19px}.dashboard-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px}
+.dashboard-section-head>div{min-width:0}.dashboard-section-head b{display:block;font-size:17px}.dashboard-section-head span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.dashboard-list{display:grid;gap:8px}.dashboard-row{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 13px;min-width:0}
+.dashboard-row-top{display:flex;align-items:center;gap:10px;min-width:0}.dashboard-row-main{min-width:0;flex:1}.dashboard-row-main b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dashboard-row-main span{display:block;font-size:10.5px;color:var(--muted);margin-top:2px}
+.dashboard-row-value{text-align:right;flex:0 0 auto}.dashboard-row-value b{font-size:14px}.dashboard-row-value span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.dashboard-progress{height:6px;background:#edf2f4;border-radius:99px;overflow:hidden;margin-top:9px}.dashboard-progress>i{display:block;height:100%;background:var(--green2);border-radius:99px;max-width:100%}
+.dashboard-progress.dark>i{background:var(--dark)}
+.dashboard-rank{width:30px;height:30px;border-radius:10px;background:#eef3f5;display:grid;place-items:center;font-size:11px;font-weight:900;flex:0 0 auto;color:var(--dark)}
+.dashboard-status-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.dashboard-status{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px}.dashboard-status b{display:block;font-size:21px}.dashboard-status span{display:block;font-size:10.5px;color:var(--muted);margin-top:3px}
+.dashboard-finance-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.dashboard-finance{background:#fff;border:1px solid var(--line);border-radius:15px;padding:11px 9px;min-width:0}.dashboard-finance span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:900}.dashboard-finance b{display:block;font-size:14px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dashboard-trend{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;min-height:155px;display:flex;align-items:flex-end;gap:7px;overflow:hidden}.trend-col{flex:1;min-width:0;display:grid;grid-template-rows:1fr auto;gap:6px;height:125px;align-items:end}.trend-bar-wrap{height:92px;display:flex;align-items:flex-end;justify-content:center;border-bottom:1px solid #edf1f3}.trend-bar{width:min(28px,70%);min-height:3px;background:var(--dark);border-radius:7px 7px 2px 2px}.trend-label{text-align:center;font-size:8.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.trend-empty{margin:auto;text-align:center;color:var(--muted);font-size:12px;align-self:center}
+@media(max-width:370px){.dashboard-period-tabs button{font-size:10px;padding:9px 2px}.dashboard-kpi{padding:13px}.dashboard-kpi b{font-size:21px}.dashboard-finance-grid{grid-template-columns:1fr}.dashboard-finance{display:flex;justify-content:space-between;align-items:center}.dashboard-finance b{margin:0}}
+
+
+/* =========================================================
+   v23 - Caja / movimientos + horario operativo
+   ========================================================= */
+.action-section-label{font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:14px 3px 7px}
+.action-section-label:first-child{margin-top:0}
+.cash-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.cash-summary{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;min-width:0}
+.cash-summary span{display:block;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.cash-summary b{display:block;font-size:19px;margin-top:4px;overflow-wrap:anywhere}
+.cash-summary small{display:block;font-size:10px;color:var(--muted);margin-top:3px}
+.cash-movement-list{display:grid;gap:8px}
+.cash-movement{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start}
+.cash-movement-main{min-width:0}.cash-movement-title{font-size:13px;font-weight:900}.cash-movement-meta{font-size:11px;color:var(--muted);line-height:1.45;margin-top:4px;overflow-wrap:anywhere}
+.cash-movement-value{text-align:right;font-size:15px;font-weight:900;white-space:nowrap}.cash-movement-value.in{color:#07813a}.cash-movement-value.out{color:#b83a3a}.cash-movement-value.neutral{color:#53616d}
+.cash-movement-proof{margin-top:8px}.cash-proof-btn{border:0;background:#eef5f0;color:#087c34;border-radius:10px;padding:7px 9px;font-size:10px;font-weight:900}
+.payment-method-editor{display:grid;gap:8px}.payment-method-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:15px;padding:10px}.payment-method-row input[type="text"]{width:100%;border:1px solid #d8e0e5;border-radius:11px;background:#fbfcfd;padding:10px 9px}.payment-method-active{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:850;color:#657180;white-space:nowrap}.payment-method-active input{width:18px;height:18px;accent-color:var(--green2)}.payment-method-remove{border:0;background:#fff0f0;color:#9d3434;border-radius:10px;padding:9px 10px;font-size:11px;font-weight:900}.payment-method-actions{margin-top:10px}
+.attachment-box{margin-top:12px;border:1px solid var(--line);background:#fbfcfd;border-radius:16px;padding:12px}.attachment-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.attachment-head b{display:block;font-size:12px}.attachment-head span{display:block;font-size:10px;color:var(--muted);margin-top:2px}.attachment-name{font-size:10px;color:#63717e;text-align:right;max-width:46%;overflow-wrap:anywhere}.attachment-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.attachment-actions .btn{width:100%;padding:10px 7px}.attachment-preview{margin-top:10px;border-top:1px solid #e5eaed;padding-top:10px;display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:10px;align-items:center}.attachment-preview img{width:64px;height:64px;object-fit:cover;border-radius:11px;border:1px solid #dce4e8;background:#fff}.attachment-preview b{font-size:11px;display:block;overflow-wrap:anywhere}.attachment-preview span{display:block;font-size:10px;color:var(--muted);margin-top:3px}.attachment-clear{border:0;background:#fff0f0;color:#9d3434;border-radius:10px;padding:8px;font-size:10px;font-weight:900}.attachment-viewer-image{display:block;width:100%;height:auto;max-height:72vh;object-fit:contain;border-radius:15px;background:#eef2f4}.payment-history{margin-top:14px;padding-top:12px;border-top:1px solid #edf1f3}.payment-history-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#657180;margin-bottom:8px}.payment-history-row{border:1px solid #e4eaee;border-radius:13px;padding:10px;margin-top:7px}.payment-history-row:first-of-type{margin-top:0}.payment-history-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.payment-history-top b{font-size:12px}.payment-history-top strong{font-size:13px;white-space:nowrap}.payment-history-meta{font-size:10.5px;color:var(--muted);line-height:1.4;margin-top:4px}.payment-history-proof{margin-top:7px}
+@media(max-width:380px){.payment-method-row{grid-template-columns:minmax(0,1fr) auto}.payment-method-remove{grid-column:2}.payment-method-active{grid-row:2;grid-column:1}.attachment-actions{grid-template-columns:1fr}.attachment-preview{grid-template-columns:54px minmax(0,1fr)}.attachment-preview img{width:54px;height:54px}.attachment-clear{grid-column:2;justify-self:start}}
+.movement-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.movement-type-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px;text-align:left;min-height:108px}.movement-type-card b{display:block;font-size:14px}.movement-type-card span{display:block;color:var(--muted);font-size:11px;line-height:1.4;margin-top:5px}.movement-type-card .iconbox{margin-bottom:10px}
+.payment-reservation-info{border:1px solid var(--line);background:#fff;border-radius:15px;padding:12px;font-size:12px;line-height:1.5;margin-bottom:12px}.payment-reservation-info b{font-size:14px}
+.schedule-list{display:grid;gap:8px}.schedule-row{display:grid;grid-template-columns:minmax(82px,1fr) 82px 82px;gap:7px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:15px;padding:10px}.schedule-day{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:900}.schedule-day input{width:18px;height:18px}.schedule-time label{display:block;font-size:9px;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:3px}.schedule-time input{width:100%;padding:8px 5px;border-radius:10px;font-size:12px}
+.cash-note{font-size:10.5px;color:var(--muted);line-height:1.45;margin:7px 2px 12px}
+@media(max-width:640px){
+  #paymentSheet,#movementFormSheet,#scheduleSheet{position:fixed!important;left:0!important;right:0!important;top:var(--vv-top,0px)!important;bottom:auto!important;width:100%!important;height:var(--vv-height,100dvh)!important;min-height:var(--vv-height,100dvh)!important;max-height:var(--vv-height,100dvh)!important;align-items:stretch!important;justify-content:stretch!important;background:var(--bg)!important;padding:0!important;overflow:hidden!important}
+  #paymentSheet>.sheet,#movementFormSheet>.sheet,#scheduleSheet>.sheet{width:100%!important;max-width:none!important;height:100%!important;min-height:100%!important;max-height:100%!important;border-radius:0!important;margin:0!important;padding:0 18px calc(22px + env(safe-area-inset-bottom))!important;background:var(--bg)!important;box-shadow:none!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;transform:none!important}
+  #paymentSheet .handle,#movementFormSheet .handle,#scheduleSheet .handle{display:none!important}
+  #paymentSheet .sheet-head,#movementFormSheet .sheet-head,#scheduleSheet .sheet-head{position:sticky!important;top:0!important;z-index:50!important;min-height:78px;margin:0 -18px 16px!important;padding:18px 18px 12px!important;background:var(--bg)!important;border-bottom:1px solid var(--line)!important}
+  #paymentSheet .summary,#movementFormSheet .summary,#scheduleSheet .summary{position:static!important}
+}
+@media(max-width:370px){.schedule-row{grid-template-columns:1fr 72px 72px}.schedule-row{padding:9px 8px}.schedule-time input{font-size:11px;padding:7px 3px}}
+
+
+
+/* =========================================================
+   v24 - Cotizacion comercial + paquete editable
+   ========================================================= */
+.package-preview-v24{border:1px solid var(--line);background:#f8fafb;border-radius:16px;padding:13px;margin-top:10px}
+.package-preview-v24 .pkg-name{font-size:14px;font-weight:900;color:var(--ink)}
+.package-preview-v24 .pkg-desc{font-size:11px;color:var(--muted);margin-top:3px}
+.package-preview-v24 .pkg-group{margin-top:10px}
+.package-preview-v24 .pkg-group b{display:block;font-size:11px;color:#34434f;margin-bottom:4px}
+.package-preview-v24 .pkg-item{font-size:11px;color:#5d6974;line-height:1.35;margin:2px 0;padding-left:12px;position:relative}
+.package-preview-v24 .pkg-item:before{content:'-';position:absolute;left:1px;color:var(--green2);font-weight:900}
+.master-editor-note{font-size:11px;color:var(--muted);line-height:1.4;margin:-3px 0 12px}
+.master-editor-actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
+
+/* Documento/PDF v24: replica la referencia aprobada */
+#pdfPreviewOverlay .pdf-stage{align-items:flex-start}
+#pdfPreviewOverlay .pdf-paper{padding:0!important;overflow:visible;background:#fff}
+.q24-page{width:100%;min-height:1123px;background:#fff;color:#15202b;font-family:Arial,Helvetica,sans-serif;position:relative;overflow:visible}
+.q24-header{min-height:148px;background:#102330;color:#fff;padding:32px 49px 30px;display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.q24-brand img{width:155px;height:auto;display:block;margin-bottom:10px;object-fit:contain;object-position:left center}
+.q24-company{font-size:12.5px;font-weight:700;color:#d8e2e8}.q24-orgmeta{font-size:11px;color:#b8c6cf;margin-top:3px}
+.q24-quote-meta{text-align:right;min-width:235px}.q24-eyebrow{font-size:11px;letter-spacing:1.1px;color:#9fb1bc;font-weight:700;text-transform:uppercase}
+.q24-title{font-size:23px;font-weight:800;line-height:1.05;margin-top:3px}.q24-code{font-size:17px;font-weight:900;color:#16e35d;margin-top:8px}
+.q24-status{display:inline-block;margin-top:7px;padding:7px 14px;border-radius:999px;background:#f7e9b7;color:#6a5400;font-size:11px;font-weight:800;text-transform:uppercase}
+.q24-status.reserved{background:#eafff1;color:#087c34}
+.q24-content{padding:15px 49px 20px}
+.q24-client-row{display:grid;grid-template-columns:1.4fr .7fr;gap:26px;align-items:end;margin-bottom:11px}
+.q24-label{font-size:10px;color:#7a8791;font-weight:800;letter-spacing:.7px;text-transform:uppercase;margin-bottom:4px}
+.q24-client-name{font-size:25px;font-weight:900;line-height:1.05}.q24-client-contact{font-size:12.5px;color:#5f6d78;margin-top:4px}
+.q24-emission{text-align:right}.q24-emission-date{font-size:14px;font-weight:800}
+.q24-summary{border-top:1px solid #dbe3e8;border-bottom:1px solid #dbe3e8;padding:9px 0;margin-bottom:10px;display:grid;grid-template-columns:1.25fr .95fr 1.2fr .75fr;gap:15px}
+.q24-summary .value{font-size:14.5px;font-weight:900;line-height:1.15}.q24-summary .sub{font-size:11px;color:#687783;margin-top:2px}
+.q24-section-title{font-size:11.5px;color:#00a83d;letter-spacing:1.25px;font-weight:900;text-transform:uppercase;margin-bottom:5px}
+.q24-price-card{border:1px solid #dbe3e8;border-radius:15px;overflow:hidden;margin-bottom:10px;background:#fff}
+.q24-price-head{display:grid;grid-template-columns:1fr auto;gap:22px;padding:11px 17px 9px;background:#102330;align-items:start;color:#fff}
+.q24-price-head .concept{font-size:20px;font-weight:900;color:#fff}.q24-price-head .desc{font-size:11.5px;color:#c4d0d7;margin-top:3px}.q24-price-head .amount{font-size:23px;font-weight:900;white-space:nowrap;color:#fff}
+.q24-includes{padding:9px 17px 10px;background:#f5f7f8;border-top:1px solid #dbe3e8}.q24-includes-title{font-size:11px;color:#00a83d;font-weight:900;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
+.q24-group{margin-top:4px}.q24-group:first-of-type{margin-top:0}.q24-group-title{font-size:11.8px;font-weight:900;color:#263845;margin-bottom:1px}
+.q24-item{font-size:10.8px;line-height:1.22;color:#45535d;margin:1px 0;padding-left:12px;position:relative}.q24-item:before{content:'-';position:absolute;left:0;top:0;font-weight:800;color:#00a83d}
+.q24-calc{border-top:1px solid #dbe3e8;background:#fff}.q24-calc-row{display:grid;grid-template-columns:1fr auto;gap:22px;padding:7px 17px;border-bottom:1px solid #eef2f4;font-size:12px;align-items:center}
+.q24-calc-row span:first-child{color:#53616c}.q24-calc-row b{font-size:13px}.q24-calc-row.guarantee{background:#fbfcfd}.q24-calc-row.guarantee span:first-child{font-weight:700;color:#33434e}.q24-calc-row.discount span:first-child{font-weight:700;color:#274234}.q24-calc-row.discount b{color:#087c34}.q24-discount-note{font-size:9.8px;color:#5f6d78;margin-top:3px;font-weight:500;line-height:1.22;max-width:535px}
+.q24-payment{border:1px solid #d7e1e6;border-radius:13px;padding:9px 15px;margin:0 0 9px;background:#fbfcfd}.q24-payment-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}.q24-payment-title{font-size:11.5px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;color:#263845}.q24-payment-help{font-size:9.8px;color:#6c7881}
+.q24-payment-grid{display:grid;grid-template-columns:1.35fr .85fr;gap:20px}.q24-pay-label{font-size:9.5px;font-weight:900;color:#6c7881;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}.q24-pay-main{font-size:12.5px;font-weight:900;color:#182833;line-height:1.25}.q24-pay-sub{font-size:10.5px;color:#53616c;line-height:1.3;margin-top:2px}.q24-pay-name{font-size:10px;color:#6c7881;margin-top:4px}.q24-payment-confirm{font-size:10px;color:#45535d;border-top:1px solid #e4eaed;margin-top:5px;padding-top:5px}
+.q24-note-box{background:#f5f1df;border-left:4px solid #d6ad22;border-radius:11px;padding:9px 15px;margin-top:0}.q24-note-title{font-size:11.5px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;color:#5b4b14;margin-bottom:4px}.q24-note{font-size:10.4px;line-height:1.25;color:#4f4a38;padding-left:12px;position:relative;margin:2px 0}.q24-note:before{content:'•';position:absolute;left:0;font-weight:900}
+.q24-rules{margin-top:7px;border:1px solid #d7e1e6;border-radius:11px;padding:7px 13px;display:grid;grid-template-columns:1fr 54px;gap:14px;align-items:center;background:#fbfcfd}.q24-rules.no-qr{grid-template-columns:1fr}.q24-rules-title{font-size:11px;font-weight:900;color:#263845;margin-bottom:2px}.q24-rules-copy{font-size:9.8px;color:#5f6d78;line-height:1.25}.q24-rules-copy a{color:#008d38;font-weight:900;text-decoration:underline;word-break:break-all}.q24-rules img{width:50px;height:50px;display:block}
+.q24-footer{margin:10px 49px 0;border-top:1px solid #dbe3e8;padding:6px 0 12px;display:flex;justify-content:space-between;gap:24px;font-size:9.5px;color:#6b7882}.q24-footer strong{color:#40505b}.q24-foot-right{text-align:right}
+@media(max-width:850px){
+  .q24-page{min-height:auto}.q24-header{padding:24px 22px 22px;min-height:132px}.q24-brand img{width:125px}.q24-quote-meta{min-width:155px}.q24-title{font-size:18px}.q24-content{padding:14px 20px}.q24-footer{margin-left:20px;margin-right:20px}.q24-client-name{font-size:21px}.q24-summary{gap:8px}.q24-price-head .concept{font-size:17px}.q24-price-head .amount{font-size:20px}
+}
+@media(max-width:480px){
+  .q24-header{gap:10px;padding-left:16px;padding-right:16px}.q24-brand img{width:108px}.q24-company{font-size:9px}.q24-orgmeta{font-size:8px}.q24-quote-meta{min-width:128px}.q24-title{font-size:15px}.q24-code{font-size:13px}.q24-status{font-size:8px;padding:5px 8px}.q24-content{padding:12px 14px}.q24-client-row{gap:12px}.q24-client-name{font-size:18px}.q24-summary{grid-template-columns:1.2fr .9fr 1.2fr .65fr}.q24-summary .value{font-size:11.5px}.q24-summary .sub{font-size:9px}.q24-price-head{padding:10px 12px}.q24-price-head .concept{font-size:15px}.q24-price-head .amount{font-size:17px}.q24-includes{padding:9px 12px}.q24-payment{padding:9px 12px}.q24-payment-grid{gap:10px}.q24-footer{margin-left:14px;margin-right:14px}.q24-rules{grid-template-columns:1fr 46px}.q24-rules img{width:44px;height:44px}
+}
+@media print{
+  #pdfPreviewOverlay .pdf-paper{width:210mm!important;min-height:297mm!important;padding:0!important;box-shadow:none!important;overflow:visible!important}
+  #pdfPreviewOverlay .q24-page{width:210mm!important;min-height:297mm!important;background:#fff!important;overflow:visible!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  #pdfPreviewOverlay .q24-header{min-height:39mm!important;padding:8.5mm 13mm 8mm!important}
+  #pdfPreviewOverlay .q24-brand img{width:41mm!important;margin-bottom:2.6mm!important}
+  #pdfPreviewOverlay .q24-company{font-size:9.5pt!important}#pdfPreviewOverlay .q24-orgmeta{font-size:8.5pt!important}
+  #pdfPreviewOverlay .q24-quote-meta{min-width:62mm!important}#pdfPreviewOverlay .q24-eyebrow{font-size:8.3pt!important}#pdfPreviewOverlay .q24-title{font-size:17pt!important}#pdfPreviewOverlay .q24-code{font-size:13pt!important}#pdfPreviewOverlay .q24-status{font-size:8.3pt!important;margin-top:1.8mm!important;padding:1.8mm 3.5mm!important}
+  #pdfPreviewOverlay .q24-content{padding:4mm 13mm 5.5mm!important}
+  #pdfPreviewOverlay .q24-client-name{font-size:18pt!important}#pdfPreviewOverlay .q24-client-contact{font-size:9.5pt!important}#pdfPreviewOverlay .q24-label{font-size:7.7pt!important}
+  #pdfPreviewOverlay .q24-summary{padding:2.3mm 0!important;margin-bottom:2.7mm!important;gap:4mm!important}#pdfPreviewOverlay .q24-summary .value{font-size:11.2pt!important}#pdfPreviewOverlay .q24-summary .sub{font-size:8.7pt!important}
+  #pdfPreviewOverlay .q24-section-title{font-size:8.8pt!important;margin-bottom:1.3mm!important}.q24-price-card{break-inside:avoid;page-break-inside:avoid}
+  #pdfPreviewOverlay .q24-price-head{padding:2.8mm 4.5mm 2.1mm!important;gap:6mm!important}#pdfPreviewOverlay .q24-price-head .concept{font-size:15.5pt!important}#pdfPreviewOverlay .q24-price-head .desc{font-size:9pt!important}#pdfPreviewOverlay .q24-price-head .amount{font-size:17pt!important}
+  #pdfPreviewOverlay .q24-includes{padding:2.1mm 4.5mm 2.4mm!important}#pdfPreviewOverlay .q24-includes-title{font-size:8.6pt!important;margin-bottom:1.15mm!important}#pdfPreviewOverlay .q24-group-title{font-size:9.25pt!important}#pdfPreviewOverlay .q24-item{font-size:8.55pt!important;line-height:1.16!important;margin:.2mm 0!important}
+  #pdfPreviewOverlay .q24-calc-row{padding:1.8mm 4.5mm!important;font-size:9.4pt!important}#pdfPreviewOverlay .q24-calc-row b{font-size:10.2pt!important}#pdfPreviewOverlay .q24-discount-note{font-size:8pt!important}
+  #pdfPreviewOverlay .q24-payment{padding:2.2mm 4mm!important;margin-bottom:2.4mm!important}#pdfPreviewOverlay .q24-payment-title{font-size:9.3pt!important}#pdfPreviewOverlay .q24-payment-help{font-size:8.1pt!important}#pdfPreviewOverlay .q24-pay-label{font-size:7.7pt!important}#pdfPreviewOverlay .q24-pay-main{font-size:10pt!important}#pdfPreviewOverlay .q24-pay-sub{font-size:8.4pt!important}#pdfPreviewOverlay .q24-pay-name{font-size:8.1pt!important}#pdfPreviewOverlay .q24-payment-confirm{font-size:8.2pt!important}
+  #pdfPreviewOverlay .q24-note-box{padding:2.2mm 4mm!important}#pdfPreviewOverlay .q24-note-title{font-size:9pt!important}#pdfPreviewOverlay .q24-note{font-size:8.35pt!important;line-height:1.22!important;margin:.45mm 0!important}
+  #pdfPreviewOverlay .q24-rules{margin-top:1.8mm!important;padding:1.7mm 3.5mm!important;grid-template-columns:1fr 14mm!important;gap:4mm!important}#pdfPreviewOverlay .q24-rules.no-qr{grid-template-columns:1fr!important}#pdfPreviewOverlay .q24-rules-title{font-size:8.8pt!important}#pdfPreviewOverlay .q24-rules-copy{font-size:7.9pt!important}#pdfPreviewOverlay .q24-rules img{width:13mm!important;height:13mm!important}
+  #pdfPreviewOverlay .q24-footer{margin:3mm 13mm 0!important;padding-top:1.5mm!important;font-size:7.7pt!important;break-inside:avoid;page-break-inside:avoid}
+}
+@media(max-width:640px){
+  #quotePackageSheet,#masterDetailSheet{position:fixed!important;left:0!important;right:0!important;top:var(--vv-top,0px)!important;bottom:auto!important;width:100%!important;height:var(--vv-height,100dvh)!important;min-height:var(--vv-height,100dvh)!important;max-height:var(--vv-height,100dvh)!important;align-items:stretch!important;justify-content:stretch!important;background:var(--bg)!important;padding:0!important;overflow:hidden!important}
+  #quotePackageSheet>.sheet,#masterDetailSheet>.sheet{width:100%!important;max-width:none!important;height:100%!important;min-height:100%!important;max-height:100%!important;border-radius:0!important;margin:0!important;padding:0 18px calc(22px + env(safe-area-inset-bottom))!important;background:var(--bg)!important;box-shadow:none!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;transform:none!important}
+  #quotePackageSheet .handle,#masterDetailSheet .handle{display:none!important}
+  #quotePackageSheet .sheet-head,#masterDetailSheet .sheet-head{position:sticky!important;top:0!important;z-index:50!important;min-height:78px;margin:0 -18px 16px!important;padding:18px 18px 12px!important;background:var(--bg)!important;border-bottom:1px solid var(--line)!important}
+}
+
+
+
+/* =========================================================
+   v25 - Impresion A4: una sola pagina + sin margen exterior
+   ========================================================= */
+@media print{
+  @page{size:A4 portrait;margin:0!important}
+  html,body{
+    width:210mm!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+  }
+  #pdfPreviewOverlay{
+    width:210mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  #pdfPreviewOverlay .pdf-stage{
+    width:210mm!important;
+    margin:0!important;
+    padding:0!important;
+    display:block!important;
+  }
+  #pdfPreviewOverlay .pdf-paper{
+    width:210mm!important;
+    height:297mm!important;
+    min-height:297mm!important;
+    max-height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    box-shadow:none!important;
+    overflow:hidden!important;
+  }
+  #pdfPreviewOverlay .q24-page{
+    width:210mm!important;
+    height:297mm!important;
+    min-height:297mm!important;
+    max-height:297mm!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+
+  /* Recupera unos milimetros verticales sin achicar el texto principal */
+  #pdfPreviewOverlay .q24-header{
+    min-height:36mm!important;
+    padding:7mm 13mm 6.3mm!important;
+  }
+  #pdfPreviewOverlay .q24-brand img{margin-bottom:1.8mm!important}
+  #pdfPreviewOverlay .q24-status{margin-top:1.2mm!important;padding:1.6mm 3.5mm!important}
+  #pdfPreviewOverlay .q24-content{padding:3.1mm 13mm 2.2mm!important}
+  #pdfPreviewOverlay .q24-client-row{margin-bottom:2mm!important}
+  #pdfPreviewOverlay .q24-summary{padding:1.8mm 0!important;margin-bottom:2.1mm!important}
+  #pdfPreviewOverlay .q24-section-title{margin-bottom:1mm!important}
+  #pdfPreviewOverlay .q24-price-card{margin-bottom:2mm!important}
+  #pdfPreviewOverlay .q24-price-head{padding:2.4mm 4.5mm 1.8mm!important}
+  #pdfPreviewOverlay .q24-includes{padding:1.7mm 4.5mm 1.8mm!important}
+  #pdfPreviewOverlay .q24-group{margin-top:.7mm!important}
+  #pdfPreviewOverlay .q24-item{margin:.1mm 0!important;line-height:1.13!important}
+  #pdfPreviewOverlay .q24-calc-row{padding:1.45mm 4.5mm!important}
+  #pdfPreviewOverlay .q24-payment{padding:1.7mm 4mm!important;margin-bottom:1.8mm!important}
+  #pdfPreviewOverlay .q24-payment-head{margin-bottom:.8mm!important}
+  #pdfPreviewOverlay .q24-payment-confirm{margin-top:.8mm!important;padding-top:.8mm!important}
+  #pdfPreviewOverlay .q24-note-box{padding:1.7mm 4mm!important}
+  #pdfPreviewOverlay .q24-note-title{margin-bottom:.7mm!important}
+  #pdfPreviewOverlay .q24-note{margin:.25mm 0!important;line-height:1.17!important}
+  #pdfPreviewOverlay .q24-rules{margin-top:1.2mm!important;padding:1.2mm 3.5mm!important}
+  #pdfPreviewOverlay .q24-footer{
+    margin:1.2mm 13mm 0!important;
+    padding-top:.8mm!important;
+    padding-bottom:0!important;
+    break-inside:auto!important;
+    page-break-inside:auto!important;
+  }
+  #pdfPreviewOverlay *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+
+
+/* =========================================================
+   v27 - Conversion Cotizacion -> Reserva -> Cobro
+   ========================================================= */
+.quote-confirm-options{display:grid;gap:10px}
+.quote-confirm-card{width:100%;border:1px solid var(--line);background:#fff;border-radius:19px;padding:15px;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 14px;align-items:start}
+.quote-confirm-card:active{transform:scale(.995)}
+.quote-confirm-card .qcp-main{min-width:0}
+.quote-confirm-card b{display:block;font-size:15px;color:var(--ink)}
+.quote-confirm-card span{display:block;font-size:11.5px;line-height:1.42;color:var(--muted);margin-top:4px}
+.quote-confirm-card strong{font-size:17px;color:var(--dark);white-space:nowrap}
+.quote-confirm-card.single{border-color:#bceccb;background:#fbfffc}
+.quote-confirm-card.single strong{color:#087c34}
+.quote-confirm-card.hold{background:#fffaf0;border-color:#f0dfaa}
+.quote-plan-info{margin:-2px 0 12px}
+.quote-plan-info b{color:var(--dark)}
+
+@media print{
+  html,body,#pdfPreviewOverlay,#pdfPreviewOverlay .pdf-stage{height:296mm!important;max-height:296mm!important;overflow:hidden!important}
+  #pdfPreviewOverlay .pdf-paper,#pdfPreviewOverlay .q24-page{height:296mm!important;min-height:296mm!important;max-height:296mm!important;overflow:hidden!important;break-after:avoid!important;page-break-after:avoid!important}
+  #pdfPreviewOverlay .q24-footer{margin-bottom:0!important;padding-bottom:0!important}
+}
+
+
+
+/* =========================================================
+   v30 - Reserva sin duplicidad + A4 Chrome de una sola hoja
+   ========================================================= */
+@media print{
+  @page{size:A4 portrait;margin:0!important}
+  html,body{
+    width:210mm!important;
+    height:297mm!important;
+    min-height:297mm!important;
+    max-height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  body>*:not(#pdfPreviewOverlay){display:none!important}
+  #pdfPreviewOverlay{
+    display:block!important;
+    position:fixed!important;
+    inset:0!important;
+    width:210mm!important;
+    height:297mm!important;
+    min-height:297mm!important;
+    max-height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  #pdfPreviewOverlay .pdf-toolbar{display:none!important}
+  #pdfPreviewOverlay .pdf-stage,
+  #pdfPreviewOverlay .pdf-paper{
+    display:block!important;
+    width:210mm!important;
+    height:297mm!important;
+    min-height:297mm!important;
+    max-height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    box-shadow:none!important;
+    background:#fff!important;
+  }
+  #pdfPreviewOverlay .q24-page{
+    position:relative!important;
+    display:block!important;
+    width:210mm!important;
+    height:297mm!important;
+    min-height:297mm!important;
+    max-height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+    background:#fff!important;
+  }
+
+  /* Cabecera conserva presencia pero recupera altura real. */
+  #pdfPreviewOverlay .q24-header{
+    height:34.5mm!important;
+    min-height:34.5mm!important;
+    max-height:34.5mm!important;
+    padding:6.2mm 12mm 5.2mm!important;
+    box-sizing:border-box!important;
+  }
+  #pdfPreviewOverlay .q24-brand img{width:37mm!important;margin-bottom:1.2mm!important}
+  #pdfPreviewOverlay .q24-company{font-size:8.8pt!important}
+  #pdfPreviewOverlay .q24-orgmeta{font-size:7.8pt!important;margin-top:.5mm!important}
+  #pdfPreviewOverlay .q24-quote-meta{min-width:58mm!important}
+  #pdfPreviewOverlay .q24-eyebrow{font-size:7.7pt!important}
+  #pdfPreviewOverlay .q24-title{font-size:15.5pt!important;margin-top:.4mm!important}
+  #pdfPreviewOverlay .q24-code{font-size:11.7pt!important;margin-top:1.2mm!important}
+  #pdfPreviewOverlay .q24-status{font-size:7.6pt!important;margin-top:1mm!important;padding:1.35mm 3mm!important}
+
+  /* Reserva fija para el bloque final; evita que Chrome lo mande a hoja 2. */
+  #pdfPreviewOverlay .q24-content{
+    position:absolute!important;
+    top:34.5mm!important;
+    left:0!important;
+    right:0!important;
+    bottom:20.5mm!important;
+    padding:2.6mm 12mm 1mm!important;
+    margin:0!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+  #pdfPreviewOverlay .q24-client-row{gap:5mm!important;margin-bottom:1.25mm!important}
+  #pdfPreviewOverlay .q24-label{font-size:7.1pt!important;margin-bottom:.45mm!important}
+  #pdfPreviewOverlay .q24-client-name{font-size:16.5pt!important;line-height:1!important}
+  #pdfPreviewOverlay .q24-client-contact{font-size:8.7pt!important;margin-top:.6mm!important}
+  #pdfPreviewOverlay .q24-emission-date{font-size:10pt!important}
+  #pdfPreviewOverlay .q24-summary{padding:1.35mm 0!important;margin-bottom:1.45mm!important;gap:3.2mm!important}
+  #pdfPreviewOverlay .q24-summary .value{font-size:10.2pt!important;line-height:1.08!important}
+  #pdfPreviewOverlay .q24-summary .sub{font-size:7.7pt!important;margin-top:.4mm!important}
+  #pdfPreviewOverlay .q24-section-title{font-size:8.1pt!important;margin-bottom:.75mm!important}
+
+  #pdfPreviewOverlay .q24-price-card{margin-bottom:1.25mm!important;border-radius:3mm!important;overflow:hidden!important;break-inside:avoid!important;page-break-inside:avoid!important}
+  #pdfPreviewOverlay .q24-price-head{grid-template-columns:minmax(0,1fr) max-content!important;gap:4mm!important;padding:1.8mm 4mm 1.45mm!important;align-items:center!important}
+  #pdfPreviewOverlay .q24-price-head>div:first-child{min-width:0!important}
+  #pdfPreviewOverlay .q24-price-head .concept{font-size:13.4pt!important;line-height:1.03!important}
+  #pdfPreviewOverlay .q24-price-head .desc{font-size:7.9pt!important;margin-top:.5mm!important;line-height:1.08!important}
+  #pdfPreviewOverlay .q24-price-head .amount{font-size:14.5pt!important;padding-right:.5mm!important;white-space:nowrap!important}
+  #pdfPreviewOverlay .q24-includes{padding:1.25mm 4mm 1.35mm!important}
+  #pdfPreviewOverlay .q24-includes-title{font-size:7.7pt!important;margin-bottom:.55mm!important}
+  #pdfPreviewOverlay .q24-group{margin-top:.35mm!important}
+  #pdfPreviewOverlay .q24-group-title{font-size:8.15pt!important;line-height:1.05!important;margin-bottom:0!important}
+  #pdfPreviewOverlay .q24-item{font-size:7.45pt!important;line-height:1.08!important;margin:0!important;padding-left:2.7mm!important}
+  #pdfPreviewOverlay .q24-calc-row{padding:1.05mm 4mm!important;font-size:8.2pt!important;line-height:1.08!important;gap:4mm!important}
+  #pdfPreviewOverlay .q24-calc-row b{font-size:9pt!important;white-space:nowrap!important}
+  #pdfPreviewOverlay .q24-discount-note{font-size:6.9pt!important;line-height:1.08!important;margin-top:.35mm!important;max-width:none!important}
+
+  #pdfPreviewOverlay .q24-payment{padding:1.2mm 3.5mm!important;margin:0 0 1.05mm!important;border-radius:2.5mm!important}
+  #pdfPreviewOverlay .q24-payment-head{margin-bottom:.45mm!important}
+  #pdfPreviewOverlay .q24-payment-title{font-size:8.1pt!important}
+  #pdfPreviewOverlay .q24-payment-help{font-size:6.9pt!important}
+  #pdfPreviewOverlay .q24-payment-grid{gap:5mm!important}
+  #pdfPreviewOverlay .q24-pay-label{font-size:6.7pt!important;margin-bottom:.25mm!important}
+  #pdfPreviewOverlay .q24-pay-main{font-size:8.7pt!important;line-height:1.08!important}
+  #pdfPreviewOverlay .q24-pay-sub{font-size:7.2pt!important;line-height:1.08!important;margin-top:.25mm!important}
+  #pdfPreviewOverlay .q24-pay-name{font-size:7pt!important;margin-top:.35mm!important}
+  #pdfPreviewOverlay .q24-payment-confirm{font-size:7.05pt!important;line-height:1.08!important;margin-top:.45mm!important;padding-top:.45mm!important}
+
+  #pdfPreviewOverlay .q24-note-box{padding:1.15mm 3.5mm!important;border-radius:2.3mm!important}
+  #pdfPreviewOverlay .q24-note-title{font-size:8pt!important;margin-bottom:.35mm!important}
+  #pdfPreviewOverlay .q24-note{font-size:7.2pt!important;line-height:1.08!important;margin:.08mm 0!important;padding-left:2.6mm!important}
+
+  /* Reglamento queda anclado a la primera hoja, no en el flujo paginable. */
+  #pdfPreviewOverlay .q24-rules{
+    position:static!important;
+    height:auto!important;
+    margin:1.05mm 0 0!important;
+    padding:1.15mm 3.2mm!important;
+    box-sizing:border-box!important;
+    grid-template-columns:1fr 8.5mm!important;
+    gap:3mm!important;
+    border-radius:2mm!important;
+    overflow:hidden!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+  #pdfPreviewOverlay .q24-rules.no-qr{grid-template-columns:1fr!important}
+  #pdfPreviewOverlay .q24-rules-title{font-size:7.7pt!important;margin-bottom:.25mm!important}
+  #pdfPreviewOverlay .q24-rules-copy{font-size:6.75pt!important;line-height:1.08!important}
+  #pdfPreviewOverlay .q24-rules img{width:8mm!important;height:8mm!important}
+
+  #pdfPreviewOverlay .q24-footer{
+    position:absolute!important;
+    left:12mm!important;
+    right:12mm!important;
+    bottom:1.5mm!important;
+    height:5.5mm!important;
+    margin:0!important;
+    padding:1mm 0 0!important;
+    box-sizing:border-box!important;
+    font-size:6.7pt!important;
+    line-height:1.05!important;
+    overflow:hidden!important;
+  }
+  #pdfPreviewOverlay *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+
+
+/* =========================================================
+   v32 - Ficha de cliente + filtros de actividad
+   ========================================================= */
+.client-directory-stats{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.client-stat-chip{display:inline-flex;align-items:center;border-radius:999px;background:#eef3f5;color:#5d6b78;padding:5px 8px;font-size:10px;font-weight:850}
+.client-stat-chip.active{background:var(--softgreen);color:#087c34}
+.client-directory-actions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:13px;padding-top:13px;border-top:1px solid #edf1f3}
+.client-directory-actions .btn{width:100%}
+.client-profile-headline{display:flex;align-items:flex-start;gap:12px;margin-bottom:13px}
+.client-profile-headline .initials{width:54px;height:54px;border-radius:17px;font-size:18px}
+.client-profile-contact{font-size:12px;color:var(--muted);line-height:1.5;margin-top:4px;overflow-wrap:anywhere}
+.client-period-tabs,.client-relation-tabs{display:flex;gap:7px;overflow:auto;scrollbar-width:none;margin-bottom:11px}
+.client-period-tabs::-webkit-scrollbar,.client-relation-tabs::-webkit-scrollbar{display:none}
+.client-period-tabs .pill,.client-relation-tabs .pill{padding:9px 12px}
+.client-profile-range{font-size:11px;color:var(--muted);font-weight:750;margin:0 2px 11px}
+.client-profile-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:15px}
+.client-profile-kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;min-width:0}
+.client-profile-kpi span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900}
+.client-profile-kpi b{display:block;font-size:20px;margin-top:5px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.client-profile-kpi small{display:block;font-size:9.5px;color:var(--muted);margin-top:4px}
+.client-profile-kpi.primary{background:var(--dark);border-color:var(--dark);color:#fff}
+.client-profile-kpi.primary span{color:var(--green)}
+.client-profile-kpi.primary small{color:#cbd5dc}
+.client-rel-list{display:grid;gap:8px}
+.client-rel-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 13px;min-width:0}
+.client-rel-top{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.client-rel-main{min-width:0;flex:1}
+.client-rel-title{font-size:13.5px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.client-rel-meta{font-size:11px;color:var(--muted);line-height:1.45;margin-top:3px;overflow-wrap:anywhere}
+.client-rel-money{text-align:right;white-space:nowrap;font-size:13px;font-weight:900}
+.client-rel-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;padding-top:9px;border-top:1px solid #edf1f3}
+.client-rel-actions .btn{padding:8px 10px}
+.client-custom-range{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:11px;margin-bottom:10px}
+.client-custom-range .field{margin:0}.client-custom-range .field input{padding:9px 7px;font-size:12px}.client-custom-range .btn{grid-column:1/-1}
+
+#clientProfileSheet{z-index:70}
+#clientSheet.show,#reservationDetailSheet.show,#quoteDetailSheet.show,#followDetailSheet.show,#attachmentViewerSheet.show{z-index:80}
+
+@media(max-width:640px){
+  #clientProfileSheet{position:fixed!important;left:0!important;right:0!important;top:var(--vv-top,0px)!important;bottom:auto!important;width:100%!important;height:var(--vv-height,100dvh)!important;min-height:var(--vv-height,100dvh)!important;max-height:var(--vv-height,100dvh)!important;align-items:stretch!important;justify-content:stretch!important;background:var(--bg)!important;padding:0!important;overflow:hidden!important}
+  #clientProfileSheet>.sheet{width:100%!important;max-width:none!important;height:100%!important;min-height:100%!important;max-height:100%!important;border-radius:0!important;margin:0!important;padding:0 18px calc(22px + env(safe-area-inset-bottom))!important;background:var(--bg)!important;box-shadow:none!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;transform:none!important}
+  #clientProfileSheet .handle{display:none!important}
+  #clientProfileSheet .sheet-head{position:sticky!important;top:0!important;z-index:50!important;min-height:78px;margin:0 -18px 16px!important;padding:18px 18px 12px!important;background:var(--bg)!important;border-bottom:1px solid var(--line)!important}
+  #clientProfileSheet .sheet-head h2{font-size:26px!important;line-height:1.05!important}
+}
+
+
+
+/* =========================================================
+   v34 - Personalizar fechas: grilla simetrica en movil
+   ========================================================= */
+.home-custom-date-card{overflow:hidden}
+.home-custom-date-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:10px;
+  width:100%;
+  min-width:0;
+  align-items:end;
+}
+.home-custom-date-grid .field{
+  min-width:0!important;
+  width:100%!important;
+  margin:0!important;
+}
+.home-custom-date-grid .field label{
+  display:block;
+  margin-bottom:6px;
+}
+.home-custom-date-grid input[type="date"]{
+  display:block;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:48px!important;
+  padding:0 10px!important;
+  margin:0!important;
+  border:1px solid #d8e0e5!important;
+  border-radius:14px!important;
+  background:#fbfcfd!important;
+  box-sizing:border-box!important;
+  font-size:16px!important;
+  line-height:48px!important;
+  text-align:center;
+  -webkit-appearance:none;
+  appearance:none;
+}
+@media(max-width:340px){
+  .home-custom-date-grid{grid-template-columns:1fr}
+}
+
+/* =========================================================
+   v33 - Inicio ejecutivo + drill-down + Analisis
+   ========================================================= */
+.home-balance-strip{width:100%;border:1px solid #cfdae0;background:#fff;border-radius:18px;padding:13px 15px;display:flex;align-items:center;gap:12px;text-align:left;color:var(--ink);margin:2px 0 14px}
+.home-balance-main{min-width:0;flex:1}.home-balance-main span{display:block;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}.home-balance-main b{display:block;font-size:25px;letter-spacing:-.4px;margin-top:5px}.home-balance-side{text-align:right}.home-balance-side span{display:block;font-size:10px;color:var(--muted)}.home-balance-side b{display:block;font-size:12px;margin-top:4px;color:var(--dark)}
+.home-period-nav{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;gap:8px;align-items:stretch;margin:5px 0 11px}.home-period-arrow{border:1px solid var(--line);background:#fff;border-radius:14px;font-size:27px;line-height:1;color:var(--dark);font-weight:600}.home-period-center{border:1px solid var(--line);background:#fff;border-radius:16px;padding:10px 12px;text-align:center;min-width:0;color:var(--ink)}.home-period-center b{display:block;font-size:18px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.home-period-center span{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-top:4px;text-transform:uppercase;letter-spacing:.07em}
+.home-filter-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:900;margin:12px 2px 7px}
+.dashboard-kpi{appearance:none;text-align:left;width:100%;font-family:inherit}.dashboard-kpi.clickable{cursor:pointer}.dashboard-kpi.cash-kpi{background:var(--dark);border-color:var(--dark);color:#fff}.dashboard-kpi.cash-kpi span{color:var(--green)}.dashboard-kpi.cash-kpi small{color:#cbd5dc}.dashboard-kpi .kpi-arrow{float:right;font-size:15px;color:#91a0ab;margin-top:-1px}.dashboard-kpi.cash-kpi .kpi-arrow{color:var(--green)}
+.dashboard-product-row{cursor:pointer}.dashboard-product-row:active,.home-balance-strip:active,.dashboard-kpi.clickable:active{transform:scale(.995)}
+.dashboard-analysis-teaser{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px}.analysis-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.analysis-mini{background:#f7f9fa;border-radius:14px;padding:11px}.analysis-mini span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900}.analysis-mini b{display:block;font-size:18px;margin-top:5px}.analysis-open{margin-top:10px}
+.dashboard-detail-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}.dashboard-detail-stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;min-width:0}.dashboard-detail-stat span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900}.dashboard-detail-stat b{display:block;font-size:18px;margin-top:5px;overflow-wrap:anywhere}.dashboard-detail-section{margin-top:18px}.dashboard-detail-title{font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#6e7b87;margin:0 2px 8px}.dashboard-detail-row{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;margin-bottom:8px;text-align:left;width:100%;color:var(--ink)}.dashboard-detail-row-main{min-width:0}.dashboard-detail-row-main b{display:block;font-size:13px}.dashboard-detail-row-main span{display:block;font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.35}.dashboard-detail-row-value{text-align:right;white-space:nowrap}.dashboard-detail-row-value b{font-size:14px}.dashboard-detail-row-value span{display:block;font-size:10px;color:var(--muted);margin-top:3px}.dashboard-method-list{display:grid;gap:8px}.dashboard-method-row{display:flex;justify-content:space-between;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 12px;font-size:12px}.dashboard-method-row b{font-size:13px}
+.home-period-options{display:grid;gap:8px}.home-period-option{width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:15px 14px;text-align:left;font-weight:900;color:var(--dark);display:flex;align-items:center;justify-content:space-between}.home-period-option span{font-size:12px;color:var(--muted);font-weight:700}.home-period-option.active{border-color:var(--green2);background:#f4fff7;box-shadow:0 0 0 2px rgba(0,201,77,.08)}
+.home-custom-preview{background:var(--dark);color:#fff;border-radius:18px;padding:15px;margin-bottom:12px}.home-custom-preview span{display:block;font-size:10px;color:var(--green);font-weight:900;text-transform:uppercase;letter-spacing:.08em}.home-custom-preview b{display:block;font-size:18px;margin-top:5px}
+.analysis-sheet-range{font-size:11px;color:var(--muted);margin:-4px 2px 12px;font-weight:750}.analysis-full-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:5px}.analysis-full-kpi{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px}.analysis-full-kpi span{display:block;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:900}.analysis-full-kpi b{display:block;font-size:19px;margin-top:5px}
+@media(max-width:640px){
+  #homeCustomSheet,#dashboardDetailSheet,#dashboardAnalysisSheet{position:fixed!important;left:0!important;right:0!important;top:var(--vv-top,0px)!important;bottom:auto!important;width:100%!important;height:var(--vv-height,100dvh)!important;min-height:var(--vv-height,100dvh)!important;max-height:var(--vv-height,100dvh)!important;align-items:stretch!important;justify-content:stretch!important;background:var(--bg)!important;padding:0!important;overflow:hidden!important}
+  #homeCustomSheet>.sheet,#dashboardDetailSheet>.sheet,#dashboardAnalysisSheet>.sheet{width:100%!important;max-width:none!important;height:100%!important;min-height:100%!important;max-height:100%!important;border-radius:0!important;margin:0!important;padding:0 18px calc(22px + env(safe-area-inset-bottom))!important;background:var(--bg)!important;box-shadow:none!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;transform:none!important}
+  #homeCustomSheet .handle,#dashboardDetailSheet .handle,#dashboardAnalysisSheet .handle{display:none!important}
+  #homeCustomSheet .sheet-head,#dashboardDetailSheet .sheet-head,#dashboardAnalysisSheet .sheet-head{position:sticky!important;top:0!important;z-index:50!important;min-height:78px;margin:0 -18px 16px!important;padding:18px 18px 12px!important;background:var(--bg)!important;border-bottom:1px solid var(--line)!important}
+}
+@media(max-width:370px){.home-period-nav{grid-template-columns:40px minmax(0,1fr) 40px}.home-period-center b{font-size:16px}.dashboard-detail-summary{grid-template-columns:1fr}.analysis-mini-grid{grid-template-columns:1fr 1fr}}
+
+
+/* v35: carrusel horizontal de fechas en Reservas + selector mensual desde el título */
+
+
+/* =========================================================
+   v37 - Cotizaciones: tarjetas responsive sin desborde
+   ========================================================= */
+@media (max-width:640px){
+  #quoteList{min-width:0;width:100%;overflow-x:hidden}
+  #quoteList .card{width:100%;max-width:100%;min-width:0;overflow:hidden}
+  #quoteList .lead{
+    display:grid!important;
+    grid-template-columns:44px minmax(0,1fr)!important;
+    gap:10px 12px!important;
+    align-items:start!important;
+    width:100%!important;
+    min-width:0!important;
+  }
+  #quoteList .initials{
+    grid-column:1;
+    grid-row:1 / span 2;
+  }
+  #quoteList .lead-main{
+    grid-column:2;
+    grid-row:1;
+    width:100%!important;
+    min-width:0!important;
+  }
+  #quoteList .lead-name{
+    white-space:normal!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    overflow-wrap:anywhere!important;
+    line-height:1.16!important;
+  }
+  #quoteList .lead-meta,
+  #quoteList .created{
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    max-width:100%!important;
+  }
+  #quoteList .lead-right{
+    grid-column:2;
+    grid-row:2;
+    width:100%!important;
+    min-width:0!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:8px!important;
+    text-align:left!important;
+    margin-top:0!important;
+  }
+  #quoteList .lead-right .money{
+    font-size:20px!important;
+    line-height:1.05!important;
+    white-space:nowrap!important;
+    flex:1 1 auto;
+    min-width:0;
+  }
+  #quoteList .lead-right .badge{
+    margin-top:0!important;
+    white-space:nowrap!important;
+    flex:0 0 auto;
+  }
+  #quoteList .actions{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    width:100%!important;
+  }
+  #quoteList .actions .btn{
+    width:100%!important;
+    min-width:0!important;
+    white-space:normal!important;
+    line-height:1.15!important;
+    padding:11px 8px!important;
+  }
+}
+@media (max-width:370px){
+  #quoteList .lead-right{align-items:flex-start!important;flex-direction:column!important}
+  #quoteList .actions{grid-template-columns:1fr!important}
+}
+
+
+/* =========================================================
+   v38 - Cliente buscable + reservas recurrentes
+   ========================================================= */
+.res-client-search{position:relative}
+.res-client-search input{padding-right:42px!important}
+.res-client-results{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:75;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 38px rgba(15,23,42,.16);max-height:250px;overflow:auto;padding:6px}
+.res-client-results.hidden{display:none!important}
+.res-client-option{width:100%;border:0;background:#fff;border-radius:12px;padding:11px 12px;text-align:left;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.res-client-option:active{background:#f3f7f8}
+.res-client-option .initials{width:38px;height:38px;border-radius:11px;font-size:12px}
+.res-client-option b{display:block;font-size:13px}.res-client-option span{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.booking-mode-tabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px;background:#edf2f4;padding:4px;border-radius:14px}
+.booking-mode-tabs button{border:0;background:transparent;border-radius:10px;padding:10px 8px;font-size:12px;font-weight:900;color:#71808d}
+.booking-mode-tabs button.active{background:#fff;color:var(--dark);box-shadow:0 1px 4px rgba(15,23,42,.08)}
+.recurring-box{border-top:1px solid #edf1f3;padding-top:13px;margin-top:3px}
+.weekday-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.weekday-check{position:relative;display:block}.weekday-check input{position:absolute;opacity:0;pointer-events:none}
+.weekday-check span{height:40px;border:1px solid var(--line);border-radius:11px;background:#fff;display:grid;place-items:center;font-size:10px;font-weight:900;color:#687586}
+.weekday-check input:checked + span{background:var(--dark);border-color:var(--dark);color:#fff}
+.recurring-preview{margin-top:10px;border-radius:15px;padding:12px;background:#f7faf8;border:1px solid #dbe8df;font-size:11px;line-height:1.5;color:#53626c}
+.recurring-preview.error{background:#fff0f0;border-color:#f1c4c4;color:#963c3c}
+.recurring-preview b{color:var(--ink)}.recurring-preview.error b{color:#963c3c}
+.series-chip{display:inline-flex;border-radius:999px;padding:5px 8px;background:#eef3f5;color:#5b6874;font-size:10px;font-weight:900;margin-top:6px}
+@media(max-width:380px){.weekday-grid{gap:3px}.weekday-check span{height:38px;font-size:9px}}
+
+
+/* =========================================================
+   v39 - Serie recurrente con multiples bloques de horario
+   ========================================================= */
+.recurring-series-intro{margin-bottom:12px}
+.recurring-schedules{display:grid;gap:10px;margin-top:12px}
+.recurring-schedule-card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:13px;min-width:0}
+.recurring-schedule-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+.recurring-schedule-head b{font-size:14px}.recurring-schedule-head span{display:block;font-size:10px;color:var(--muted);margin-top:2px}
+.recurring-remove{border:0;background:#fff0f0;color:#a53b3b;border-radius:10px;padding:8px 9px;font-size:11px;font-weight:900;flex:0 0 auto}
+.recurring-add{margin-top:10px}
+.recurring-courts{margin-top:9px}
+.recurring-block-calc{margin-top:9px;background:#f7faf8;border:1px solid #dbe8df;border-radius:12px;padding:9px 10px;font-size:11px;color:#53626c;line-height:1.4}
+.recurring-block-calc b{color:var(--ink)}
+.recurring-series-settings{padding-bottom:12px;border-bottom:1px solid #edf1f3}
+.recurring-schedule-card .weekday-grid{margin-top:2px}
+.recurring-schedule-card .field{min-width:0}
+.recurring-schedule-card select,.recurring-schedule-card input{min-width:0!important}
+@media(max-width:380px){.recurring-schedule-card{padding:11px}.recurring-schedule-head{align-items:flex-start}}
+

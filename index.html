@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14232f">
+<title>Eleva Sport · Ventas de eventos</title>
+<!-- v39: series recurrentes con multiples bloques de horario -->
+<!-- v38: clientes buscables + reservas recurrentes para academias/escuelas -->
+<!-- v24: PDF cotizacion aprobado + Masters Paquetes editable + datos de pago -->
+<!-- v27: cotización → reserva → cobro + A4 una sola página -->
+<!-- v26: nombre de exportación dinámico para cotización -->
+<!-- v28: metodos de pago editables + comprobantes fotograficos por movimiento -->
+<!-- v30: reserva sin duplicidad + impresion A4 Chrome estable -->
+<!-- v32: ficha de cliente con filtros y vinculaciones -->
+<!-- v31: guardado PNG de reserva compatible con iPhone/Chrome -->
+<!-- v36: Masters · plantillas de mensajes WhatsApp editables -->
+<!-- v23: caja/movimientos + horario operativo configurable -->
+<!-- v33: inicio ejecutivo + drill-down + analisis -->
+<!-- v22: dashboard ejecutivo mobile-first con filtros y analitica -->
+<!-- v21: estados de reserva + destino de pago + saldo a favor -->
+<!-- v19: Reservas mobile-first Agenda | Canchas | Lista -->
+<!-- Base v13 + correcciones de cotizacion y limpieza demo v14 -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+<header class="topbar"><div class="topbar-row"><img class="brand-logo" src="data:image/png;base64,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" alt="Eleva Sport"><div class="top-title">Ventas</div><div class="avatar">EV</div></div></header>
+
+<section id="view-home" class="view active">
+<div class="content dashboard-content">
+  <div class="eyebrow">Eleva Sport</div><h1>Ventas y reservas</h1>
+
+  <button class="home-balance-strip" onclick="openDashboardDetail('available')">
+    <div class="home-balance-main"><span>Saldo disponible actual</span><b id="dashAvailable">S/ 0</b></div>
+    <div class="home-balance-side"><span>Dinero acumulado</span><b>Ver detalle ›</b></div>
+  </button>
+
+  <div class="home-period-nav">
+    <button class="home-period-arrow" onclick="shiftHomePeriod(-1)" aria-label="Período anterior">‹</button>
+    <button class="home-period-center" onclick="openHomePeriodPicker()"><b id="homeRangeLabel">Septiembre 2026</b><span id="homePeriodLabel">Este mes</span></button>
+    <button class="home-period-arrow" onclick="shiftHomePeriod(1)" aria-label="Período siguiente">›</button>
+  </div>
+
+  <div class="home-filter-label">Ventas y reservas</div>
+  <div id="homeReservationFilters" class="tabs dashboard-type-tabs">
+    <button class="pill active" data-home-filter="all" onclick="setHomeReservationFilter('all',this)">Todos</button>
+    <button class="pill" data-home-filter="court" onclick="setHomeReservationFilter('court',this)">Canchas</button>
+    <button class="pill" data-home-filter="exclusive" onclick="setHomeReservationFilter('exclusive',this)">Eventos</button>
+  </div>
+
+  <div class="dashboard-kpis">
+    <button class="dashboard-kpi cash-kpi clickable" onclick="openDashboardDetail('cash')"><span>Caja neta <i class="kpi-arrow">›</i></span><b id="dashCashNet">S/ 0</b><small id="dashCashNetMeta">Entradas − salidas</small></button>
+    <button class="dashboard-kpi clickable" onclick="openDashboardDetail('sales')"><span>Total vendido <i class="kpi-arrow">›</i></span><b id="dashSold">S/ 0</b><small id="dashSoldDelta">—</small></button>
+    <button class="dashboard-kpi clickable" onclick="openDashboardDetail('reservations')"><span>Reservas <i class="kpi-arrow">›</i></span><b id="dashReservationCount">0</b><small id="dashReservationMeta">0 h reservadas</small></button>
+    <button class="dashboard-kpi clickable" onclick="openDashboardDetail('receivable')"><span>Por cobrar <i class="kpi-arrow">›</i></span><b id="dashReceivable">S/ 0</b><small id="dashReceivableMeta">0 reservas con saldo</small></button>
+  </div>
+
+  <div class="dashboard-section">
+    <div class="dashboard-section-head"><div><b>Tendencia</b><span id="homeTrendSubtitle">Ventas del período</span></div></div>
+    <div id="homeTrend" class="dashboard-trend"></div>
+  </div>
+
+  <div class="dashboard-section">
+    <div class="dashboard-section-head"><div><b>Rendimiento</b><span>Ventas por producto</span></div><button class="link-btn" onclick="openDashboardDetail('sales')">Ver detalle</button></div>
+    <div id="homePerformance" class="dashboard-list"></div>
+  </div>
+
+  <div class="dashboard-section">
+    <div class="dashboard-section-head"><div><b>Análisis</b><span>Indicadores de gestión del período</span></div></div>
+    <div class="dashboard-analysis-teaser">
+      <div class="analysis-mini-grid">
+        <div class="analysis-mini"><span>Ocupación</span><b id="analysisOccupancy">0%</b></div>
+        <div class="analysis-mini"><span>Horas reservadas</span><b id="analysisHours">0 h</b></div>
+        <div class="analysis-mini"><span>Ticket promedio</span><b id="analysisTicket">S/ 0</b></div>
+        <div class="analysis-mini"><span>Ingreso / hora</span><b id="analysisIncomeHour">S/ 0</b></div>
+      </div>
+      <button class="secondary analysis-open" onclick="openDashboardAnalysis()">Ver análisis completo</button>
+    </div>
+  </div>
+
+  <div class="section"><div class="section-head"><div class="section-title">Próximas reservas</div><button class="link-btn" onclick="go('reservations')">Ver reservas</button></div><div id="homeReservations" class="stack"></div></div>
+  <div class="section"><div class="section-head"><div class="section-title">Seguimientos pendientes</div><button class="link-btn" onclick="go('follow')">Ver todos</button></div><div id="homeFollowups" class="stack"></div></div>
+  <div class="section"><div class="section-head"><div class="section-title">Accesos rápidos</div></div>
+    <div class="quick-grid">
+      <button class="quick" onclick="openNewClient(false)"><div class="iconbox">👤</div><strong>Nuevo cliente</strong><small>Crear contacto</small></button>
+      <button class="quick" onclick="startQuote()"><div class="iconbox">＋</div><strong>Nueva cotización</strong><small>Crear propuesta</small></button>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="view-follow" class="view">
+<div class="content">
+  <div class="eyebrow">Comercial</div><h1>Seguimientos</h1>
+  <div class="toolbar"><div class="search">⌕ <input id="followSearch" placeholder="Buscar cliente..." oninput="renderFollowups()"></div><button class="filter" onclick="openNewFollowup()">＋</button></div>
+  <div class="tabs"><button class="pill active" data-follow-filter="pending" onclick="setFollowFilter('pending',this)">Pendientes</button><button class="pill" data-follow-filter="done" onclick="setFollowFilter('done',this)">Realizados</button><button class="pill" data-follow-filter="all" onclick="setFollowFilter('all',this)">Todos</button></div>
+  <div id="followList" class="stack"></div>
+</div>
+</section>
+
+<section id="view-quotes" class="view">
+<div class="content">
+  <div class="eyebrow">Ventas</div><h1>Cotizaciones</h1>
+  <div class="toolbar"><div class="search">⌕ <input id="quoteSearch" placeholder="Cliente o código..." oninput="renderQuotes()"></div><button class="filter" onclick="startQuote()">＋</button></div>
+  <div class="tabs"><button class="pill active" data-quote-filter="all" onclick="setQuoteFilter('all',this)">Todas</button><button class="pill" data-quote-filter="pending" onclick="setQuoteFilter('pending',this)">Pendientes</button><button class="pill" data-quote-filter="reserved" onclick="setQuoteFilter('reserved',this)">Reservadas</button></div>
+  <div id="quoteList" class="stack"></div>
+</div>
+</section>
+
+
+<section id="view-reservations" class="view">
+<div class="content">
+  <div class="eyebrow">Agenda</div><h1>Reservas</h1>
+
+  <div class="reservation-view-switch reservation-view-switch-v19">
+    <button id="reservationAgendaTab" class="active" onclick="setReservationWorkspace('agenda')">Agenda</button>
+    <button id="reservationCourtsTab" onclick="setReservationWorkspace('courts')">Canchas</button>
+    <button id="reservationListTab" onclick="setReservationWorkspace('list')">Lista</button>
+  </div>
+
+  <!-- AGENDA: visión amplia del día -->
+  <div id="reservationAgendaPanel" class="reservation-workspace-panel">
+    <div class="reservation-day-head">
+      <div>
+        <div class="reservation-day-title" id="agendaDayTitle" role="button" tabindex="0" onclick="openReservationDatePicker()" onkeydown="if(event.key==='Enter'||event.key===' ')openReservationDatePicker()"></div>
+        <div class="reservation-day-sub" id="agendaDaySummary"></div>
+      </div>
+      <button class="reservation-today-btn" onclick="reservationGoToday()">Hoy</button>
+    </div>
+    <div id="agendaDateStrip" class="reservation-date-strip"></div>
+    <div id="reservationAgendaList" class="reservation-agenda-list"></div>
+  </div>
+
+  <!-- CANCHAS: disponibilidad por recurso físico -->
+  <div id="reservationCourtsPanel" class="reservation-workspace-panel hidden">
+    <div class="reservation-day-head">
+      <div>
+        <div class="reservation-day-title" id="courtsDayTitle" role="button" tabindex="0" onclick="openReservationDatePicker()" onkeydown="if(event.key==='Enter'||event.key===' ')openReservationDatePicker()"></div>
+        <div class="reservation-day-sub">Disponibilidad por cancha física</div>
+      </div>
+      <button class="reservation-today-btn" onclick="reservationGoToday()">Hoy</button>
+    </div>
+    <div id="courtsDateStrip" class="reservation-date-strip"></div>
+
+    <div class="reservation-court-tabs">
+      <button class="active" data-res-court="Cancha 1" onclick="selectReservationCourt('Cancha 1',this)">Cancha 1</button>
+      <button data-res-court="Cancha 2" onclick="selectReservationCourt('Cancha 2',this)">Cancha 2</button>
+      <button data-res-court="Cancha 3" onclick="selectReservationCourt('Cancha 3',this)">Cancha 3</button>
+    </div>
+
+    <div class="reservation-court-summary" id="reservationCourtSummary"></div>
+    <div id="reservationCourtTimeline" class="reservation-court-timeline"></div>
+  </div>
+
+  <!-- LISTA: gestión detallada existente -->
+  <div id="reservationListPanel" class="reservation-workspace-panel hidden">
+    <div class="toolbar">
+      <div class="search">⌕ <input id="reservationSearch" placeholder="Buscar cliente o reserva..." oninput="renderReservations()"></div>
+      <button class="filter" onclick="openNewReservation()">＋</button>
+    </div>
+    <div class="tabs">
+      <button class="pill active" data-reservation-filter="upcoming" onclick="setReservationFilter('upcoming',this)">Proximas</button>
+      <button class="pill" data-reservation-filter="today" onclick="setReservationFilter('today',this)">Hoy</button>
+      <button class="pill" data-reservation-filter="hold" onclick="setReservationFilter('hold',this)">Pre-reservas</button>
+      <button class="pill" data-reservation-filter="all" onclick="setReservationFilter('all',this)">Todas</button>
+    </div>
+    <div id="reservationList" class="stack"></div>
+  </div>
+</div>
+</section>
+
+<section id="view-more" class="view">
+<div class="content">
+  <div class="eyebrow">Gestión</div><h1>Más</h1>
+
+  <div class="more-section">
+    <div class="more-section-title">Gestión</div>
+    <div class="stack">
+      <button class="card lead more-card" onclick="go('quotes')"><div class="iconbox">▧</div><div class="lead-main"><div class="lead-name">Cotizaciones</div><div class="lead-meta">Consultar, dar seguimiento y convertir en reserva</div></div><div class="list-chevron">›</div></button>
+      <button class="card lead more-card" onclick="openClients()"><div class="iconbox">👥</div><div class="lead-main"><div class="lead-name">Clientes</div><div class="lead-meta">Contactos, cotizaciones y reservas</div></div><div class="list-chevron">›</div></button>
+      <button class="card lead more-card" onclick="openCash()"><div class="iconbox">S/</div><div class="lead-main"><div class="lead-name">Caja y movimientos</div><div class="lead-meta">Cobros, otros ingresos, gastos y movimientos de caja</div></div><div class="list-chevron">›</div></button>
+    </div>
+  </div>
+
+  <div class="more-section">
+    <div class="more-section-title">Historial</div>
+    <div class="stack">
+      <button class="card lead more-card" onclick="openHistory()"><div class="iconbox">↺</div><div class="lead-main"><div class="lead-name">Historial por concepto</div><div class="lead-meta">Reservas, cotizaciones, seguimientos, pagos, clientes y bloqueos</div></div><div class="list-chevron">›</div></button>
+    </div>
+  </div>
+
+  <div class="more-section">
+    <div class="more-section-title">Configuración</div>
+    <div class="stack">
+      <button class="card lead more-card" onclick="openMasters()"><div class="iconbox">◆</div><div class="lead-main"><div class="lead-name">Masters</div><div class="lead-meta">Tablas maestras que controlan el funcionamiento del sistema</div></div><div class="list-chevron">›</div></button>
+      <button class="card lead more-card" onclick="openTariffs()"><div class="iconbox">⚙</div><div class="lead-main"><div class="lead-name">Tarifas y condiciones</div><div class="lead-meta">Precios, garantía, hora adicional y términos</div></div><div class="list-chevron">›</div></button>
+    </div>
+  </div>
+</div>
+</section>
+
+<nav class="nav">
+<button id="nav-home" class="active" onclick="go('home')"><span class="ni">⌂</span><span>Inicio</span></button>
+<button id="nav-follow" onclick="go('follow')"><span class="ni">▤</span><span>Seguimientos</span></button>
+<div><button class="fab" onclick="openActions()">+</button></div>
+<button id="nav-reservations" onclick="go('reservations')"><span class="ni">▦</span><span>Reservas</span></button>
+<button id="nav-more" onclick="go('more')"><span class="ni">•••</span><span>Más</span></button>
+</nav>
+</main>
+
+<!-- Action menu -->
+<div id="actionSheet" class="backdrop" onclick="if(event.target===this)closeSheet('actionSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Crear</div><h2>Nueva acción</h2></div><button class="close" onclick="closeSheet('actionSheet')">×</button></div>
+<div class="actionlist">
+<div class="action-section-label">Operación</div>
+<button class="actionbtn" onclick="closeSheet('actionSheet');openNewReservation()"><div class="iconbox">▦</div><div><b>Nueva reserva</b><span>Evento exclusivo o alquiler de cancha</span></div></button>
+<button class="actionbtn" onclick="closeSheet('actionSheet');startQuote()"><div class="iconbox">＋</div><div><b>Nueva cotización</b><span>Selecciona un cliente existente o crea uno</span></div></button>
+<button class="actionbtn" onclick="closeSheet('actionSheet');openNewFollowup()"><div class="iconbox">✓</div><div><b>Nuevo seguimiento</b><span>Programa una acción comercial</span></div></button>
+<button class="actionbtn" onclick="closeSheet('actionSheet');openNewClient(false)"><div class="iconbox">👤</div><div><b>Nuevo cliente</b><span>Crea un contacto</span></div></button>
+<div class="action-section-label">Caja</div>
+<button class="actionbtn" onclick="closeSheet('actionSheet');openPaymentSheet()"><div class="iconbox">S/</div><div><b>Registrar cobro</b><span>Aplica un pago a una reserva existente</span></div></button>
+<button class="actionbtn" onclick="closeSheet('actionSheet');openMovementTypeSheet()"><div class="iconbox">↕</div><div><b>Registrar movimiento</b><span>Gasto, otro ingreso, aporte o retiro de caja</span></div></button>
+</div></div></div>
+
+<!-- Client creation -->
+<div id="clientSheet" class="backdrop" onclick="if(event.target===this)closeSheet('clientSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Contacto</div><h2 id="clientFormTitle">Nuevo cliente</h2></div><button class="close" onclick="closeSheet('clientSheet')">×</button></div>
+<div class="form-card"><h3>Datos del cliente</h3>
+<div class="field"><label>Nombre <span class="req">*</span></label><input id="cName" placeholder="Ej. Juan Pérez"></div>
+<div class="field"><label>Teléfono</label><input id="cPhone" inputmode="tel" placeholder="Opcional"></div>
+<div class="field"><label>Empresa</label><input id="cCompany" placeholder="Opcional"></div>
+<div class="grid2"><div class="field"><label>DNI / RUC</label><input id="cDoc" placeholder="Opcional"></div><div class="field"><label>Correo</label><input id="cEmail" type="email" placeholder="Opcional"></div></div>
+<div class="field"><label>Notas</label><textarea id="cNotes" rows="3" placeholder="Opcional"></textarea></div>
+<div class="special-pricing-box">
+  <h4>Tarifas especiales · opcional</h4>
+  <div class="grid2">
+    <div class="field"><label>FUT 6 · por cancha/hora</label><input id="cRateFut6" type="number" min="0" placeholder="Usar tarifa general"></div>
+    <div class="field"><label>FUT 9 · por hora</label><input id="cRateFut9" type="number" min="0" placeholder="Usar tarifa general"></div>
+  </div>
+  <div class="mutedline">Si quedan vacías, el sistema usa automáticamente las tarifas generales.</div>
+</div>
+</div>
+<button id="clientSaveBtn" class="primary" onclick="saveClient()">Crear cliente</button>
+</div></div>
+
+<!-- Select client for quote -->
+<div id="selectClientSheet" class="backdrop" onclick="if(event.target===this)closeSheet('selectClientSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Cotización</div><h2>Selecciona cliente</h2></div><button class="close" onclick="closeSheet('selectClientSheet')">×</button></div>
+<div class="toolbar"><div class="search">⌕ <input id="clientSearch" placeholder="Buscar cliente..." oninput="renderClientOptions()"></div></div><div id="clientOptions" class="stack"></div>
+<div style="height:10px"></div><button class="ghost" onclick="openNewClient(true)">＋ Crear nuevo cliente</button>
+</div></div>
+
+<!-- Quote creation -->
+<div id="quoteSheet" class="backdrop" onclick="if(event.target===this)closeSheet('quoteSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Venta</div><h2>Nueva cotización</h2></div><button class="close" onclick="closeSheet('quoteSheet')">×</button></div>
+
+<div class="form-card"><h3>Cliente</h3><div class="lead"><div class="initials" id="qInitials">CL</div><div class="lead-main"><div class="lead-name" id="qClientName">Cliente</div><div class="lead-meta" id="qClientMeta">Sin teléfono</div></div></div></div>
+
+<div class="form-card quote-event-card"><h3>Evento</h3>
+<div class="quote-event-row quote-event-top">
+  <div class="field"><label>Tipo</label><select id="eventType"><option>Campeonato</option><option>Cumpleaños</option><option>Integración</option><option>Reunión familiar</option><option>Evento deportivo</option><option>Otro</option></select></div>
+  <div class="field"><label>Asistentes</label><input id="people" type="number" min="1" value="20"></div>
+</div>
+<div class="field quote-event-date"><label>Fecha</label><input id="date" type="date"></div>
+<div class="quote-event-row quote-event-times">
+  <div class="field"><label>Hora inicio</label><input id="startTime" type="time" value="11:00" oninput="calcHours()"></div>
+  <div class="field"><label>Hora fin</label><input id="endTime" type="time" value="21:00" oninput="calcHours()"></div>
+</div>
+<div class="field quote-event-hours"><label>Total horas</label><input id="totalHours" value="10" readonly></div>
+</div>
+
+<div class="form-card"><h3>Modalidad</h3><div class="choice-grid"><button id="modeExclusive" class="choice active" onclick="setMode('exclusive')">Local exclusivo</button><button id="modeCourt" class="choice" onclick="setMode('court')">Por cancha</button></div></div>
+
+<div id="exclusiveBlock" class="form-card"><h3>Alquiler exclusivo</h3><div class="field"><label>Precio paquete</label><input id="packagePrice" type="number" value="2000" oninput="recalcQuote()"></div>
+<div id="qPackagePreview" class="package-preview-v24"></div>
+<button type="button" class="ghost" style="margin-top:10px" onclick="openQuotePackageEditor()">Editar incluido solo para esta cotización</button>
+<div class="mutedline" style="margin-top:8px">El contenido se carga desde Masters → Paquetes. Al generar la cotización se guarda una copia y los cambios futuros del Master no alteran este documento.</div></div>
+
+<div id="courtBlock" class="form-card hidden"><h3>Alquiler por cancha</h3><div class="grid2"><div class="field"><label>Cancha</label><select id="courtType" onchange="syncCourtRate()"><option value="50">FUT 6</option><option value="120">FUT 9</option></select></div><div class="field"><label>Precio / hora</label><input id="courtRate" type="number" value="50" oninput="recalcQuote()"></div></div></div>
+
+<div class="form-card"><h3>Condiciones económicas</h3><div class="grid2"><div class="field"><label>Garantía reembolsable</label><input id="guarantee" type="number" value="300" oninput="recalcQuote()"></div><div class="field"><label>Descuento pago único</label><input id="discount" type="number" value="200" oninput="recalcQuote()"></div></div><div class="field"><label>Hora adicional</label><input id="extraHour" type="number" value="180"></div><div class="info">El descuento aplica únicamente cuando el importe completo se cancela en una sola operación anticipada. Si se paga 50% y luego el saldo, no aplica.</div></div>
+<div class="form-card"><h3>Condiciones</h3><div class="info">Público general: ingreso 30 min antes y cierre 30 min después. La garantía se devuelve después del evento. El organizador asume seguridad adicional y primeros auxilios cuando corresponda.</div></div>
+
+<div class="summary"><div class="sumrow"><span>Alquiler</span><b id="sumRent">S/ 2,000</b></div><div class="sumrow"><span>Garantía reembolsable</span><b id="sumGuarantee">S/ 300</b></div><div class="sumrow"><span>Descuento pago único</span><b id="sumDiscount">− S/ 200</b></div><div class="sumrow"><span>Pago en partes</span><b id="sumRegular">S/ 2,300</b></div><div class="sumrow total"><span>Si paga todo en una operación</span><span id="sumTotal">S/ 2,100</span></div><button class="primary" onclick="generateQuote()">Generar cotización</button></div>
+</div></div>
+
+<!-- Editar contenido del paquete solo para esta cotización -->
+<div id="quotePackageSheet" class="backdrop" onclick="if(event.target===this)closeSheet('quotePackageSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Cotización</div><h2>Contenido del paquete</h2></div><button class="close" onclick="closeSheet('quotePackageSheet')">×</button></div>
+<div class="info" style="margin-bottom:12px">Estos cambios afectan únicamente a la cotización que estás preparando.</div>
+<div class="form-card"><h3>Presentación</h3><div class="field"><label>Nombre</label><input id="qPkgName"></div><div class="field"><label>Descripción</label><input id="qPkgDescription"></div></div>
+<div class="form-card"><h3>Zona deportiva</h3><div class="field"><label>Un elemento por línea</label><textarea id="qPkgSports" rows="6"></textarea></div></div>
+<div class="form-card"><h3>Otras zonas</h3><div class="field"><label>Un elemento por línea</label><textarea id="qPkgOther" rows="6"></textarea></div></div>
+<div class="form-card"><h3>Servicios del establecimiento</h3><div class="field"><label>Un elemento por línea</label><textarea id="qPkgServices" rows="5"></textarea></div></div>
+<button class="primary" onclick="saveQuotePackageDraft()">Aplicar a esta cotización</button>
+</div></div>
+
+<!-- Quote detail -->
+<div id="quoteDetailSheet" class="backdrop" onclick="if(event.target===this)closeSheet('quoteDetailSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Cotización</div><h2 id="qdTitle">Detalle</h2></div><button class="close" onclick="closeSheet('quoteDetailSheet')">×</button></div>
+<div class="form-card" id="quoteDetailBody"></div>
+<div class="actionlist">
+<button class="actionbtn" onclick="openQuotePdf(openQuoteId)"><div class="iconbox">▧</div><div><b>Ver PDF</b><span>Abre la cotización en formato documento A4</span></div></button>
+<button class="actionbtn" onclick="createFollowupFromOpenQuote()"><div class="iconbox">✓</div><div><b>Crear seguimiento</b><span>Programa la próxima acción comercial</span></div></button>
+<button id="quoteReserveAction" class="actionbtn" onclick="reserveOpenQuote()"><div class="iconbox">▦</div><div><b>Confirmar / crear reserva</b><span>Elige cómo se confirmará y registra el cobro sin duplicar ingresos</span></div></button>
+</div>
+</div></div>
+
+<!-- Confirmar cotizacion / crear reserva -->
+<div id="quoteConfirmSheet" class="backdrop" onclick="if(event.target===this)closeSheet('quoteConfirmSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Cotización aceptada</div><h2>¿Cómo se confirmará?</h2></div><button class="close" onclick="closeSheet('quoteConfirmSheet')">×</button></div>
+<div id="quoteConfirmSummary" class="payment-reservation-info">Selecciona una forma de confirmación.</div>
+<div class="quote-confirm-options">
+  <button class="quote-confirm-card single" onclick="chooseQuoteConfirmation('single')"><div class="qcp-main"><b>Pago único anticipado</b><span>Aplica el descuento de la cotización solo si todo se paga ahora en una sola operación.</span></div><strong id="quoteConfirmSingleAmount">S/ 0</strong></button>
+  <button class="quote-confirm-card" onclick="chooseQuoteConfirmation('installments')"><div class="qcp-main"><b>Pago en partes / adelanto</b><span>No aplica descuento. Se crea la reserva y luego registras el primer pago; se precarga 50% como referencia y puedes editarlo.</span></div><strong id="quoteConfirmRegularAmount">S/ 0</strong></button>
+  <button class="quote-confirm-card hold" onclick="chooseQuoteConfirmation('hold')"><div class="qcp-main"><b>Pre-reserva sin pago</b><span>Bloquea el horario sin registrar dinero. El cobro puede hacerse después desde la reserva.</span></div><strong>Sin cobro</strong></button>
+</div>
+<div class="cash-note" style="margin-top:12px">La cotización permanece vinculada a la reserva. Los pagos se registran sobre la reserva, nunca como “otro ingreso”.</div>
+</div></div>
+
+<!-- New followup -->
+<div id="followSheet" class="backdrop" onclick="if(event.target===this)closeSheet('followSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Seguimiento</div><h2>Nuevo seguimiento</h2></div><button class="close" onclick="closeSheet('followSheet')">×</button></div>
+<div class="form-card"><h3>Acción comercial</h3>
+<div class="field"><label>Cliente <span class="req">*</span></label><select id="fClient"></select></div>
+<div class="field"><label>Cotización relacionada</label><select id="fQuote"><option value="">Sin cotización</option></select></div>
+<div class="field"><label>Qué hacer <span class="req">*</span></label><input id="fNote" placeholder="Ej. Llamar para confirmar evento"></div>
+<div class="grid2"><div class="field"><label>Fecha</label><input id="fDate" type="date"></div><div class="field"><label>Hora</label><input id="fTime" type="time"></div></div>
+</div>
+<button class="primary" onclick="saveFollowup()">Crear seguimiento</button>
+</div></div>
+
+<!-- Followup detail -->
+<div id="followDetailSheet" class="backdrop" onclick="if(event.target===this)closeSheet('followDetailSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Seguimiento</div><h2>Detalle</h2></div><button class="close" onclick="closeSheet('followDetailSheet')">×</button></div>
+<div id="followDetailBody" class="form-card"></div>
+<div class="actionlist"><button class="primary" onclick="completeOpenFollowup()">Marcar como realizado</button><button class="secondary" onclick="reprogramOpenFollowup()">Reprogramar</button></div>
+</div></div>
+
+<!-- Reservation type -->
+<div id="reservationTypeSheet" class="backdrop" onclick="if(event.target===this)closeSheet('reservationTypeSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Reserva</div><h2>¿Qué deseas reservar?</h2></div><button class="close" onclick="closeSheet('reservationTypeSheet')">×</button></div>
+<div class="reservation-type-grid">
+  <button class="reservation-type-card exclusive" onclick="chooseReservationType('exclusive')"><div class="type-icon">🏟️</div><div><b>Evento exclusivo</b><span>Uso exclusivo del establecimiento para campeonatos, cumpleaños, integraciones u otros eventos.</span></div></button>
+  <button class="reservation-type-card court" onclick="chooseReservationType('court')"><div class="type-icon">⚽</div><div><b>Alquiler de cancha</b><span>Reserva deportiva por horas en FUT 6 o FUT 9.</span></div></button>
+</div>
+</div></div>
+
+<!-- New reservation -->
+<div id="reservationSheet" class="backdrop" onclick="if(event.target===this)closeSheet('reservationSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Reserva</div><h2 id="reservationFormTitle">Nueva reserva</h2></div><button class="close" onclick="closeSheet('reservationSheet')">×</button></div>
+<div id="reservationKindChip" class="reservation-kind-chip">Evento exclusivo</div>
+
+<div class="form-card"><h3>Cliente y origen</h3>
+<div class="field"><label>Cliente <span class="req">*</span></label>
+<div class="res-client-search">
+  <input id="rClientSearch" autocomplete="off" placeholder="Buscar por nombre, teléfono o empresa" onfocus="renderReservationClientSearchResults()" oninput="renderReservationClientSearchResults(this.value)" onblur="setTimeout(()=>hideReservationClientSearchResults(),180)">
+  <div id="rClientSearchResults" class="res-client-results hidden"></div>
+  <select id="rClient" class="hidden" onchange="onReservationClientChange()"></select>
+</div></div>
+<div class="field"><label>Cotización relacionada</label><select id="rQuote" onchange="loadReservationQuote()"><option value="">Reserva directa / sin cotización</option></select></div>
+<div class="mutedline">El cliente debe existir primero. Puedes reservar directamente o convertir una cotización compatible.</div>
+</div>
+<div id="rQuotePaymentPlanInfo" class="info quote-plan-info hidden"></div>
+
+<div id="rExclusiveBlock" class="form-card"><h3>Evento exclusivo</h3>
+<div class="grid2"><div class="field"><label>Tipo de evento</label><select id="rEventType"><option>Campeonato</option><option>Cumpleaños</option><option>Integración</option><option>Reunión familiar</option><option>Evento deportivo</option><option>Otro</option></select></div><div class="field"><label>Asistentes</label><input id="rPeople" type="number" min="1" value="20"></div></div>
+<div class="field"><label>Espacio</label><input id="rExclusiveSpace" value="Local exclusivo" readonly></div>
+</div>
+
+<div id="rCourtBlock" class="form-card hidden"><h3>Alquiler de cancha</h3>
+<div class="booking-mode-tabs" id="rBookingModeTabs">
+  <button type="button" class="active" data-booking-mode="single" onclick="setCourtBookingMode('single')">Reserva puntual</button>
+  <button type="button" data-booking-mode="recurring" onclick="setCourtBookingMode('recurring')">Reserva recurrente</button>
+</div>
+
+<div id="rSingleCourtConfig">
+  <div class="grid2">
+    <div class="field"><label>Formato</label><select id="rCourtType" onchange="onReservationCourtTypeChange()"><option value="FUT 6">FUT 6</option><option value="FUT 9">FUT 9</option></select></div>
+    <div class="field"><label id="rCourtRateLabel">Tarifa por cancha / hora</label><input id="rCourtRate" type="number" min="0" oninput="markManualRate();recalcReservationCourtTotal()"></div>
+  </div>
+  <div id="rRateSource" class="rate-source"><span class="dotrate"></span><span>Tarifa general</span></div>
+  <div id="rFut6CourtSelection">
+    <div class="field" style="margin-top:12px"><label>Cantidad de canchas</label>
+      <select id="rCourtQty" onchange="syncCourtQtySelection();recalcReservationCourtTotal();checkReservationConflictUI()">
+        <option value="1">1 cancha</option><option value="2">2 canchas</option><option value="3">3 canchas</option>
+      </select>
+    </div>
+    <div class="field"><label>Selecciona las canchas físicas</label>
+      <div class="court-select-grid">
+        <label class="court-check"><input id="rCourtSel1" type="checkbox" value="Cancha 1" onchange="onPhysicalCourtToggle(this)"><span>Cancha 1</span></label>
+        <label class="court-check"><input id="rCourtSel2" type="checkbox" value="Cancha 2" onchange="onPhysicalCourtToggle(this)"><span>Cancha 2</span></label>
+        <label class="court-check"><input id="rCourtSel3" type="checkbox" value="Cancha 3" onchange="onPhysicalCourtToggle(this)"><span>Cancha 3</span></label>
+      </div>
+    </div>
+  </div>
+  <div id="rFut9ResourceInfo" class="resource-help hidden"><b>FUT 9:</b> utiliza la cancha grande y bloquea automáticamente Cancha 1 + Cancha 2 + Cancha 3.</div>
+  <div id="rCourtCalc" class="calc-box"><span>Cálculo</span><b>1 cancha × 1 h × S/ 0 = S/ 0</b></div>
+  <div class="mutedline" style="margin-top:8px">La tarifa se carga automáticamente según el cliente. Puedes modificarla solo para esta reserva.</div>
+</div>
+
+<div id="rRecurringBlock" class="recurring-box hidden">
+  <div class="info recurring-series-intro"><b>Un solo acuerdo, varios horarios.</b><br>Puedes combinar días, formatos y canchas diferentes dentro de la misma serie recurrente.</div>
+  <div class="recurring-series-settings">
+    <div class="grid2">
+      <div class="field"><label>Desde</label><input id="rRecurringStartDate" type="date" onchange="updateRecurringSeriesPreview()"></div>
+      <div class="field"><label>Hasta</label><input id="rRecurringEndDate" type="date" onchange="updateRecurringSeriesPreview()"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Frecuencia</label><select id="rRecurringFrequency" onchange="updateRecurringSeriesPreview()"><option value="weekly">Semanal</option><option value="biweekly">Cada 2 semanas</option></select></div>
+      <div class="field"><label>Cobro</label><select id="rRecurringBilling" onchange="updateRecurringBillingUI();updateRecurringSeriesPreview()"><option value="per_reservation">Por reserva</option><option value="monthly">Mensual fijo</option></select></div>
+    </div>
+    <div id="rRecurringMonthlyAmountField" class="field hidden"><label>Monto mensual del acuerdo</label><input id="rRecurringMonthlyAmount" type="number" min="0" step="0.01" placeholder="Ej. 640" oninput="updateRecurringSeriesPreview()"></div>
+  </div>
+  <div id="rRecurringSchedules" class="recurring-schedules"></div>
+  <button type="button" class="ghost recurring-add" onclick="addRecurringScheduleBlock()">＋ Agregar otro horario</button>
+  <div id="rRecurringPreview" class="recurring-preview">Agrega al menos un horario para calcular la serie.</div>
+</div>
+</div>
+
+<div id="rDateScheduleCard" class="form-card"><h3>Fecha y horario</h3>
+<div id="rSingleDateField" class="field"><label>Fecha <span class="req">*</span></label><input id="rDate" type="date" onchange="checkReservationConflictUI()"></div>
+
+<div id="rCourtScheduleBlock">
+  <div class="grid2">
+    <div class="field"><label>Hora inicio <span class="req">*</span></label><select id="rStartSelect" onchange="syncCourtScheduleFromSelectors();if(courtBookingMode==='recurring')updateRecurringSeriesPreview()"></select></div>
+    <div class="field"><label>Duración</label><select id="rDurationSelect" onchange="syncCourtScheduleFromSelectors();if(courtBookingMode==='recurring')updateRecurringSeriesPreview()"><option value="60">1 hora</option><option value="90">1 hora 30 min</option><option value="120">2 horas</option><option value="150">2 horas 30 min</option><option value="180">3 horas</option></select></div>
+  </div>
+  <div class="inline-total" style="background:#eef3f5;color:var(--ink)"><span style="color:var(--muted)">Hora fin</span><b id="rEndDisplay" style="font-size:18px">12:00</b></div>
+</div>
+
+<div id="rExclusiveScheduleBlock" class="hidden">
+  <div class="grid2"><div class="field"><label>Hora inicio <span class="req">*</span></label><input id="rStartExclusive" type="time" value="11:00" oninput="syncExclusiveSchedule()"></div><div class="field"><label>Hora fin <span class="req">*</span></label><input id="rEndExclusive" type="time" value="13:00" oninput="syncExclusiveSchedule()"></div></div>
+  <div class="inline-total" style="background:#eef3f5;color:var(--ink)"><span style="color:var(--muted)">Duración</span><b id="rDuration" style="font-size:18px">2 h</b></div>
+</div>
+<input id="rStart" type="hidden" value="11:00"><input id="rEnd" type="hidden" value="12:00">
+</div>
+
+<div id="reservationConflictBox" class="conflict-box"></div>
+<div class="form-card"><h3>Estado de la reserva</h3>
+<div class="field"><label>Estado</label><select id="rStatus"><option value="confirmed">Confirmada</option><option value="hold">Pre-reserva / bloqueada</option></select></div>
+<div class="mutedline">Ambos estados bloquean el espacio para evitar cruces. Una pre-reserva puede confirmarse después.</div>
+</div>
+<div id="rPaymentCard" class="form-card"><h3>Pago</h3>
+<div class="grid2"><div class="field"><label>Total</label><input id="rTotal" type="number" value="0" oninput="recalcReservationBalance()"></div><div class="field"><label>Adelanto</label><input id="rAdvance" type="number" value="0" oninput="recalcReservationBalance()"></div></div>
+<div class="inline-total"><span>Saldo pendiente</span><b id="rBalance">S/ 0</b></div>
+<div class="field" style="margin-top:10px"><label>Notas</label><textarea id="rNotes" rows="3" placeholder="Opcional"></textarea></div>
+</div>
+<button id="reservationSaveBtn" class="primary" onclick="saveReservation()">Crear reserva</button>
+</div></div>
+
+<!-- Reservation detail -->
+<div id="reservationDetailSheet" class="backdrop" onclick="if(event.target===this)closeSheet('reservationDetailSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Reserva</div><h2 id="rdTitle">Detalle</h2></div><button class="close" onclick="closeSheet('reservationDetailSheet')">×</button></div>
+<div id="reservationDetailBody" class="form-card"></div>
+<div class="actionlist">
+<button id="confirmHoldBtn" class="primary hidden" onclick="confirmOpenReservation()">Confirmar pre-reserva</button>
+<div class="grid2">
+  <button class="secondary" onclick="editOpenReservation()">Editar reserva</button>
+  <button class="secondary" onclick="shareOpenReservation()">Compartir</button>
+</div>
+<button class="secondary" onclick="openReservationOutcome()">Estado y dinero</button>
+</div>
+</div></div>
+
+<!-- Reservation outcome / finance -->
+<div id="reservationOutcomeSheet" class="backdrop" onclick="if(event.target===this)closeSheet('reservationOutcomeSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Reserva</div><h2>Estado y dinero</h2></div><button class="close" onclick="closeSheet('reservationOutcomeSheet')">×</button></div>
+<div class="form-card"><h3>Qué pasó con la reserva</h3>
+<div class="field"><label>Estado</label><select id="outcomeStatus" onchange="updateOutcomeUI()">
+<option value="completed">Realizada</option>
+<option value="cancelled">Cancelada</option>
+<option value="no_show">No asistió</option>
+<option value="rescheduled">Reprogramada</option>
+</select></div>
+<div class="field"><label>Motivo</label><select id="outcomeReason">
+<option value="client">Cliente canceló / cambió</option>
+<option value="no_show">Cliente no asistió</option>
+<option value="weather">Clima</option>
+<option value="eleva">Problema de Eleva</option>
+<option value="error">Error de reserva</option>
+<option value="other">Otro</option>
+</select></div>
+</div>
+
+<div id="outcomeFinanceBlock" class="form-card"><h3>Qué pasa con el dinero</h3>
+<div class="inline-total"><span>Pagado por el cliente</span><b id="outcomePaidLabel">S/ 0</b></div>
+<div class="field" style="margin-top:12px"><label>Destino del pago</label><select id="outcomeDisposition" onchange="applyOutcomeDispositionDefaults()">
+<option value="refund">Reembolso</option>
+<option value="credit">Saldo a favor</option>
+<option value="reprogram">Reprogramación</option>
+<option value="retained">Retenido / sin devolución</option>
+</select></div>
+<div id="outcomeAmountsBlock">
+<div class="grid2"><div class="field"><label>Monto devuelto</label><input id="outcomeRefund" type="number" min="0" value="0" oninput="recalcOutcomeAmounts('refund')"></div><div class="field"><label>Saldo a favor</label><input id="outcomeCredit" type="number" min="0" value="0" oninput="recalcOutcomeAmounts('credit')"></div></div>
+<div class="field"><label>Monto retenido</label><input id="outcomeRetained" type="number" min="0" value="0" oninput="recalcOutcomeAmounts('retained')"></div>
+<div class="mutedline">Devuelto + saldo a favor + retenido no puede superar lo pagado.</div>
+</div>
+<div id="outcomeReprogramNote" class="info hidden">El pago se mantiene asociado a la reserva. Después de guardar, podrás editar fecha, hora o cancha.</div>
+</div>
+
+<div class="form-card"><h3>Observación</h3><div class="field"><textarea id="outcomeNote" rows="3" placeholder="Opcional"></textarea></div></div>
+<button class="primary" onclick="saveReservationOutcome()">Guardar movimiento</button>
+</div></div>
+
+<!-- Tariffs and conditions -->
+<div id="tariffSheet" class="backdrop" onclick="if(event.target===this)closeSheet('tariffSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Configuración</div><h2>Tarifas y condiciones</h2></div><button class="close" onclick="closeSheet('tariffSheet')">×</button></div>
+<div class="form-card"><h3>Tarifas base</h3>
+<div class="grid2"><div class="field"><label>FUT 6 / hora</label><input id="tFut6" type="number"></div><div class="field"><label>FUT 9 / hora</label><input id="tFut9" type="number"></div></div>
+<div class="field"><label>Paquete local exclusivo</label><input id="tExclusive" type="number"></div>
+</div>
+<div class="form-card"><h3>Condiciones económicas</h3>
+<div class="grid2"><div class="field"><label>Garantía por defecto</label><input id="tGuarantee" type="number"></div><div class="field"><label>Hora adicional</label><input id="tExtraHour" type="number"></div></div>
+<div class="field"><label>Descuento por pago único anticipado</label><input id="tDiscount" type="number"></div>
+</div>
+<div class="form-card"><h3>Texto de condiciones</h3><div class="field"><textarea id="tConditions" rows="7"></textarea></div></div>
+<button class="primary" onclick="saveTariffs()">Guardar cambios</button>
+</div></div>
+
+<!-- Calendar -->
+<div id="calendarSheet" class="backdrop" onclick="if(event.target===this)closeCalendarView()"><div class="sheet calendar-sheet">
+<div class="handle"></div>
+<div class="sheet-head"><div><div class="eyebrow">Agenda operativa</div><h2>Calendario</h2></div><button class="close" onclick="closeCalendarView()">×</button></div>
+
+<div class="cal-toolbar">
+  <div class="cal-toolbar-left">
+    <button class="cal-iconbtn" onclick="moveCalendarDay(-1)">‹</button>
+    <div><div class="cal-date-label" id="calendarDayLabel"></div><div class="cal-date-sub" id="calendarDaySummary"></div></div>
+    <button class="cal-iconbtn" onclick="moveCalendarDay(1)">›</button>
+  </div>
+  <button class="cal-today" onclick="goCalendarToday()">Hoy</button>
+</div>
+
+<div class="cal-view-tabs">
+  <button id="calTabDay" class="cal-view-tab active" onclick="setCalendarView('day')">Día</button>
+  <button id="calTabMonth" class="cal-view-tab" onclick="setCalendarView('month')">Mes</button>
+</div>
+
+<div id="calendarDayPanel">
+  <div id="calendarDateStrip" class="date-strip"></div>
+  <div class="cal-legend">
+    <div class="legend-item"><span class="legend-dot avail"></span>Disponible</div>
+    <div class="legend-item"><span class="legend-dot res"></span>FUT 6</div>
+    <div class="legend-item"><span class="legend-dot f9"></span>FUT 9</div>
+    <div class="legend-item"><span class="legend-dot exc"></span>Exclusivo</div>
+    <div class="legend-item"><span class="legend-dot pre"></span>Pre-reserva</div>
+  </div>
+  <div class="scheduler-wrap"><div id="dayScheduler" class="scheduler"></div></div>
+  <div class="cal-note">Toca un espacio disponible para crear rápidamente una reserva FUT 6. FUT 9 y Evento exclusivo bloquean automáticamente las tres canchas.</div>
+  <div class="calendar-actions">
+    <button class="secondary" onclick="closeCalendarView();openNewReservation()">＋ Nueva reserva</button>
+    <button class="primary" onclick="closeCalendarView()">Ver lista</button>
+  </div>
+</div>
+
+<div id="calendarMonthPanel" class="month-panel hidden">
+  <div class="form-card">
+    <div class="monthbar"><button class="monthnav" onclick="moveCalendarMonth(-1)">‹</button><b id="calendarMonthLabel"></b><button class="monthnav" onclick="moveCalendarMonth(1)">›</button></div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+  <div class="cal-note">El punto indica que existen reservas o bloqueos ese día. Toca una fecha para abrirla en la vista Día.</div>
+</div>
+</div></div>
+
+<!-- Clients -->
+<div id="clientsSheet" class="backdrop" onclick="if(event.target===this)closeSheet('clientsSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Base comercial</div><h2>Clientes</h2></div><button class="close" onclick="closeSheet('clientsSheet')">×</button></div>
+<div id="clientDirectory" class="stack"></div><div style="height:10px"></div><button class="primary" onclick="closeSheet('clientsSheet');openNewClient(false)">Nuevo cliente</button>
+</div></div>
+
+<!-- Ficha de cliente -->
+<div id="clientProfileSheet" class="backdrop" onclick="if(event.target===this)closeSheet('clientProfileSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Cliente</div><h2 id="clientProfileTitle">Ficha del cliente</h2></div><button class="close" onclick="closeSheet('clientProfileSheet')">×</button></div>
+<div class="client-profile-headline">
+  <div class="initials" id="clientProfileInitials">CL</div>
+  <div class="lead-main"><div class="lead-name" id="clientProfileName">Cliente</div><div class="client-profile-contact" id="clientProfileContact"></div></div>
+</div>
+<div class="client-period-tabs" id="clientProfilePeriodTabs">
+  <button class="pill" data-client-period="today" onclick="setClientProfilePeriod('today',this)">Hoy</button>
+  <button class="pill" data-client-period="week" onclick="setClientProfilePeriod('week',this)">Semana</button>
+  <button class="pill" data-client-period="month" onclick="setClientProfilePeriod('month',this)">Mes</button>
+  <button class="pill" data-client-period="year" onclick="setClientProfilePeriod('year',this)">Año</button>
+  <button class="pill active" data-client-period="all" onclick="setClientProfilePeriod('all',this)">Todo</button>
+  <button class="pill" data-client-period="custom" onclick="setClientProfilePeriod('custom',this)">Personalizado</button>
+</div>
+<div id="clientProfileCustomRange" class="client-custom-range hidden">
+  <div class="field"><label>Desde</label><input id="clientProfileStart" type="date"></div>
+  <div class="field"><label>Hasta</label><input id="clientProfileEnd" type="date"></div>
+  <button class="btn primary-small" onclick="applyClientProfileCustomRange()">Aplicar período</button>
+</div>
+<div id="clientProfileRangeLabel" class="client-profile-range">Todo el historial</div>
+<div id="clientProfileKpis" class="client-profile-kpis"></div>
+<div class="client-relation-tabs" id="clientRelationTabs">
+  <button id="clientTabReservations" class="pill active" data-client-relation="reservations" onclick="setClientRelation('reservations',this)">Reservas</button>
+  <button id="clientTabQuotes" class="pill" data-client-relation="quotes" onclick="setClientRelation('quotes',this)">Cotizaciones</button>
+  <button id="clientTabPayments" class="pill" data-client-relation="payments" onclick="setClientRelation('payments',this)">Pagos</button>
+  <button id="clientTabFollowups" class="pill" data-client-relation="followups" onclick="setClientRelation('followups',this)">Seguimientos</button>
+</div>
+<div id="clientRelationList" class="client-rel-list"></div>
+<div style="height:10px"></div>
+<button class="secondary" onclick="editOpenClientProfile()">Editar cliente</button>
+</div></div>
+
+
+<!-- Vista previa PDF / documento A4 -->
+<div id="pdfPreviewOverlay" class="pdf-overlay">
+  <div class="pdf-toolbar">
+    <button class="pdf-toolbtn dark" onclick="closeQuotePdf()">← Volver</button>
+    <div class="pdf-toolbar-title" id="pdfToolbarTitle">Cotización</div>
+    <button class="pdf-toolbtn" onclick="shareQuoteWhatsApp()">WhatsApp</button>
+    <button class="pdf-toolbtn green" onclick="printQuotePdf()">Guardar / imprimir PDF</button>
+  </div>
+  <div class="pdf-stage"><article id="pdfPaper" class="pdf-paper"></article></div>
+</div>
+
+
+<!-- Historial -->
+<div id="historySheet" class="backdrop" onclick="if(event.target===this)closeSheet('historySheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Auditoría comercial</div><h2>Historial</h2></div><button class="close" onclick="closeSheet('historySheet')">×</button></div>
+<div class="history-tabs"><button class="pill active" data-history-filter="all" onclick="setHistoryFilter('all',this)">Todo</button><button class="pill" data-history-filter="reservations" onclick="setHistoryFilter('reservations',this)">Reservas</button><button class="pill" data-history-filter="quotes" onclick="setHistoryFilter('quotes',this)">Cotizaciones</button><button class="pill" data-history-filter="followups" onclick="setHistoryFilter('followups',this)">Seguimientos</button><button class="pill" data-history-filter="payments" onclick="setHistoryFilter('payments',this)">Pagos</button><button class="pill" data-history-filter="clients" onclick="setHistoryFilter('clients',this)">Clientes</button><button class="pill" data-history-filter="blocks" onclick="setHistoryFilter('blocks',this)">Bloqueos</button></div>
+<div id="historyList" class="stack"></div>
+</div></div>
+
+<!-- Masters -->
+<div id="mastersSheet" class="backdrop" onclick="if(event.target===this)closeSheet('mastersSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Configuración estructural</div><h2>Masters</h2></div><button class="close" onclick="closeSheet('mastersSheet')">×</button></div>
+<div class="info" style="margin-bottom:12px">Estas tablas controlan las opciones base que utiliza el sistema. No forman parte de la operación diaria.</div>
+<div class="master-grid">
+<button class="master-card" onclick="openMasterDetail('spaces')"><div class="iconbox">▦</div><b>Espacios / Canchas</b><span>Cancha 1, 2, 3 y combinaciones físicas</span><div class="master-badge">3 activas</div></button>
+<button class="master-card" onclick="openMasterDetail('formats')"><div class="iconbox">⚽</div><b>Formatos</b><span>FUT 6, FUT 9 e intervalos permitidos</span><div class="master-badge">2 formatos</div></button>
+<button class="master-card" onclick="closeSheet('mastersSheet');openSchedule()"><div class="iconbox">◷</div><b>Horario operativo</b><span>Define las horas disponibles que usa el cálculo de ocupación</span><div class="master-badge" id="scheduleMasterBadge">08:00–00:00</div></button>
+<button class="master-card" onclick="closeSheet('mastersSheet');openTariffs()"><div class="iconbox">S/</div><b>Tarifas</b><span>Precio por formato y reglas comerciales</span><div class="master-badge">Configurable</div></button>
+<button class="master-card" onclick="openMasterDetail('events')"><div class="iconbox">★</div><b>Tipos de evento</b><span>Campeonato, cumpleaños, integración y otros</span><div class="master-badge">6 tipos</div></button>
+<button class="master-card" onclick="openMasterDetail('packages')"><div class="iconbox">▤</div><b>Paquetes</b><span>Evento exclusivo, garantía y servicios incluidos</span><div class="master-badge">1 paquete</div></button>
+<button class="master-card" onclick="openMasterDetail('paymentData')"><div class="iconbox">▣</div><b>Datos para el pago</b><span>BCP, CCI, Yape, titular y WhatsApp de confirmación</span><div class="master-badge">BCP / Yape</div></button>
+<button class="master-card" onclick="openMasterDetail('messages')"><div class="iconbox">✉</div><b>Plantillas de mensajes</b><span>Texto que se envía por WhatsApp al cliente</span><div class="master-badge">Confirmación</div></button>
+<button class="master-card" onclick="openMasterDetail('states')"><div class="iconbox">●</div><b>Estados</b><span>Pre-reserva, confirmada, realizada, cancelada, no asistió y reprogramada</span><div class="master-badge">6 estados</div></button>
+<button class="master-card" onclick="openMasterDetail('payments')"><div class="iconbox">▣</div><b>Métodos de pago</b><span id="paymentMethodsMasterText">Efectivo y transferencia</span><div class="master-badge" id="paymentMethodsMasterBadge">2 activos</div></button>
+<button class="master-card" onclick="openMasterDetail('users')"><div class="iconbox">👤</div><b>Usuarios / Vendedores</b><span>Responsables, roles y estado activo</span><div class="master-badge">Administración</div></button>
+<button class="master-card" onclick="openMasterDetail('conditions')"><div class="iconbox">≡</div><b>Condiciones</b><span>Reserva, cancelación, garantía y eventos</span><div class="master-badge">Textos base</div></button>
+</div></div></div>
+
+<!-- Master detail -->
+<div id="masterDetailSheet" class="backdrop" onclick="if(event.target===this)closeSheet('masterDetailSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Master</div><h2 id="masterDetailTitle">Configuración</h2></div><button class="close" onclick="closeSheet('masterDetailSheet')">×</button></div>
+<div id="masterDetailBody" class="stack"></div>
+</div></div>
+
+
+<!-- v29: compartir reserva optimizado para WhatsApp + logo real -->
+<!-- Compartir reserva -->
+<div id="reservationShareSheet" class="backdrop" onclick="if(event.target===this)closeSheet('reservationShareSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Cliente</div><h2>Compartir reserva</h2></div><button class="close" onclick="closeSheet('reservationShareSheet')">×</button></div>
+<div class="share-preview"><canvas id="reservationShareCanvas" width="1080" height="1120"></canvas></div>
+<div class="actionlist">
+  <button class="primary" onclick="shareReservationImage()">Compartir imagen</button>
+  <button class="secondary" onclick="openReservationWhatsApp()">Abrir chat de WhatsApp</button>
+  <button class="secondary" onclick="downloadReservationImage()">Guardar imagen</button>
+</div>
+<div class="share-note">En iPhone y Android, “Compartir imagen” abre el selector del sistema para elegir WhatsApp. Si el navegador no permite compartir archivos, la imagen se guarda para enviarla manualmente.</div>
+</div></div>
+
+
+<!-- Registrar cobro -->
+<div id="paymentSheet" class="backdrop" onclick="if(event.target===this)closeSheet('paymentSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Caja</div><h2>Registrar cobro</h2></div><button class="close" onclick="closeSheet('paymentSheet')">×</button></div>
+<div class="form-card"><h3>Reserva</h3>
+<div class="field"><label>Reserva con saldo pendiente <span class="req">*</span></label><select id="paymentReservation" onchange="syncPaymentReservation()"></select></div>
+<div id="paymentReservationInfo" class="payment-reservation-info">Selecciona una reserva.</div>
+</div>
+<div class="form-card"><h3>Pago</h3>
+<div class="grid2"><div class="field"><label>Monto <span class="req">*</span></label><input id="paymentAmount" type="number" min="0" step="0.01" inputmode="decimal"></div><div class="field"><label>Método <span class="req">*</span></label><select id="paymentMethod"></select></div></div>
+<div class="grid2"><div class="field"><label>Fecha</label><input id="paymentDate" type="date"></div><div class="field"><label>Hora</label><input id="paymentTime" type="time"></div></div>
+<div class="field"><label>Detalle</label><textarea id="paymentNote" rows="2" placeholder="Opcional"></textarea></div>
+<div class="attachment-box"><div class="attachment-head"><div><b>Comprobante</b><span>Opcional · queda vinculado a este cobro</span></div><div id="paymentAttachmentName" class="attachment-name">Sin foto</div></div><div class="attachment-actions"><button type="button" class="btn" onclick="document.getElementById('paymentCameraInput').click()">📷 Tomar foto</button><button type="button" class="btn" onclick="document.getElementById('paymentFileInput').click()">📎 Adjuntar foto</button></div><input id="paymentCameraInput" class="hidden" type="file" accept="image/*" capture="environment" onchange="handleAttachmentSelection('payment',this)"><input id="paymentFileInput" class="hidden" type="file" accept="image/*" onchange="handleAttachmentSelection('payment',this)"><div id="paymentAttachmentPreview" class="attachment-preview hidden"></div></div>
+</div>
+<div class="info">Un cobro actualiza el pagado y saldo de la reserva. No debes registrarlo otra vez como “otro ingreso”.</div>
+<div class="summary"><button class="primary" onclick="savePayment()">Registrar cobro</button></div>
+</div></div>
+
+<!-- Tipo de movimiento -->
+<div id="movementTypeSheet" class="backdrop" onclick="if(event.target===this)closeSheet('movementTypeSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Caja</div><h2>Registrar movimiento</h2></div><button class="close" onclick="closeSheet('movementTypeSheet')">×</button></div>
+<div class="movement-type-grid">
+<button class="movement-type-card" onclick="openMovementForm('expense')"><div class="iconbox">−</div><b>Gasto</b><span>Personal, mantenimiento, servicios, marketing, compras u otros.</span></button>
+<button class="movement-type-card" onclick="openMovementForm('other_income')"><div class="iconbox">＋</div><b>Otro ingreso</b><span>Tienda, estacionamiento, parrilla u otro ingreso ajeno a una reserva.</span></button>
+<button class="movement-type-card" onclick="openMovementForm('cash_in')"><div class="iconbox">↘</div><b>Aporte a caja</b><span>Dinero puesto en caja que no representa una venta.</span></button>
+<button class="movement-type-card" onclick="openMovementForm('cash_out')"><div class="iconbox">↗</div><b>Retiro de caja</b><span>Dinero retirado o depositado que no representa un gasto.</span></button>
+</div>
+<div class="cash-note">Los pagos y reembolsos vinculados a reservas se registran desde la propia reserva para evitar duplicidades.</div>
+</div></div>
+
+<!-- Movimiento manual -->
+<div id="movementFormSheet" class="backdrop" onclick="if(event.target===this)closeSheet('movementFormSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Caja</div><h2 id="movementFormTitle">Nuevo movimiento</h2></div><button class="close" onclick="closeSheet('movementFormSheet')">×</button></div>
+<div class="form-card"><h3 id="movementFormSectionTitle">Datos</h3>
+<div class="field" id="movementCategoryField"><label>Categoría <span class="req">*</span></label><select id="movementCategory"></select></div>
+<div class="grid2"><div class="field"><label>Monto <span class="req">*</span></label><input id="movementAmount" type="number" min="0" step="0.01" inputmode="decimal"></div><div class="field"><label>Método</label><select id="movementMethod"></select></div></div>
+<div class="grid2"><div class="field"><label>Fecha</label><input id="movementDate" type="date"></div><div class="field"><label>Hora</label><input id="movementTime" type="time"></div></div>
+<div class="field"><label id="movementPartyLabel">Pagado a / recibido de</label><input id="movementParty" placeholder="Opcional"></div>
+<div class="field"><label>Detalle</label><textarea id="movementDetail" rows="3" placeholder="Ej. Lavado de chalecos"></textarea></div>
+<div class="attachment-box"><div class="attachment-head"><div><b>Comprobante</b><span>Opcional · foto del voucher, recibo o sustento</span></div><div id="movementAttachmentName" class="attachment-name">Sin foto</div></div><div class="attachment-actions"><button type="button" class="btn" onclick="document.getElementById('movementCameraInput').click()">📷 Tomar foto</button><button type="button" class="btn" onclick="document.getElementById('movementFileInput').click()">📎 Adjuntar foto</button></div><input id="movementCameraInput" class="hidden" type="file" accept="image/*" capture="environment" onchange="handleAttachmentSelection('movement',this)"><input id="movementFileInput" class="hidden" type="file" accept="image/*" onchange="handleAttachmentSelection('movement',this)"><div id="movementAttachmentPreview" class="attachment-preview hidden"></div></div>
+</div>
+<div id="movementFormHelp" class="info"></div>
+<div class="summary"><button class="primary" onclick="saveManualMovement()">Guardar movimiento</button></div>
+</div></div>
+
+<!-- Caja y movimientos -->
+<div id="cashSheet" class="backdrop" onclick="if(event.target===this)closeSheet('cashSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Finanzas</div><h2>Caja y movimientos</h2></div><button class="close" onclick="closeSheet('cashSheet')">×</button></div>
+<div id="cashSummary" class="cash-summary-grid"></div>
+<div class="tabs" id="cashFilters"><button class="pill active" data-cash-filter="all" onclick="setCashFilter('all',this)">Todos</button><button class="pill" data-cash-filter="income" onclick="setCashFilter('income',this)">Ingresos</button><button class="pill" data-cash-filter="expense" onclick="setCashFilter('expense',this)">Gastos</button><button class="pill" data-cash-filter="cash" onclick="setCashFilter('cash',this)">Mov. caja</button></div>
+<div class="cash-note">Aportes y retiros de caja se muestran, pero no alteran el resultado operativo. Saldo a favor tampoco se cuenta como un ingreso nuevo cuando se usa.</div>
+<div id="cashMovementList" class="cash-movement-list"></div>
+</div></div>
+
+<!-- Horario operativo -->
+<div id="scheduleSheet" class="backdrop" onclick="if(event.target===this)closeSheet('scheduleSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Master</div><h2>Horario operativo</h2></div><button class="close" onclick="closeSheet('scheduleSheet')">×</button></div>
+<div class="info" style="margin-bottom:12px">Este horario define las horas disponibles del dashboard. La ocupación = horas-cancha reservadas ÷ horas-cancha disponibles.</div>
+<div id="scheduleEditor" class="schedule-list"></div>
+<div class="summary"><button class="primary" onclick="saveSchedule()">Guardar horario</button></div>
+</div></div>
+
+<div id="attachmentViewerSheet" class="backdrop" onclick="if(event.target===this)closeAttachmentViewer()"><div class="sheet"><div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Comprobante</div><h2 id="attachmentViewerTitle">Imagen</h2></div><button class="close" onclick="closeAttachmentViewer()">×</button></div><div class="form-card"><img id="attachmentViewerImage" class="attachment-viewer-image" alt="Comprobante"><div id="attachmentViewerMeta" class="mutedline" style="margin-top:10px"></div></div><button class="secondary" onclick="closeAttachmentViewer()">Cerrar</button></div></div>
+
+
+<!-- Selector de período del dashboard -->
+<div id="homePeriodSheet" class="backdrop" onclick="if(event.target===this)closeSheet('homePeriodSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Período</div><h2>Ver información</h2></div><button class="close" onclick="closeSheet('homePeriodSheet')">×</button></div>
+<div class="home-period-options">
+  <button class="home-period-option" data-period-option="today" onclick="selectHomePeriod('today')">Hoy <span>Día actual</span></button>
+  <button class="home-period-option" data-period-option="week" onclick="selectHomePeriod('week')">Esta semana <span>Lunes a domingo</span></button>
+  <button class="home-period-option" data-period-option="month" onclick="selectHomePeriod('month')">Este mes <span>Mes calendario</span></button>
+  <button class="home-period-option" data-period-option="year" onclick="selectHomePeriod('year')">Este año <span>Año calendario</span></button>
+  <button class="home-period-option" data-period-option="custom" onclick="openHomeCustomPeriod()">Personalizar <span>Elegir fechas ›</span></button>
+</div>
+</div></div>
+
+<!-- Rango personalizado -->
+<div id="homeCustomSheet" class="backdrop" onclick="if(event.target===this)closeSheet('homeCustomSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Período</div><h2>Personalizar fechas</h2></div><button class="close" onclick="closeSheet('homeCustomSheet')">×</button></div>
+<div class="home-custom-preview"><span>Rango seleccionado</span><b id="homeCustomPreview">Selecciona las fechas</b></div>
+<div class="form-card home-custom-date-card"><h3>Desde / hasta</h3><div class="home-custom-date-grid"><div class="field"><label>Desde</label><input id="homeCustomStart" type="date" onchange="updateHomeCustomPreview()"></div><div class="field"><label>Hasta</label><input id="homeCustomEnd" type="date" onchange="updateHomeCustomPreview()"></div></div></div>
+<button class="primary" onclick="applyHomeCustomRange()">Aplicar período</button>
+</div></div>
+
+<!-- Detalle de KPIs del dashboard -->
+<div id="dashboardDetailSheet" class="backdrop" onclick="if(event.target===this)closeSheet('dashboardDetailSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Detalle</div><h2 id="dashboardDetailTitle">Indicador</h2></div><button class="close" onclick="closeSheet('dashboardDetailSheet')">×</button></div>
+<div id="dashboardDetailRange" class="analysis-sheet-range"></div>
+<div id="dashboardDetailBody"></div>
+</div></div>
+
+<!-- Análisis completo -->
+<div id="dashboardAnalysisSheet" class="backdrop" onclick="if(event.target===this)closeSheet('dashboardAnalysisSheet')"><div class="sheet">
+<div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Gestión</div><h2>Análisis</h2></div><button class="close" onclick="closeSheet('dashboardAnalysisSheet')">×</button></div>
+<div id="analysisRangeLabel" class="analysis-sheet-range"></div>
+<div class="analysis-full-kpis">
+  <div class="analysis-full-kpi"><span>Ocupación</span><b id="analysisFullOccupancy">0%</b></div>
+  <div class="analysis-full-kpi"><span>Horas reservadas</span><b id="analysisFullHours">0 h</b></div>
+  <div class="analysis-full-kpi"><span>Ticket promedio</span><b id="analysisFullTicket">S/ 0</b></div>
+  <div class="analysis-full-kpi"><span>Ingreso / hora</span><b id="analysisFullIncomeHour">S/ 0</b></div>
+</div>
+<div class="dashboard-section"><div class="dashboard-section-head"><div><b>Uso de canchas</b><span>Ocupación de cada cancha física</span></div></div><div id="analysisCourtUsage" class="dashboard-list"></div></div>
+<div class="dashboard-section"><div class="dashboard-section-head"><div><b>Horas pico</b><span>Días y horarios con mayor uso</span></div></div><div id="analysisPeakHours" class="dashboard-list"></div></div>
+<div class="dashboard-section"><div class="dashboard-section-head"><div><b>Mejores clientes</b><span>Por ventas del período</span></div><button class="link-btn" onclick="closeSheet('dashboardAnalysisSheet');openClients()">Ver clientes</button></div></div><div id="analysisTopClients" class="dashboard-list"></div></div>
+<div class="dashboard-section"><div class="dashboard-section-head"><div><b>Estado de reservas</b><span>Resultados del período</span></div></div><div id="analysisStatusGrid" class="dashboard-status-grid"></div></div>
+<div class="dashboard-section"><div class="dashboard-section-head"><div><b>Resultado financiero</b><span>Devoluciones, créditos y retenidos</span></div></div><div id="analysisFinanceGrid" class="dashboard-finance-grid"></div></div>
+</div></div>
+
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
