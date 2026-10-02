@@ -22,6 +22,7 @@
 <!-- v19: Reservas mobile-first Agenda | Canchas | Lista -->
 <!-- Base v13 + correcciones de cotizacion y limpieza demo v14 -->
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="responsive.css">
 </head>
 <body>
 <main class="shell">
@@ -29,13 +30,17 @@
 
 <section id="view-home" class="view active">
 <div class="content dashboard-content">
+  <div class="dashboard-overview">
+  <div class="dashboard-heading">
   <div class="eyebrow">Eleva Sport</div><h1>Ventas y reservas</h1>
+  </div>
 
   <button class="home-balance-strip" onclick="openDashboardDetail('available')">
     <div class="home-balance-main"><span>Saldo disponible actual</span><b id="dashAvailable">S/ 0</b></div>
     <div class="home-balance-side"><span>Dinero acumulado</span><b>Ver detalle ›</b></div>
   </button>
 
+  <div class="dashboard-controls">
   <div class="home-period-nav">
     <button class="home-period-arrow" onclick="shiftHomePeriod(-1)" aria-label="Período anterior">‹</button>
     <button class="home-period-center" onclick="openHomePeriodPicker()"><b id="homeRangeLabel">Septiembre 2026</b><span id="homePeriodLabel">Este mes</span></button>
@@ -49,6 +54,7 @@
     <button class="pill" data-home-filter="exclusive" onclick="setHomeReservationFilter('exclusive',this)">Eventos</button>
   </div>
 
+  </div>
   <div class="dashboard-kpis">
     <button class="dashboard-kpi cash-kpi clickable" onclick="openDashboardDetail('cash')"><span>Caja neta <i class="kpi-arrow">›</i></span><b id="dashCashNet">S/ 0</b><small id="dashCashNetMeta">Entradas − salidas</small></button>
     <button class="dashboard-kpi clickable" onclick="openDashboardDetail('sales')"><span>Total vendido <i class="kpi-arrow">›</i></span><b id="dashSold">S/ 0</b><small id="dashSoldDelta">—</small></button>
@@ -56,6 +62,9 @@
     <button class="dashboard-kpi clickable" onclick="openDashboardDetail('receivable')"><span>Por cobrar <i class="kpi-arrow">›</i></span><b id="dashReceivable">S/ 0</b><small id="dashReceivableMeta">0 reservas con saldo</small></button>
   </div>
 
+  </div>
+  <div class="dashboard-workspace">
+  <div class="dashboard-insights">
   <div class="dashboard-section">
     <div class="dashboard-section-head"><div><b>Tendencia</b><span id="homeTrendSubtitle">Ventas del período</span></div></div>
     <div id="homeTrend" class="dashboard-trend"></div>
@@ -79,6 +88,8 @@
     </div>
   </div>
 
+  </div>
+  <div class="dashboard-activity">
   <div class="section"><div class="section-head"><div class="section-title">Próximas reservas</div><button class="link-btn" onclick="go('reservations')">Ver reservas</button></div><div id="homeReservations" class="stack"></div></div>
   <div class="section"><div class="section-head"><div class="section-title">Seguimientos pendientes</div><button class="link-btn" onclick="go('follow')">Ver todos</button></div><div id="homeFollowups" class="stack"></div></div>
   <div class="section"><div class="section-head"><div class="section-title">Accesos rápidos</div></div>
@@ -87,6 +98,9 @@
       <button class="quick" onclick="startQuote()"><div class="iconbox">＋</div><strong>Nueva cotización</strong><small>Crear propuesta</small></button>
     </div>
   </div>
+</div>
+</div>
+</div>
 </div>
 </section>
 
@@ -255,6 +269,7 @@
 <div id="quoteSheet" class="backdrop" onclick="if(event.target===this)closeSheet('quoteSheet')"><div class="sheet">
 <div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Venta</div><h2>Nueva cotización</h2></div><button class="close" onclick="closeSheet('quoteSheet')">×</button></div>
 
+<div class="form-workspace"><div class="form-column">
 <div class="form-card"><h3>Cliente</h3><div class="lead"><div class="initials" id="qInitials">CL</div><div class="lead-main"><div class="lead-name" id="qClientName">Cliente</div><div class="lead-meta" id="qClientMeta">Sin teléfono</div></div></div></div>
 
 <div class="form-card quote-event-card"><h3>Evento</h3>
@@ -272,6 +287,7 @@
 
 <div class="form-card"><h3>Modalidad</h3><div class="choice-grid"><button id="modeExclusive" class="choice active" onclick="setMode('exclusive')">Local exclusivo</button><button id="modeCourt" class="choice" onclick="setMode('court')">Por cancha</button></div></div>
 
+</div><div class="form-column">
 <div id="exclusiveBlock" class="form-card"><h3>Alquiler exclusivo</h3><div class="field"><label>Precio paquete</label><input id="packagePrice" type="number" value="2000" oninput="recalcQuote()"></div>
 <div id="qPackagePreview" class="package-preview-v24"></div>
 <button type="button" class="ghost" style="margin-top:10px" onclick="openQuotePackageEditor()">Editar incluido solo para esta cotización</button>
@@ -282,6 +298,7 @@
 <div class="form-card"><h3>Condiciones económicas</h3><div class="grid2"><div class="field"><label>Garantía reembolsable</label><input id="guarantee" type="number" value="300" oninput="recalcQuote()"></div><div class="field"><label>Descuento pago único</label><input id="discount" type="number" value="200" oninput="recalcQuote()"></div></div><div class="field"><label>Hora adicional</label><input id="extraHour" type="number" value="180"></div><div class="info">El descuento aplica únicamente cuando el importe completo se cancela en una sola operación anticipada. Si se paga 50% y luego el saldo, no aplica.</div></div>
 <div class="form-card"><h3>Condiciones</h3><div class="info">Público general: ingreso 30 min antes y cierre 30 min después. La garantía se devuelve después del evento. El organizador asume seguridad adicional y primeros auxilios cuando corresponda.</div></div>
 
+</div></div>
 <div class="summary"><div class="sumrow"><span>Alquiler</span><b id="sumRent">S/ 2,000</b></div><div class="sumrow"><span>Garantía reembolsable</span><b id="sumGuarantee">S/ 300</b></div><div class="sumrow"><span>Descuento pago único</span><b id="sumDiscount">− S/ 200</b></div><div class="sumrow"><span>Pago en partes</span><b id="sumRegular">S/ 2,300</b></div><div class="sumrow total"><span>Si paga todo en una operación</span><span id="sumTotal">S/ 2,100</span></div><button class="primary" onclick="generateQuote()">Generar cotización</button></div>
 </div></div>
 
@@ -352,6 +369,7 @@
 <div class="handle"></div><div class="sheet-head"><div><div class="eyebrow">Reserva</div><h2 id="reservationFormTitle">Nueva reserva</h2></div><button class="close" onclick="closeSheet('reservationSheet')">×</button></div>
 <div id="reservationKindChip" class="reservation-kind-chip">Evento exclusivo</div>
 
+<div class="form-workspace"><div class="form-column">
 <div class="form-card"><h3>Cliente y origen</h3>
 <div class="field"><label>Cliente <span class="req">*</span></label>
 <div class="res-client-search">
@@ -419,6 +437,7 @@
 </div>
 </div>
 
+</div><div class="form-column">
 <div id="rDateScheduleCard" class="form-card"><h3>Fecha y horario</h3>
 <div id="rSingleDateField" class="field"><label>Fecha <span class="req">*</span></label><input id="rDate" type="date" onchange="checkReservationConflictUI()"></div>
 
@@ -447,6 +466,7 @@
 <div class="inline-total"><span>Saldo pendiente</span><b id="rBalance">S/ 0</b></div>
 <div class="field" style="margin-top:10px"><label>Notas</label><textarea id="rNotes" rows="3" placeholder="Opcional"></textarea></div>
 </div>
+</div></div>
 <button id="reservationSaveBtn" class="primary" onclick="saveReservation()">Crear reserva</button>
 </div></div>
 
@@ -766,7 +786,7 @@
 </div>
 <div class="dashboard-section"><div class="dashboard-section-head"><div><b>Uso de canchas</b><span>Ocupación de cada cancha física</span></div></div><div id="analysisCourtUsage" class="dashboard-list"></div></div>
 <div class="dashboard-section"><div class="dashboard-section-head"><div><b>Horas pico</b><span>Días y horarios con mayor uso</span></div></div><div id="analysisPeakHours" class="dashboard-list"></div></div>
-<div class="dashboard-section"><div class="dashboard-section-head"><div><b>Mejores clientes</b><span>Por ventas del período</span></div><button class="link-btn" onclick="closeSheet('dashboardAnalysisSheet');openClients()">Ver clientes</button></div></div><div id="analysisTopClients" class="dashboard-list"></div></div>
+<div class="dashboard-section"><div class="dashboard-section-head"><div><b>Mejores clientes</b><span>Por ventas del período</span></div><button class="link-btn" onclick="closeSheet('dashboardAnalysisSheet');openClients()">Ver clientes</button></div><div id="analysisTopClients" class="dashboard-list"></div></div>
 <div class="dashboard-section"><div class="dashboard-section-head"><div><b>Estado de reservas</b><span>Resultados del período</span></div></div><div id="analysisStatusGrid" class="dashboard-status-grid"></div></div>
 <div class="dashboard-section"><div class="dashboard-section-head"><div><b>Resultado financiero</b><span>Devoluciones, créditos y retenidos</span></div></div><div id="analysisFinanceGrid" class="dashboard-finance-grid"></div></div>
 </div></div>
