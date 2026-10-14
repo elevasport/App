@@ -7269,7 +7269,7 @@ window.ElevaLegacy={
 (() => {
   const s=ElevaLegacy.getState(),c=ElevaCatalogEngine.seed(s.settings),day=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
   c.sites[0].name='Sede 1';c.sites[0].address='';c.sites[0].schedule=Object.fromEntries(Array.from({length:7},(_,i)=>[i,{active:true,open:'08:00',close:'24:00'}]));const extra={...structuredClone(c.sites[0]),id:'preview-site-two',name:'Sede 2',schedule:Object.fromEntries(Array.from({length:7},(_,i)=>[i,{active:true,open:'18:00',close:'02:00'}]))};c.sites.push(extra);c.resources.push({id:4,siteId:extra.id,name:'Cancha A',active:true,sportIds:[c.sports[0].id]});c.offerings.push({...structuredClone(c.offerings[0]),id:'preview-offering-four',siteId:extra.id,name:'Cancha A por hora',resourceIds:[4],pricing:{mode:'flat',rate:60}});c.resources.forEach(r=>r.sportIds??=[c.sports[0].id]);c.resourceSportsSupported=true;
-  s.settings.businessCatalog=c;s.settings.users=[{id:'preview-user',name:'Usuario',role:'preview',active:true}];s.settings.customRoles=[{id:'preview',name:'Encargado de turno',short:'Encargado',baseRole:'shift',permissions:['view_dashboard','view_reservations','view_pending','view_cash','view_clients','view_history','view_reports','manage_reservations']}];
+  s.settings.businessCatalog=c;s.settings.customRoles=[];s.settings.users=Object.entries(ROLE_DEFS).map(([role,definition])=>({id:'html-'+role,name:definition.name,role,active:true,initials:initials(definition.short),email:''}));
   s.clients=[{id:'preview-team-a',name:'Equipo A',phone:'',creditBalance:0},{id:'preview-team-b',name:'Equipo B',phone:'',creditBalance:0}];s.quotes=[];s.followups=[];s.movements=[];s.recurringSeries=[];s.auditLog=[];s.approvalRequests=[];
   const book=(id,client,ids,start,end,hours,status,paid)=>({id,code:'RS-'+id.padStart(4,'0'),clientId:client,reservationKind:'court',courtType:'FUT 6',formatCode:'fut6',resourceIds:ids,physicalCourts:ids.map(x=>'Cancha '+x),eventDate:day,startTime:start,endTime:end,hours,status,courtRate:50,total:hours*50,baseTotal:hours*50,taxApplied:false,advance:paid,balance:hours*50-paid,notes:'',createdAt:day+'T08:00:00-05:00'});
   s.reservations=[book('01','preview-team-a',[1],'10:00','11:00',1,'confirmed',20),book('02','preview-team-b',[2],'10:00','12:00',2,'completed',100),book('03','preview-team-a',[3],'12:00','13:00',1,'hold',0),{...book('04',null,[1],'14:00','15:00',1,'confirmed',0),reservationKind:'internal',internalTitle:'Mantenimiento',internalUseType:'maintenance',total:0,baseTotal:0,balance:0},book('05','preview-team-b',[4],'23:00','01:00',2,'confirmed',0)];
@@ -7277,7 +7277,25 @@ window.ElevaLegacy={
   const notice=()=>ElevaFeedback?.error('Esta acción no está disponible en esta página.');for(const name of ElevaLegacy.mutators)window[name]=notice;window.elevaSignOut=notice;window.elevaChangePassword=notice;window.submitBillingDocument=notice;
   document.addEventListener('submit',event=>{if(event.target.id==='ecDatePicker')return;event.preventDefault();event.stopImmediatePropagation();notice();},true);
   document.getElementById('authGate').hidden=true;
-  ElevaLegacy.render();go('reservations');selectReservationFocusDate(day);
+  const renderProfiles=()=>{
+    const user=window.ElevaSessionUser;
+    document.getElementById('sessionCurrent').innerHTML=user?`<div class="account-identity"><div class="account-avatar">${escapeHtml(user.initials)}</div><div class="account-name">${escapeHtml(user.name)}</div><span class="account-role">${escapeHtml(roleCatalog()[user.role].name)}</span></div>`:'';
+    const host=document.getElementById('rolePreviewBlock');host.hidden=false;host.style.display='';host.querySelector('h3').textContent='Cambiar perfil';host.querySelector('.mutedline').hidden=true;
+    const grid=document.getElementById('rolePreviewGrid');grid.replaceChildren();
+    for(const profile of s.settings.users){const button=document.createElement('button');button.type='button';button.className='role-preview-btn'+(user?.id===profile.id?' active':'');button.setAttribute('aria-pressed',String(user?.id===profile.id));const name=document.createElement('b');name.textContent=profile.name;const label=document.createElement('span');label.textContent=profile.role==='admin'?'Acceso total':roleCatalog()[profile.role].short;button.append(name,label);button.addEventListener('click',()=>selectProfile(profile.id));grid.append(button);}
+    const access=document.getElementById('sessionUsers');access.replaceChildren();access.parentElement.querySelector('h3').hidden=true;
+    if(user){const exit=document.createElement('button');exit.type='button';exit.className='session-signout';exit.textContent='Cerrar sesión';exit.addEventListener('click',window.elevaSignOut);access.append(exit);}
+  };
+  const selectProfile=id=>{
+    const user=s.settings.users.find(profile=>profile.id===id);if(!user)return;
+    document.querySelectorAll('.backdrop.show').forEach(sheet=>closeSheet(sheet.id));window.ElevaSessionUser={...user};
+    ElevaLegacy.render();go('home');renderProfiles();
+  };
+  window.renderSessionSheet=renderProfiles;
+  window.switchSessionUser=selectProfile;
+  window.previewRole=role=>selectProfile('html-'+role);
+  window.elevaSignOut=()=>{document.querySelectorAll('.backdrop.show').forEach(sheet=>closeSheet(sheet.id));window.ElevaSessionUser=null;ElevaLegacy.render();renderProfiles();openSheet('sessionSheet');};
+  selectProfile('html-admin');selectReservationFocusDate(day);
 })();
 
 </script>
