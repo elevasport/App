@@ -7264,38 +7264,217 @@ window.ElevaLegacy={
 
 </script>
 <script>
-
-/* Isolated design preview: no authentication, API calls, real customers, or persistence. */
+/* Browser-local application. No server identities or remote persistence. */
 (() => {
-  const s=ElevaLegacy.getState(),c=ElevaCatalogEngine.seed(s.settings),day=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-  c.sites[0].name='Sede 1';c.sites[0].address='';c.sites[0].schedule=Object.fromEntries(Array.from({length:7},(_,i)=>[i,{active:true,open:'08:00',close:'24:00'}]));const extra={...structuredClone(c.sites[0]),id:'preview-site-two',name:'Sede 2',schedule:Object.fromEntries(Array.from({length:7},(_,i)=>[i,{active:true,open:'18:00',close:'02:00'}]))};c.sites.push(extra);c.resources.push({id:4,siteId:extra.id,name:'Cancha A',active:true,sportIds:[c.sports[0].id]});c.offerings.push({...structuredClone(c.offerings[0]),id:'preview-offering-four',siteId:extra.id,name:'Cancha A por hora',resourceIds:[4],pricing:{mode:'flat',rate:60}});c.resources.forEach(r=>r.sportIds??=[c.sports[0].id]);c.resourceSportsSupported=true;
-  s.settings.businessCatalog=c;s.settings.customRoles=[];s.settings.users=Object.entries(ROLE_DEFS).map(([role,definition])=>({id:'html-'+role,name:definition.name,role,active:true,initials:initials(definition.short),email:''}));
-  s.clients=[{id:'preview-team-a',name:'Equipo A',phone:'',creditBalance:0},{id:'preview-team-b',name:'Equipo B',phone:'',creditBalance:0}];s.quotes=[];s.followups=[];s.movements=[];s.recurringSeries=[];s.auditLog=[];s.approvalRequests=[];
-  const book=(id,client,ids,start,end,hours,status,paid)=>({id,code:'RS-'+id.padStart(4,'0'),clientId:client,reservationKind:'court',courtType:'FUT 6',formatCode:'fut6',resourceIds:ids,physicalCourts:ids.map(x=>'Cancha '+x),eventDate:day,startTime:start,endTime:end,hours,status,courtRate:50,total:hours*50,baseTotal:hours*50,taxApplied:false,advance:paid,balance:hours*50-paid,notes:'',createdAt:day+'T08:00:00-05:00'});
-  s.reservations=[book('01','preview-team-a',[1],'10:00','11:00',1,'confirmed',20),book('02','preview-team-b',[2],'10:00','12:00',2,'completed',100),book('03','preview-team-a',[3],'12:00','13:00',1,'hold',0),{...book('04',null,[1],'14:00','15:00',1,'confirmed',0),reservationKind:'internal',internalTitle:'Mantenimiento',internalUseType:'maintenance',total:0,baseTotal:0,balance:0},book('05','preview-team-b',[4],'23:00','01:00',2,'confirmed',0)];
-  ElevaSessionUser={...s.settings.users[0],email:''};ElevaLegacy.setState(s);
-  const notice=()=>ElevaFeedback?.error('Esta acción no está disponible en esta página.');for(const name of ElevaLegacy.mutators)window[name]=notice;window.elevaSignOut=notice;window.elevaChangePassword=notice;window.submitBillingDocument=notice;
-  document.addEventListener('submit',event=>{if(event.target.id==='ecDatePicker')return;event.preventDefault();event.stopImmediatePropagation();notice();},true);
-  document.getElementById('authGate').hidden=true;
-  const renderProfiles=()=>{
-    const user=window.ElevaSessionUser;
-    document.getElementById('sessionCurrent').innerHTML=user?`<div class="account-identity"><div class="account-avatar">${escapeHtml(user.initials)}</div><div class="account-name">${escapeHtml(user.name)}</div><span class="account-role">${escapeHtml(roleCatalog()[user.role].name)}</span></div>`:'';
-    const host=document.getElementById('rolePreviewBlock');host.hidden=false;host.style.display='';host.querySelector('h3').textContent='Cambiar perfil';host.querySelector('.mutedline').hidden=true;
-    const grid=document.getElementById('rolePreviewGrid');grid.replaceChildren();
-    for(const profile of s.settings.users){const button=document.createElement('button');button.type='button';button.className='role-preview-btn'+(user?.id===profile.id?' active':'');button.setAttribute('aria-pressed',String(user?.id===profile.id));const name=document.createElement('b');name.textContent=profile.name;const label=document.createElement('span');label.textContent=profile.role==='admin'?'Acceso total':roleCatalog()[profile.role].short;button.append(name,label);button.addEventListener('click',()=>selectProfile(profile.id));grid.append(button);}
-    const access=document.getElementById('sessionUsers');access.replaceChildren();access.parentElement.querySelector('h3').hidden=true;
-    if(user){const exit=document.createElement('button');exit.type='button';exit.className='session-signout';exit.textContent='Cerrar sesión';exit.addEventListener('click',window.elevaSignOut);access.append(exit);}
+  const legacy = window.ElevaLegacy;
+  const KEY = 'eleva.local-app.v1', SESSION = 'eleva.local-profile.v1';
+  const clone = value => structuredClone(value);
+  const cash = value => Math.round(Number(value || 0) * 100) / 100;
+  const by = id => document.getElementById(id);
+  const actor = () => window.ElevaSessionUser;
+  const error = message => { throw new Error(message); };
+  const feedback = message => window.ElevaFeedback?.error(message);
+  const bridge = window.ElevaBridge = {mutation: false, dirty: false, local: true};
+  let record, revision = 0, storageFailure = '', busy = false;
+  const auditEntry=(entityType,entityId,code,action,changes=[],meta='')=>({id:crypto.randomUUID(),at:new Date().toISOString(),entityType,entityId,code,action,changes,user:actor()?.name||'Usuario',role:actor()?window.currentRole().name:'',meta});
+  window.addAuditEvent=(...args)=>auditLog.unshift(auditEntry(...args));
+
+  function valid(row) {
+    if (!row || row.version !== 1 || !Number.isInteger(row.revision) || !row.state?.settings || !['clients','quotes','followups','reservations','movements','recurringSeries','auditLog','approvalRequests'].every(k => Array.isArray(row.state[k]))) error('El archivo de datos no es válido.');
+    return row;
+  }
+  function read() { const raw = localStorage.getItem(KEY); return raw ? valid(JSON.parse(raw)) : null; }
+  function financial(state) {
+    state.settings.operatingPolicies = {adminTariffs: true, cancellations: true};
+    state.settings.cancellationDecisions ??= [];
+    state.settings.cancellationRefundEvents ??= [];
+    state.settings.cancellationRetentionEvents ??= [];
+    state.settings.cancellationFunds = window.ElevaCancellationEngine.derive(state);
+    return state;
+  }
+  function write(next) {
+    if (storageFailure) error(storageFailure);
+    const current = read();
+    if (current && current.revision !== revision) error('Los datos cambiaron en otra pestaña. Cierra el formulario y actualiza antes de guardar.');
+    financial(next.state);
+    next.revision = revision + 1;
+    try { localStorage.setItem(KEY, JSON.stringify(next)); }
+    catch { error('No se pudo guardar en este navegador. Libera espacio o descarga una copia de tus datos.'); }
+    record = next; revision = next.revision;
+  }
+  function refresh() {
+    legacy.setState(clone(record.state));
+    const user = record.state.settings.users.find(u => u.id === actor()?.id && u.active);
+    window.ElevaSessionUser = user ? {...user} : null;
+    legacy.render();
+    if (actor()) {
+      by('authGate').hidden = true;
+      if (by('view-pending').classList.contains('active')) window.renderPendingView();
+      if (by('view-control').classList.contains('active')) window.renderControl();
+      if (by('view-reports').classList.contains('active')) window.renderReports();
+    } else showAccess();
+  }
+  function requireAccess(permission) {
+    if (!actor()?.active) error('Selecciona un perfil para entrar.');
+    if (permission && !window.hasPermission(permission)) error('Este perfil no tiene permiso para esta acción.');
+  }
+  function change(permission, fn) {
+    requireAccess(permission);
+    if (busy) error('Espera a que termine el guardado.');
+    busy = true;
+    try {
+      const next = clone(record), result = fn(next.state, next);
+      write(next); refresh(); return result;
+    } finally { busy = false; }
+  }
+  const permissions = {
+    saveClient:'manage_clients',saveBillingProfile:'manage_clients',generateQuote:'manage_quotes',saveFollowup:'manage_followups',completeFollowup:'manage_followups',
+    finishSeriesFromManager:'manage_reservations',saveReservation:'manage_reservations',saveReservationOutcome:'manage_reservations',confirmOpenReservation:'manage_reservations',
+    savePayment:'register_payments',saveClientPayment:'register_payments',saveClientUnappliedApplication:'register_payments',saveManualMovement:'register_expenses',
+    saveTreasuryTransfer:'manage_treasury',setExpenseSupportStatus:'approve_expenses',setPaymentReconciliation:'reconcile_payments',issueBillingRecord:'issue_billing',resolveApproval:'approve_sensitive',
+    saveNewUserProfile:'manage_access',saveUserAccess:'manage_access',saveRoleLabel:'manage_access',createCustomRole:'manage_access',duplicateRole:'manage_access',saveCustomRoleMeta:'manage_access',deleteCustomRole:'manage_access',saveRolePermissions:'manage_access',restoreRolePermissions:'manage_access',saveUserMaster:'manage_access',saveApprovalConfig:'manage_access',saveControlConfig:'manage_access',togglePauseSeriesFromManager:'manage_reservations'
   };
-  const selectProfile=id=>{
-    const user=s.settings.users.find(profile=>profile.id===id);if(!user)return;
-    document.querySelectorAll('.backdrop.show').forEach(sheet=>closeSheet(sheet.id));window.ElevaSessionUser={...user};
-    ElevaLegacy.render();go('home');renderProfiles();
+  function wrap(name) {
+    const original = window[name]; if (typeof original !== 'function') return;
+    window[name] = function(...args) {
+      if(name==='saveReservation' && window.ElevaReservationForm?.handles()) return window.ElevaReservationForm.save(...args);
+      if (bridge.mutation) return original.apply(this,args);
+      let before;
+      try {
+        requireAccess(permissions[name] || (name.startsWith('save') ? 'manage_settings' : null));
+        if (busy) error('Espera a que termine el guardado.');
+        const current = read(); if (current && current.revision !== revision) error('Los datos cambiaron en otra pestaña. Actualiza antes de guardar.');
+        before = clone(record); busy = true; bridge.mutation = true; bridge.dirty = false;
+        const finish = result => {
+          try { if (bridge.dirty) { const next=clone(record);next.state=legacy.getState();write(next);window.ElevaFeedback?.success('Cambios guardados.'); } return result; }
+          catch(e) { legacy.setState(clone(before.state));feedback(e.message);throw e; }
+          finally { bridge.mutation=false;bridge.dirty=false;busy=false;refresh(); }
+        };
+        const rollback = e => { bridge.mutation=false;bridge.dirty=false;busy=false;legacy.setState(clone(before.state));refresh();feedback(e.message);throw e; };
+        const result = original.apply(this,args);
+        return result?.then ? result.then(finish,rollback) : finish(result);
+      } catch(e) {
+        bridge.mutation=false;busy=false;if(before)legacy.setState(clone(before.state));feedback(e.message);return false;
+      }
+    };
+  }
+  function showAccess() {
+    by('authGate').hidden = false;
+    const select=by('localProfile');select.replaceChildren();
+    for(const user of (record?.state.settings.users || []).filter(u=>u.active)) {
+      const option=document.createElement('option');option.value=user.id;option.textContent=user.name+' · '+(window.roleCatalog()[user.role]?.name || user.role);select.append(option);
+    }
+    by('authError').textContent=storageFailure;
+    by('authSubmit').disabled=!!storageFailure || !select.options.length;
+  }
+  function enter(id, remember=false) {
+    const user=record.state.settings.users.find(u=>u.id===id&&u.active);
+    if(!user)return;
+    window.ElevaSessionUser={...user};sessionStorage.setItem(SESSION,id);
+    if(remember)localStorage.setItem(SESSION,id);else localStorage.removeItem(SESSION);
+    window.ElevaUsersUI.clearDirectory();refresh();window.go('home');
+  }
+  function exit() {
+    if(busy)return;
+    sessionStorage.removeItem(SESSION);localStorage.removeItem(SESSION);window.ElevaSessionUser=null;
+    window.ElevaUsersUI.clearDirectory();window.ElevaFeedback?.dismiss();
+    document.querySelectorAll('.backdrop.show').forEach(s=>window.closeSheet(s.id));refresh();
+  }
+  function account() {
+    const user=actor();if(!user)return;
+    by('sessionCurrent').innerHTML=`<div class="account-identity"><div class="account-avatar">${escapeHtml(user.initials || initials(user.name))}</div><div class="account-name">${escapeHtml(user.name)}</div>${user.email?`<div class="account-email">${escapeHtml(user.email)}</div>`:''}<span class="account-role">${escapeHtml(window.currentRole().name)}</span></div>`;
+    window.ElevaAccessUI?.decorateCard(by('sessionCurrent'));
+    by('rolePreviewBlock').hidden=true;
+    const host=by('sessionUsers');host.replaceChildren();
+    host.closest('.form-card').querySelector('h3').textContent='Este dispositivo';
+    for(const [label,action] of [['Cambiar perfil',exit],['Descargar copia de datos',exportData]]) {
+      const button=document.createElement('button');button.type='button';button.textContent=label;button.onclick=action;host.append(button);
+    }
+    if(user.role==='admin') {
+      const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.hidden=true;
+      input.onchange=async()=>{try{const imported=valid(JSON.parse(await input.files[0].text()));window.ElevaCatalogEngine.validate(imported.state.settings.businessCatalog);change('manage_settings',(state,next)=>{next.state=clone(imported.state);next.branding=clone(imported.branding);next.attachments=clone(imported.attachments||{});});await window.ElevaBranding.refresh();window.closeSheet('sessionSheet');window.ElevaFeedback.success('Datos restaurados.');}catch(e){feedback(e.message);}input.value='';};
+      const button=document.createElement('button');button.type='button';button.textContent='Restaurar copia de datos';button.onclick=()=>input.click();host.append(button,input);
+    }
+    const signout=document.createElement('button');signout.type='button';signout.className='session-signout';signout.textContent='Cerrar sesión';signout.onclick=exit;host.append(signout);
+  }
+  function exportData() {
+    const blob=new Blob([JSON.stringify(record,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='eleva-sport-'+new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  const blobURL = blob => new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('No se pudo leer el archivo.'));reader.readAsDataURL(blob);});
+  async function reserve(input) {
+    return change('manage_reservations',state=>{
+      const catalog=state.settings.businessCatalog;
+      if(input.version!==catalog.version)error('La tarifa cambió. Vuelve a abrir la reserva.');
+      const q=window.ElevaCatalogEngine.quote(catalog,input);
+      if(window.ElevaCatalogEngine.conflict(state.reservations,input,q))error('Una de las canchas ya está ocupada.');
+      if(!state.clients.some(c=>c.id===input.clientId))error('Selecciona un cliente.');
+      const offering=catalog.offerings.find(o=>o.id===input.offeringId),service=catalog.services.find(s=>s.id===offering.serviceId),cfg=state.settings.taxConfig||{},id=crypto.randomUUID(),rate=Number(cfg.taxRate||18);
+      const base=cfg.pricesIncludeTax?Math.floor(q.total/(1+rate/100)*100)/100:q.total,tax=cfg.pricesIncludeTax?Math.round(base*rate)/100:0,rounding=cash(q.total-base-tax);
+      const number=Math.max(0,...state.reservations.map(r=>Number(String(r.code).replace(/\D/g,''))||0))+1;
+      state.reservations.push({id,code:'RS-'+String(number).padStart(4,'0'),clientId:input.clientId,reservationKind:service.kind==='event'?'exclusive':'court',formatCode:service.id,courtType:service.name,siteId:offering.siteId,siteName:q.siteName,offeringId:offering.id,resourceIds:q.resourceIds,resourceNames:q.resourceNames,physicalCourts:q.resourceIds.map(id=>'Cancha '+id),physicalCourt:q.resourceIds.length===1?'Cancha '+q.resourceIds[0]:null,courtQty:q.resourceIds.length,space:q.siteName+' · '+q.resourceNames.join(' + '),eventDate:input.date,startTime:input.start,endTime:input.end==='24:00'?'00:00':input.end,hours:q.hours,courtRate:service.unit==='hour'?cash(q.total/q.hours):null,rateSource:'standard',baseTotal:base,taxApplied:!!cfg.pricesIncludeTax,taxRate:rate,taxAmount:tax,nonTaxableExtra:rounding,total:q.total,advance:0,balance:q.total,status:'hold',notes:input.notes||'',paymentDueDate:input.date,createdAt:new Date().toISOString(),createdBy:actor().id,catalogSnapshot:{...q,catalogVersion:catalog.version,pricing:clone(offering.pricing),roundingAdjustment:rounding}});
+      state.auditLog.unshift(auditEntry('reservation',id,'RS-'+String(number).padStart(4,'0'),'Reserva creada',[],q.siteName+' · '+q.resourceNames.join(' + ')));
+      return id;
+    });
+  }
+  async function details(id,input) {
+    return change('manage_reservations',state=>{const r=state.reservations.find(r=>r.id===id);if(!r||!['hold','confirmed'].includes(input.status)||!/^\d{4}-\d{2}-\d{2}$/.test(input.dueDate))error('Revisa el estado y vencimiento.');const previous=r.status;r.status=input.status;r.paymentDueDate=input.dueDate;if(previous!==r.status){if(r.status==='confirmed')r.confirmedAt=new Date().toISOString();state.auditLog.unshift(auditEntry('reservation',r.id,r.code,r.status==='confirmed'?'Reserva confirmada':'Reserva pendiente',[{field:'Estado',before:previous,after:r.status}]));}});
+  }
+  async function billing(input) {
+    return change('issue_billing',state=>{
+      if(!Array.isArray(input.paymentIds)||!input.paymentIds.length||new Set(input.paymentIds).size!==input.paymentIds.length)error('Selecciona pagos válidos.');
+      const rows=input.paymentIds.map(id=>state.movements.find(m=>m.id===id&&m.type==='payment'));
+      if(rows.some(m=>!m)||new Set(rows.map(m=>m.clientId)).size!==1)error('Los pagos deben pertenecer al mismo cliente.');
+      if(rows.some(m=>m.billingDocumentId||['issued_local','accepted','issued','invoiced'].includes(m.billingStatus)))error('Un pago ya tiene comprobante.');
+      const cfg=state.settings.taxConfig||{},invoice=input.seriesCode===(cfg.facturaSeries||'F001'),receipt=input.seriesCode===(cfg.boletaSeries||'B001'),total=cash(rows.reduce((n,m)=>n+Number(m.amount),0)),client=state.clients.find(c=>c.id===rows[0].clientId),recipient=client?.billingProfiles?.find(p=>p.id===input.recipientId);
+      if(!invoice&&!receipt)error('Selecciona una serie válida.');
+      if(input.recipientId==='consumer'?(invoice||total>700):(!recipient||(invoice&&(recipient.kind!=='company'||recipient.docType!=='RUC'||!/^\d{11}$/.test(recipient.docNumber)))))error('Selecciona un receptor válido.');
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(input.date)||!Number.isFinite(Date.parse(input.date+'T12:00:00Z')))error('Fecha no válida.');
+      const rates=new Set();let tax=0;
+      for(const m of rows){const breakdown=legacy.format.billingBreakdownForPayment(m);for(const allocation of window.paymentApplications(m)){const r=state.reservations.find(r=>r.id===allocation.reservationId);if(r?.taxApplied)rates.add(r.taxRate);}tax+=Number(breakdown.tax||0);}
+      if(rates.size>1)error('Los pagos tienen tasas diferentes.');
+      tax=cash(tax);const id=crypto.randomUUID(),sequence=Math.max(0,...state.movements.filter(m=>m.billingNumber?.startsWith(input.seriesCode+'-')).map(m=>Number(m.billingNumber.split('-')[1])||0))+1;
+      for(const m of rows)Object.assign(m,{billingStatus:'issued_local',billingProviderStatus:'prepared_local',billingDocumentId:id,billingPaymentIds:[...input.paymentIds],billingNumber:input.seriesCode+'-'+String(sequence).padStart(6,'0'),billingType:invoice?'Factura':'Boleta',billingDate:input.date,billingAt:new Date().toISOString(),billingRecipientProfileId:input.recipientId,billingRecipientSnapshot:recipient?clone(recipient):{name:'Consumidor final'},billingBase:cash(total-tax),billingTax:tax,billingTaxRate:[...rates][0]||cfg.taxRate||18,billingTotal:total,billingNote:input.note||''});
+      state.auditLog.unshift(auditEntry('billing',id,rows[0].billingNumber,'Comprobante preparado',[],input.paymentIds.length+' pagos · S/ '+total));
+      return id;
+    });
+  }
+  try {
+    record=read();
+    if(!record) {
+      const state=legacy.getState();state.settings.businessCatalog=window.ElevaCatalogEngine.seed(state.settings);
+      state.settings.users=Object.entries(ROLE_DEFS).map(([role,def])=>({id:crypto.randomUUID(),name:def.name,role,initials:initials(def.short),email:'',active:true}));
+      record={version:1,revision:0,state:financial(state),attachments:{},branding:window.ElevaBranding.getCurrent()};write(record);
+    }
+    revision=record.revision;legacy.setState(clone(record.state));
+  } catch(e) { storageFailure='No se pudo abrir el almacenamiento local: '+e.message;record??={version:1,revision:0,state:legacy.getState(),attachments:{}}; }
+  for(const name of new Set([...legacy.mutators,'togglePauseSeriesFromManager']))wrap(name);
+  window.ElevaBusinessCatalog.connect({load:async()=>clone(record.state.settings.businessCatalog),save:async(catalog,version)=>change('manage_settings',state=>{if(version!==state.settings.businessCatalog.version)error('La configuración cambió. Vuelve a abrirla.');window.ElevaCatalogEngine.validate(catalog);state.settings.businessCatalog={...clone(catalog),version:version+1};return clone(state.settings.businessCatalog);}),reserve});
+  window.ElevaReservationForm.connect({reserve,details});
+  window.ElevaCancellation.connect({refresh:async()=>refresh(),decide:async input=>change('manage_settings',state=>window.ElevaCancellationEngine.decide(state,input,actor())),execute:async input=>change('register_payments',state=>window.ElevaCancellationEngine.execute(state,input,actor(),true))});
+  window.ElevaGroupedBilling.connect({available:()=>true,prepare:billing});
+  window.ElevaBranding.connect({load:async()=>clone(record.branding||window.ElevaBranding.getCurrent()),save:async(design,logo)=>{const url=logo?await blobURL(logo):null;return change('manage_settings',(state,next)=>{const current=next.branding||{};if(design.version!==current.version)error('La identidad visual cambió. Vuelve a abrirla.');next.branding={settings:clone(design.settings),logoPath:logo?'local-logo':design.logoPath,logoUrl:url||(design.logoPath?current.logoUrl:null),version:crypto.randomUUID()};return clone(next.branding);});}});
+  window.ElevaUsersUI.setDirectoryLoader(async()=>({users:record.state.settings.users.map(u=>({id:u.id,email:u.email||''})),next_page:null}));
+  window.addUserMasterRow=()=>{
+    window.ElevaUsersUI.openCreate({create:async input=>change('manage_access',state=>{const email=String(input.email||'').trim().toLowerCase();if(state.settings.users.some(u=>u.email&&u.email.toLowerCase()===email))error('Ese correo ya está registrado en este dispositivo.');if(!input.display_name?.trim()||!window.roleCatalog()[input.role_code])error('Revisa el nombre y perfil.');const id=crypto.randomUUID();state.settings.users.push({id,name:input.display_name.trim(),role:input.role_code,email,active:true,initials:initials(input.display_name)});return {user:{id},delivery:'local'};}),refresh:async()=>refresh(),feedback:window.showToast});
+    const form=by('inviteUserForm');if(!form)return;
+    const action=form.elements.action;action.innerHTML='<option value="create">Crear usuario</option>';action.closest('label').hidden=true;
+    form.elements.password.disabled=true;form.elements.password.required=false;by('invitePasswordField').hidden=true;form.querySelector('[type=submit]').textContent='Crear usuario';
   };
-  window.renderSessionSheet=renderProfiles;
-  window.switchSessionUser=selectProfile;
-  window.previewRole=role=>selectProfile('html-'+role);
-  window.elevaSignOut=()=>{document.querySelectorAll('.backdrop.show').forEach(sheet=>closeSheet(sheet.id));window.ElevaSessionUser=null;ElevaLegacy.render();renderProfiles();openSheet('sessionSheet');};
-  selectProfile('html-admin');selectReservationFocusDate(day);
+  window.storeAttachmentFile=async file=>{requireAccess();if(file.size>3*1024*1024)error('El archivo debe pesar menos de 3 MB para guardarlo en este dispositivo.');const data=await blobURL(file),id=crypto.randomUUID();const next=clone(record);next.attachments??={};next.attachments[id]={data,name:file.name,type:file.type};write(next);return {id,name:file.name,type:file.type,size:file.size};};
+  window.getAttachmentFile=async id=>{requireAccess();const item=record.attachments?.[id];if(!item)error('No se encontró el archivo.');const parts=item.data.split(','),bytes=Uint8Array.from(atob(parts[1]),c=>c.charCodeAt(0));return {id,name:item.name,type:item.type,blob:new Blob([bytes],{type:item.type})};};
+  window.elevaSignOut=exit;window.renderSessionSheet=account;
+  window.previewRole=role=>{const user=record.state.settings.users.find(u=>u.role===role&&u.active);if(user)enter(user.id);};
+  window.switchSessionUser=id=>enter(id);
+  window.elevaRefreshCollections=async()=>{if(busy)return;const current=read();if(current){record=current;revision=current.revision;refresh();}};
+  const refreshButton=by('refreshCollections');if(refreshButton)refreshButton.hidden=false;
+  const form=by('loginForm');form.innerHTML='<h1>Iniciar sesión</h1><p>Selecciona tu perfil para entrar. Los datos se guardan en este navegador.</p><label for="localProfile">Perfil<select id="localProfile" required></select></label><label class="remember-account"><input id="localRemember" type="checkbox"><span>Recordar perfil en este dispositivo</span></label><button id="authSubmit" type="submit">Entrar</button><p id="authError" role="alert"></p>';
+  window.ElevaAccessUI?.decorateCard(form);
+  const style=document.createElement('style');style.textContent='#localProfile{width:100%;min-height:48px;padding:12px;border:1px solid var(--line,#dce2e6);border-radius:12px;background:var(--card,#fff);color:var(--ink,#14232f);font:inherit}';document.head.append(style);
+  form.addEventListener('submit',event=>{event.preventDefault();try{enter(by('localProfile').value,by('localRemember').checked);}catch(e){by('authError').textContent=e.message;}});
+  window.addEventListener('storage',event=>{if(event.key!==KEY||!event.newValue)return;try{const incoming=valid(JSON.parse(event.newValue));if(busy||document.querySelector('.backdrop.show')){feedback('Los datos cambiaron en otra pestaña. Cierra el formulario y pulsa Actualizar datos.');return;}record=incoming;revision=incoming.revision;refresh();}catch(e){feedback(e.message);}});
+  window.ElevaLocal={storageKey:KEY,enter,reserve,details,billing,exportData,getRecord:()=>clone(record),change};
+  legacy.render();showAccess();
+  if(!storageFailure){const remembered=sessionStorage.getItem(SESSION)||localStorage.getItem(SESSION);if(remembered)enter(remembered,localStorage.getItem(SESSION)===remembered);}
 })();
 
 </script>
